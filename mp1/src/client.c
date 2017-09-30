@@ -24,39 +24,39 @@ char getrequest[] = "GET %s HTTP/1.1\r\nHost: %s:%s\r\nConnection: Keep-Alive\r\
 // parse input url for hostname and port number
 void parseURL(char *url, char *hostname, char *port, char *filepath)
 {
-	char *hostStart, *portStart, *pathStart, *end;
+    char *hostStart, *portStart, *pathStart, *end;
 
-	hostStart = strstr(url, "://");
-	if(!hostStart) {
-		// user did not specify the protocol
-		hostStart = url;
-	} else {
-		hostStart += 3;
-	}
+    hostStart = strstr(url, "://");
+    if(!hostStart) {
+        // user did not specify the protocol
+        hostStart = url;
+    } else {
+        hostStart += 3;
+    }
 
-	portStart = strstr(hostStart, ":");
-	if(portStart)
-		portStart++;
+    portStart = strstr(hostStart, ":");
+    if(portStart)
+        portStart++;
 
-	pathStart = hostStart;
-	while(*pathStart != '\0' && *pathStart != '/')
-		pathStart++;
+    pathStart = hostStart;
+    while(*pathStart != '\0' && *pathStart != '/')
+        pathStart++;
 
-	end = pathStart;
-	while(*end != '\0')
-		end++;
+    end = pathStart;
+    while(*end != '\0')
+        end++;
 
-	if(portStart) {
-		strncpy(hostname, hostStart, (size_t)(portStart - hostStart) - 1);
-		strncpy(port, portStart, (size_t)(pathStart - portStart));
-	} else {
-		strncpy(hostname, hostStart, (size_t)(pathStart - hostStart));
-		strcpy(port, "80");
-	}
-	if(pathStart == end)
-		strcpy(filepath, "/");
-	else
-		strncpy(filepath, pathStart, (size_t)(end - pathStart));
+    if(portStart) {
+        strncpy(hostname, hostStart, (size_t)(portStart - hostStart) - 1);
+        strncpy(port, portStart, (size_t)(pathStart - portStart));
+    } else {
+        strncpy(hostname, hostStart, (size_t)(pathStart - hostStart));
+        strcpy(port, "80");
+    }
+    if(pathStart == end)
+        strcpy(filepath, "/");
+    else
+        strncpy(filepath, pathStart, (size_t)(end - pathStart));
 }
 
 
@@ -90,12 +90,6 @@ void send_request(int sockfd, const char * msg, int len)
 int recv_data(int sockfd, char *buf)
 {
     int ret, total, idx, found;
-    struct timeval tv;
-
-    tv.tv_sec = 3;   // 5 Secs Timeout
-    tv.tv_usec = 0;  // 0 extra microseconds
-
-    setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char*)&tv, sizeof(struct timeval));
 
     // open the output file
     FILE * outfile = fopen("output", "w");
@@ -206,88 +200,88 @@ int recv_data(int sockfd, char *buf)
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
 {
-	if (sa->sa_family == AF_INET) {
-		return &(((struct sockaddr_in*)sa)->sin_addr);
-	}
+    if (sa->sa_family == AF_INET) {
+        return &(((struct sockaddr_in*)sa)->sin_addr);
+    }
 
-	return &(((struct sockaddr_in6*)sa)->sin6_addr);
+    return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
 
 int main(int argc, char *argv[])
 {
-	int sockfd, numbytes;  
-	char buf[BUFSIZE];
+    int sockfd, numbytes;
+    char buf[BUFSIZE];
 
-	char hostname[MAXSTRSIZE];
-	char port[PORTLEN];
-	char filepath[MAXSTRSIZE];
+    char hostname[MAXSTRSIZE];
+    char port[PORTLEN];
+    char filepath[MAXSTRSIZE];
 
-	struct addrinfo hints, *servinfo, *p;
-	int rv;
-	char s[INET6_ADDRSTRLEN];
+    struct addrinfo hints, *servinfo, *p;
+    int rv;
+    char s[INET6_ADDRSTRLEN];
 
-	if (argc != 2) {
-	    fprintf(stderr,"usage: http_client http://hostname[:port]/path/to/file\n");
-	    exit(1);
-	}
+    if (argc != 2) {
+        fprintf(stderr,"usage: http_client http://hostname[:port]/path/to/file\n");
+        exit(1);
+    }
 
-	memset(&hints, 0, sizeof hints);
-	hints.ai_family = AF_UNSPEC;
-	hints.ai_socktype = SOCK_STREAM;
+    memset(&hints, 0, sizeof hints);
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
 
-	memset(hostname, 0, MAXSTRSIZE);
-	memset(port, 0, PORTLEN);
-	memset(filepath, 0, MAXSTRSIZE);
-	
-	parseURL(argv[1], hostname, port, filepath);
-	printf("http_client: hostname %s\n", hostname);
-	printf("http_client: port %s\n", port);
-	printf("http_client: filepath %s\n", filepath);
+    memset(hostname, 0, MAXSTRSIZE);
+    memset(port, 0, PORTLEN);
+    memset(filepath, 0, MAXSTRSIZE);
 
-	if ((rv = getaddrinfo(hostname, port, &hints, &servinfo)) != 0) {
-		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
-		return 1;
-	}
+    parseURL(argv[1], hostname, port, filepath);
+    printf("http_client: hostname %s\n", hostname);
+    printf("http_client: port %s\n", port);
+    printf("http_client: filepath %s\n", filepath);
 
-	// loop through all the results and connect to the first we can
-	for(p = servinfo; p != NULL; p = p->ai_next) {
-		if ((sockfd = socket(p->ai_family, p->ai_socktype,
-				p->ai_protocol)) == -1) {
-			perror("http_client: socket");
-			continue;
-		}
+    if ((rv = getaddrinfo(hostname, port, &hints, &servinfo)) != 0) {
+        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
+        return 1;
+    }
 
-		if (connect(sockfd, p->ai_addr, p->ai_addrlen) == -1) {
-			close(sockfd);
-			perror("http_client: connect");
-			continue;
-		}
+    // loop through all the results and connect to the first we can
+    for(p = servinfo; p != NULL; p = p->ai_next) {
+        if ((sockfd = socket(p->ai_family, p->ai_socktype,
+                p->ai_protocol)) == -1) {
+            perror("http_client: socket");
+            continue;
+        }
 
-		break;
-	}
+        if (connect(sockfd, p->ai_addr, p->ai_addrlen) == -1) {
+            close(sockfd);
+            perror("http_client: connect");
+            continue;
+        }
 
-	if (p == NULL) {
-		fprintf(stderr, "http_client: failed to connect\n");
-		return 2;
-	}
+        break;
+    }
 
-	inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr), s, sizeof s);
-	printf("http_client: connecting to %s\n", s);
+    if (p == NULL) {
+        fprintf(stderr, "http_client: failed to connect\n");
+        return 2;
+    }
 
-	freeaddrinfo(servinfo); // all done with this structure
+    inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr), s, sizeof s);
+    printf("http_client: connecting to %s\n", s);
 
-	memset(buf, 0, BUFSIZE);
-	// send "GET" request
-	sprintf(buf, getrequest, filepath, hostname, port);
-	numbytes = strlen(buf);
-	send_request(sockfd, buf, numbytes);
+    freeaddrinfo(servinfo); // all done with this structure
 
-	if(0 != recv_data(sockfd, buf))
-	{
-		fprintf(stderr, "http_client: could not complete request\n");
-	}
+    memset(buf, 0, BUFSIZE);
+    // send "GET" request
+    sprintf(buf, getrequest, filepath, hostname, port);
+    numbytes = strlen(buf);
+    send_request(sockfd, buf, numbytes);
 
-	close(sockfd);
-	return 0;
+    if(0 != recv_data(sockfd, buf))
+    {
+        fprintf(stderr, "http_client: could not complete request\n");
+    }
+
+    close(sockfd);
+    return 0;
 }
