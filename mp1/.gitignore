@@ -1,4 +1,9 @@
-/client
-/server
+/http_client
+/http_server
 /talker
 /listener
+
+*.obj
+obj/
+
+.svn/
