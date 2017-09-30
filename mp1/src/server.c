@@ -15,9 +15,11 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-#define PORT "3490"  // the port users will be connecting to
-
 #define BACKLOG 10	 // how many pending connections queue will hold
+
+#define GET_REQ_LEN 4
+#define MAXBUFLEN 1024
+#define MAXFILELEN 1024
 
 void sigchld_handler(int s)
 {
@@ -34,23 +36,45 @@ void *get_in_addr(struct sockaddr *sa)
 	return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-int main(void)
+int main(int argc, char *argv[])
 {
-	int sockfd, new_fd;  // listen on sock_fd, new connection on new_fd
+	int sockfd, new_fd, port, numbytes, numfnbytes, numfbytes;  // listen on sock_fd, new connection on new_fd
 	struct addrinfo hints, *servinfo, *p;
 	struct sockaddr_storage their_addr; // connector's address information
 	socklen_t sin_size;
 	struct sigaction sa;
-	int yes=1;
+	int yes=1, i;
 	char s[INET6_ADDRSTRLEN];
 	int rv;
+	char filename[MAXFILELEN];
+	char buf[MAXBUFLEN];
+	char resbuf[MAXBUFLEN];
+	char GET[GET_REQ_LEN];
+	char *vHTTPstart;
+	int len200, len400, len404;
+	FILE *fp;
 
+
+	const char *HTTP_RESP[3];
+	HTTP_RESP[0] = "HTTP/1.1 200 OK\r\n";
+	HTTP_RESP[1] = "HTTP/1.1 400 Bad Request\r\n";
+	HTTP_RESP[2] = "HTTP/1.1 404 Not Found\r\n";
+	len200 = strlen(HTTP_RESP[0]);
+	len400 = strlen(HTTP_RESP[1]);
+	len404 = strlen(HTTP_RESP[2]);
+
+	if (argc != 2) {
+	    fprintf(stderr,"usage: server port\n");
+	    exit(1);
+	}
+	
+	bzero(resbuf, MAXBUFLEN);
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE; // use my IP
 
-	if ((rv = getaddrinfo(NULL, PORT, &hints, &servinfo)) != 0) {
+	if ((rv = getaddrinfo(NULL, argv[1], &hints, &servinfo)) != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
 		return 1;
 	}
@@ -113,10 +137,65 @@ int main(void)
 			s, sizeof s);
 		printf("server: got connection from %s\n", s);
 
+		if ((numbytes = recv(new_fd, buf, MAXBUFLEN-1 , 0)) == -1) {
+			perror("recv");
+			exit(1);
+		}
+
+		buf[numbytes]='\0';
+		printf("received %d bytes from client", numbytes);
+
+		memcpy(GET, buf[0], 3);
+		GET[GET_REQ_LEN]='\0';
+
+	//	vHTTPstart = strstr(buf, "HTTP");
+	//	strncat(HTTP_RESP[1], vHTTPstart, );
+
 		if (!fork()) { // this is the child process
 			close(sockfd); // child doesn't need the listener
-			if (send(new_fd, "Hello, world!", 13, 0) == -1)
-				perror("send");
+
+			// HTTP 400 Bad Request (i.e. not GET)
+			if(strcmp(GET, "GET\0") != 0) {
+				memcpy(resbuf, HTTP_RESP[1], len400);
+				numfbytes=len400;
+				if (write(new_fd, resbuf, numfbytes) == -1)
+					perror("write");
+				close(new_fd);
+				exit(0);
+			}
+
+			// extract filename
+			i=4; // start after "GET "
+			while(buf[i] != '\r')
+			{
+				numfnbytes++;
+			}
+
+			bzero(filename, MAXFILELEN);
+			memcpy(filename, buf+4, numfnbytes-9);
+
+			//GET abc HTTP/1.1\r\n
+			fp = fopen(filename, "r");
+
+			// HTTP 200 OK
+			if( fp != NULL ) {
+				memcpy(resbuf, HTTP_RESP[0], len200);
+				if( (numfbytes = fread(resbuf+len200, sizeof(char), 
+							MAXBUFLEN, fp)) == 0 ) {
+					memcpy(resbuf+len200, "File is empty!\0", 15);
+				numfbytes = 15;
+				}
+			}
+			// HTTP 404 Not Found
+			else {
+				memcpy(resbuf, HTTP_RESP[2], len404);
+				numfbytes=len404;
+				exit(1);
+			}
+
+			// write HTTP response to client
+			if (write(new_fd, resbuf, numfbytes) == -1)
+					perror("write");
 			close(new_fd);
 			exit(0);
 		}
