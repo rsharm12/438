@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 			continue;
 		}
 
-		if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes,
+		if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &yes,
 				sizeof(int)) == -1) {
 			perror("setsockopt");
 			exit(1);
@@ -137,22 +137,23 @@ int main(int argc, char *argv[])
 			s, sizeof s);
 		printf("server: got connection from %s\n", s);
 
-		if ((numbytes = recv(new_fd, buf, MAXBUFLEN-1 , 0)) == -1) {
-			perror("recv");
-			exit(1);
-		}
-
-		buf[numbytes]='\0';
-		printf("received %d bytes from client", numbytes);
-
-		memcpy(GET, buf[0], 3);
-		GET[GET_REQ_LEN]='\0';
-
 	//	vHTTPstart = strstr(buf, "HTTP");
 	//	strncat(HTTP_RESP[1], vHTTPstart, );
 
 		if (!fork()) { // this is the child process
 			close(sockfd); // child doesn't need the listener
+
+			numbytes = recv(new_fd, buf, MAXBUFLEN-1 , 0);
+			if (numbytes == -1) {
+				perror("recv");
+				exit(1);
+			}
+	
+			buf[numbytes]='\0';
+			printf("received %d bytes from client", numbytes);
+	
+			memcpy(GET, buf, 3);
+			GET[GET_REQ_LEN]='\0';
 
 			// HTTP 400 Bad Request (i.e. not GET)
 			if(strcmp(GET, "GET\0") != 0) {
@@ -169,10 +170,12 @@ int main(int argc, char *argv[])
 			while(buf[i] != '\r')
 			{
 				numfnbytes++;
+				i++;
 			}
 
 			bzero(filename, MAXFILELEN);
 			memcpy(filename, buf+4, numfnbytes-9);
+			fprintf(stderr, "filename: %s\n", filename);
 
 			//GET abc HTTP/1.1\r\n
 			fp = fopen(filename, "r");
