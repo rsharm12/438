@@ -38,7 +38,8 @@ void *get_in_addr(struct sockaddr *sa)
 
 int main(int argc, char *argv[])
 {
-	int sockfd, new_fd, port, numbytes, numfnbytes, numfbytes;  // listen on sock_fd, new connection on new_fd
+	int sockfd, new_fd, numbytes;  // listen on sock_fd, new connection on new_fd
+	int numfnbytes, numfbytes, numsbytes, bytes_sent;
 	struct addrinfo hints, *servinfo, *p;
 	struct sockaddr_storage their_addr; // connector's address information
 	socklen_t sin_size;
@@ -50,15 +51,14 @@ int main(int argc, char *argv[])
 	char buf[MAXBUFLEN];
 	char resbuf[MAXBUFLEN];
 	char GET[GET_REQ_LEN];
-	char *vHTTPstart;
 	int len200, len400, len404;
 	FILE *fp;
 
-
+	// HTTP response codes
 	const char *HTTP_RESP[3];
-	HTTP_RESP[0] = "HTTP/1.1 200 OK\r\n";
-	HTTP_RESP[1] = "HTTP/1.1 400 Bad Request\r\n";
-	HTTP_RESP[2] = "HTTP/1.1 404 Not Found\r\n";
+	HTTP_RESP[0] = "HTTP/1.0 200 OK\r\n\r\n";
+	HTTP_RESP[1] = "HTTP/1.0 400 Bad Request\r\n\r\n";
+	HTTP_RESP[2] = "HTTP/1.0 404 Not Found\r\n\r\n";
 	len200 = strlen(HTTP_RESP[0]);
 	len400 = strlen(HTTP_RESP[1]);
 	len404 = strlen(HTTP_RESP[2]);
@@ -137,9 +137,6 @@ int main(int argc, char *argv[])
 			s, sizeof s);
 		printf("server: got connection from %s\n", s);
 
-	//	vHTTPstart = strstr(buf, "HTTP");
-	//	strncat(HTTP_RESP[1], vHTTPstart, );
-
 		if (!fork()) { // this is the child process
 			close(sockfd); // child doesn't need the listener
 
@@ -150,7 +147,7 @@ int main(int argc, char *argv[])
 			}
 	
 			buf[numbytes]='\0';
-			printf("received %d bytes from client", numbytes);
+			printf("received %d bytes from client\n", numbytes);
 	
 			memcpy(GET, buf, 3);
 			GET[GET_REQ_LEN]='\0';
@@ -174,7 +171,7 @@ int main(int argc, char *argv[])
 			}
 
 			bzero(filename, MAXFILELEN);
-			memcpy(filename, buf+4, numfnbytes-9);
+			memcpy(filename, buf+5, numfnbytes-9);
 			fprintf(stderr, "filename: %s\n", filename);
 
 			//GET abc HTTP/1.1\r\n
@@ -183,22 +180,34 @@ int main(int argc, char *argv[])
 			// HTTP 200 OK
 			if( fp != NULL ) {
 				memcpy(resbuf, HTTP_RESP[0], len200);
-				if( (numfbytes = fread(resbuf+len200, sizeof(char), 
-							MAXBUFLEN, fp)) == 0 ) {
-					memcpy(resbuf+len200, "File is empty!\0", 15);
-				numfbytes = 15;
+				if (send(new_fd, resbuf, len200, 0) == -1)
+					perror("send");
+				// loop through file until finished
+				while(!feof(fp)){
+					bytes_sent=0;
+					bzero(resbuf, MAXBUFLEN);
+					numfbytes = fread(resbuf, sizeof(char), MAXBUFLEN, fp);
+					if( numfbytes == -1) {
+						break;
+					}
+					while(bytes_sent < numfbytes) 
+					{
+						if ((numsbytes = send(new_fd, resbuf+bytes_sent, numfbytes-bytes_sent, 0)) == -1)
+							perror("write");	
+						bytes_sent += numsbytes;
+					}				
 				}
 			}
 			// HTTP 404 Not Found
 			else {
 				memcpy(resbuf, HTTP_RESP[2], len404);
 				numfbytes=len404;
-				exit(1);
+				if (send(new_fd, resbuf, numfbytes, 0) == -1)
+					perror("write");
 			}
 
 			// write HTTP response to client
-			if (write(new_fd, resbuf, numfbytes) == -1)
-					perror("write");
+			fclose(fp);
 			close(new_fd);
 			exit(0);
 		}
