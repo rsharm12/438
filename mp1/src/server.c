@@ -17,7 +17,6 @@
 
 #define BACKLOG 10	 // how many pending connections queue will hold
 
-#define GET_REQ_LEN 4
 #define MAXBUFLEN 1024
 #define MAXFILELEN 1024
 
@@ -36,10 +35,31 @@ void *get_in_addr(struct sockaddr *sa)
 	return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
+int send_data(int sockfd, const char * msg, int len)
+{
+    int bytes_sent, ret;
+
+    bytes_sent = 0;
+    while (bytes_sent < len)
+    {
+        ret = send(sockfd, msg + bytes_sent, len - bytes_sent, 0);
+        if (ret == -1)
+        {
+            perror("http_server: send request");
+            return 0;
+        }
+
+        bytes_sent += ret;
+    }
+
+	return bytes_sent;
+}
+
+
 int main(int argc, char *argv[])
 {
 	int sockfd, new_fd, numbytes;  // listen on sock_fd, new connection on new_fd
-	int numfnbytes, numfbytes, numsbytes, bytes_sent;
+	int numfnbytes, filesize, bytes_sent;
 	struct addrinfo hints, *servinfo, *p;
 	struct sockaddr_storage their_addr; // connector's address information
 	socklen_t sin_size;
@@ -50,7 +70,6 @@ int main(int argc, char *argv[])
 	char filename[MAXFILELEN];
 	char buf[MAXBUFLEN];
 	char resbuf[MAXBUFLEN];
-	char GET[GET_REQ_LEN];
 	int len200, len400, len404;
 	FILE *fp;
 
@@ -140,6 +159,7 @@ int main(int argc, char *argv[])
 		if (!fork()) { // this is the child process
 			close(sockfd); // child doesn't need the listener
 
+			bzero(buf, MAXBUFLEN);
 			numbytes = recv(new_fd, buf, MAXBUFLEN-1 , 0);
 			if (numbytes == -1) {
 				perror("recv");
@@ -148,62 +168,62 @@ int main(int argc, char *argv[])
 	
 			buf[numbytes]='\0';
 			printf("received %d bytes from client\n", numbytes);
-	
-			memcpy(GET, buf, 3);
-			GET[GET_REQ_LEN]='\0';
+			printf("\n%s\n", buf);
 
 			// HTTP 400 Bad Request (i.e. not GET)
-			if(strcmp(GET, "GET\0") != 0) {
-				memcpy(resbuf, HTTP_RESP[1], len400);
-				numfbytes=len400;
-				if (write(new_fd, resbuf, numfbytes) == -1)
-					perror("write");
+			if(0 != strncmp(buf, "GET", 3)) {
+				printf("Bad request\n");
+				send_data(new_fd, HTTP_RESP[1], len400);
 				close(new_fd);
 				exit(0);
 			}
 
+			//GET abc HTTP/1.1\r\n
 			// extract filename
+			numfnbytes = 0;
 			i=4; // start after "GET "
-			while(buf[i] != '\r')
+			while(buf[i] != ' ' && buf[i] != '\0')
 			{
 				numfnbytes++;
 				i++;
 			}
 
 			bzero(filename, MAXFILELEN);
-			memcpy(filename, buf+5, numfnbytes-9);
-			fprintf(stderr, "filename: %s\n", filename);
+			// skip the inital '/' in the filename
+			strncpy(filename, buf+5, numfnbytes-1);
+			printf("filename: <%s>\n", filename);
 
-			//GET abc HTTP/1.1\r\n
 			fp = fopen(filename, "r");
 
 			// HTTP 200 OK
 			if( fp != NULL ) {
-				memcpy(resbuf, HTTP_RESP[0], len200);
-				if (send(new_fd, resbuf, len200, 0) == -1)
-					perror("send");
+				// get the file size
+				fseek(fp, 0, SEEK_END);
+				filesize = ftell(fp);
+				rewind(fp);
+				printf("http_server: Requested file is %d bytes\n", filesize);
+				fflush(stdout);
+
+				sprintf(buf, "HTTP/1.0 200 OK\r\n\r\n");
+				send_data(new_fd, HTTP_RESP[0], len200);
+
 				// loop through file until finished
+				bytes_sent = 0;
+				int read = 0;
 				while(!feof(fp)){
-					bytes_sent=0;
 					bzero(resbuf, MAXBUFLEN);
-					numfbytes = fread(resbuf, sizeof(char), MAXBUFLEN, fp);
-					if( numfbytes == -1) {
+					read = fread(resbuf, sizeof(char), MAXBUFLEN, fp);
+					if(read == -1) {
 						break;
 					}
-					while(bytes_sent < numfbytes) 
-					{
-						if ((numsbytes = send(new_fd, resbuf+bytes_sent, numfbytes-bytes_sent, 0)) == -1)
-							perror("write");	
-						bytes_sent += numsbytes;
-					}				
+					bytes_sent += send_data(new_fd, resbuf, read);					
 				}
+				printf("http_server: Sent %d bytes\n", bytes_sent);
 			}
 			// HTTP 404 Not Found
 			else {
-				memcpy(resbuf, HTTP_RESP[2], len404);
-				numfbytes=len404;
-				if (send(new_fd, resbuf, numfbytes, 0) == -1)
-					perror("write");
+				printf("File not found, sending 404\n");
+				send_data(new_fd, HTTP_RESP[2], len404);
 			}
 
 			// write HTTP response to client
