@@ -36,6 +36,8 @@
 struct sockaddr_in si_me;
 struct sockaddr_in si_other;
 int s;
+int sent;
+fd_set set;
 socklen_t slen = (socklen_t) sizeof(struct sockaddr_in);
 int recvd;
 
@@ -43,23 +45,12 @@ unsigned int totPacketsSent = 0;
 unsigned int totPacketsRecvd = 0;
 
 char fileBuffer[FILEBUFSIZE];
+char buffer[PACKETSIZE];
 
-void createAndSendPacket(const char * fileBuf, int bufSize, unsigned int seqNum,
-                         unsigned int * expectedAckNum)
-{
-    int sent;
-    char packet[PACKETSIZE];
+struct timeval timeout = {
+    .tv_sec = 0, .tv_usec = 40000
+};
 
-    memcpy(&packet[0], &seqNum, sizeof(unsigned int));
-    memcpy(&packet[4], expectedAckNum, sizeof(unsigned int));
-    memcpy(&packet[HEADERSIZE / sizeof(char)], fileBuf, bufSize);
-
-    printf("Sending %d bytes, SEQ=%d ACK=%d. ", bufSize, seqNum, *expectedAckNum);
-
-    sent = sendto(s, packet, HEADERSIZE + bufSize, 0,
-                  (struct sockaddr *) &si_other, slen);
-    totPacketsSent++;
-}
 
 void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
                       char* filename, unsigned long long int bytesToTransfer)
@@ -76,15 +67,16 @@ void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
     fseek(fp, 0L, SEEK_SET);
     if(bytesToTransfer > fileSize)
         bytesToTransfer = fileSize;
-    printf("Need to sent %lld bytes to %s...\n", bytesToTransfer, hostname);
+    printf("Need to send %lld bytes to %s...\n", bytesToTransfer, hostname);
 
     setupSockaddrMe(&si_me, hostUDPport);
     s = createAndBindSocket(hostUDPport, &si_me);
     setupSockaddrOther(&si_other, hostname, hostUDPport);
+    printf("made it");
 
     /* Send data and receive acknowledgements on s */
     unsigned int sentSoFar = 0;  // sequence number
-    unsigned int expectedAck = 0;  // ack number
+    unsigned int recvd_acknum = 0;  // sequence number
     while(sentSoFar < bytesToTransfer)
     {
         /* read next part of file */
@@ -94,11 +86,29 @@ void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
             /* limit if we have fewer bytes to send than are in the buffer */
             toSendThisRound = bytesToTransfer - sentSoFar;
 
-        /* try to send packet */
-        createAndSendPacket(fileBuffer, toSendThisRound, sentSoFar,
-                            &expectedAck);
+        while(1){
+            /* try to send packet */
+            sent = createAndSendPacket(s, fileBuffer, toSendThisRound, sentSoFar,
+                                NULL, (struct sockaddr*) &si_other);
+            if(sent) totPacketsSent++;
 
-        /* check for ACK */
+            FD_ZERO(&set);
+            FD_SET(s, &set);
+
+            /* check for ACK */
+            select(s+1, &set, NULL, NULL, &timeout);
+
+            if(FD_ISSET(s, &set)){
+
+                recvd = recvfrom(s, buffer, PACKETSIZE, 0,
+                         (struct sockaddr *) &si_other, &slen);
+
+                /* extract ACK # from received packet */
+                recvd_acknum = *((unsigned int *) &buffer[4]);
+                if(recvd_acknum == (sentSoFar + toSendThisRound))
+                    break;
+            }
+        }
 
         /* packet has been sent and ack'd */
         sentSoFar += toSendThisRound;

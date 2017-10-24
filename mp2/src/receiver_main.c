@@ -63,8 +63,8 @@ void reliablyReceive(unsigned short int myUDPport, char* destinationFile)
                      (struct sockaddr *) &si_other, &slen);
 
     /* set to non-blocking socket after 1st receive */
-    opts = opts | O_NONBLOCK;
-    fcntl(s, F_SETFL, opts);
+   // opts = opts | O_NONBLOCK;
+   // fcntl(s, F_SETFL, opts);
 
     while(recvd > 0)
     {
@@ -75,24 +75,22 @@ void reliablyReceive(unsigned short int myUDPport, char* destinationFile)
         // memcpy(header, buffer, HEADERSIZE);
         // sscanf(header, "%u%u", &seqnum, &acknum);
         recvd_seqnum = *((unsigned int *) &buffer[0]);
-        recvd_acknum = *((unsigned int *) &buffer[4]);
-        printf("Recvd %d bytes, SEQ=%u ACK=%u", recvd, recvd_seqnum, recvd_acknum);
+        // recvd_acknum = *((unsigned int *) &buffer[4]);
+        printf("Recvd %d bytes, SEQ=%u", recvd, recvd_seqnum);
 
         /* check packet sequencing */
         if(recvd_seqnum == currentSeqNum)
         {
             /* packet is in correct sequence */
             fwrite(buffer + HEADERSIZE, sizeof(char), recvd - HEADERSIZE, fp);
-            /* send ACK */
-        } else {
-            /* packet not expected, send ACK for last correct packet */
-            
-            sendto(s, packet, HEADERSIZE + bufSize, 0,
-                   (struct sockaddr *) &si_other, slen);
+            currentSeqNum += (recvd - HEADERSIZE);
         }
 
+        /* send ACK */
+        createAndSendPacket(s, NULL, 0, 0, &currentSeqNum, (struct sockaddr*) &si_other);
+        
         memset(buffer, 0, PACKETSIZE);
-        usleep(1000);
+        // usleep(1000);
         recvd = recvfrom(s, buffer, PACKETSIZE, 0,
                          (struct sockaddr *) &si_other, &slen);
     }
