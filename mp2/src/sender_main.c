@@ -22,17 +22,6 @@
 
 #include "tcp.h"
 
-#define PACKETSIZE  1472
-#define HEADERSIZE  8
-#define FILEBUFSIZE (PACKETSIZE - HEADERSIZE)
-/*
- * HEADER:
- *        4 bytes - seq number
- *        4 bytes - ack number
- * DATA:
- *        up to 1464 bytes - data
- */
-
 struct sockaddr_in si_me;
 struct sockaddr_in si_other;
 int s;
@@ -72,7 +61,6 @@ void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
     setupSockaddrMe(&si_me, hostUDPport);
     s = createAndBindSocket(hostUDPport, &si_me);
     setupSockaddrOther(&si_other, hostname, hostUDPport);
-    printf("made it");
 
     /* Send data and receive acknowledgements on s */
     unsigned int sentSoFar = 0;  // sequence number
@@ -88,9 +76,14 @@ void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
 
         while(1){
             /* try to send packet */
-            sent = createAndSendPacket(s, fileBuffer, toSendThisRound, sentSoFar,
-                                NULL, (struct sockaddr*) &si_other);
-            if(sent) totPacketsSent++;
+            struct tcp_header header = {
+                .seqNum = sentSoFar,
+                .ackNum = 0
+            };
+            sent = createAndSendPacket(s, fileBuffer, toSendThisRound, &header,
+                                       (struct sockaddr *) &si_other);
+            if(sent)
+                totPacketsSent++;
 
             FD_ZERO(&set);
             FD_SET(s, &set);
@@ -106,13 +99,50 @@ void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
                 /* extract ACK # from received packet */
                 recvd_acknum = *((unsigned int *) &buffer[4]);
                 if(recvd_acknum == (sentSoFar + toSendThisRound))
+                {
+                    printf("Got ACK=%u\n", recvd_acknum);
                     break;
+                } else {
+                    printf("Got unexpected ACK=%u\n", recvd_acknum);
+                }
+            } else {
+                printf("No ACK received...\n");
             }
         }
 
         /* packet has been sent and ack'd */
         sentSoFar += toSendThisRound;
         printf("Sent %d bytes so far\n", sentSoFar);
+    }
+
+    /* reset timeout to 1 sec for fin */
+    timeout.tv_sec = 1;
+    timeout.tv_usec = 0;
+
+    while(1)
+    {
+        /* send FIN packet */
+        struct tcp_header header = {
+            .flags = FLAG_FIN,
+        };
+        sent = createAndSendPacket(s, NULL, 0, &header,
+                                (struct sockaddr *) &si_other);
+        FD_ZERO(&set);
+        FD_SET(s, &set);
+        /* check for FINACK */
+        select(s+1, &set, NULL, NULL, &timeout);
+        if(FD_ISSET(s, &set))
+        {
+            recvd = recvfrom(s, buffer, PACKETSIZE, 0,
+                    (struct sockaddr *) &si_other, &slen);
+            /* extract FLAGS from received packet */
+            unsigned short flags = *((unsigned short *) &buffer[8]);
+            if(flags & (FLAG_FIN | FLAG_ACK))
+            {
+                printf("Got FINACK\n");
+                break;
+            }
+        }
     }
 
     printf("Closing the socket and file\n");

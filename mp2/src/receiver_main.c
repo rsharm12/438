@@ -19,19 +19,8 @@
 
 #include "tcp.h"
 
-#define PACKETSIZE  1472
-#define HEADERSIZE  8
-#define FILEBUFSIZE (PACKETSIZE - HEADERSIZE)
-/*
- * HEADER:
- *        4 bytes - seq number
- *        4 bytes - ack number
- * DATA:
- *        up to 1464 bytes - data
- */
-
 struct sockaddr_in si_me;
-struct sockaddr_storage si_other;
+struct sockaddr_in si_other;
 int s;
 socklen_t slen = (socklen_t) sizeof(struct sockaddr_in);
 int recvd;
@@ -59,8 +48,11 @@ void reliablyReceive(unsigned short int myUDPport, char* destinationFile)
 
     /* Now receive data and send acknowledgements */
     memset(buffer, 0, PACKETSIZE);
-    recvd = recvfrom(s, buffer, PACKETSIZE, 0,
-                     (struct sockaddr *) &si_other, &slen);
+    recvd = recvfrom(s, buffer, PACKETSIZE, 0, (struct sockaddr *)&si_other, &slen);
+    
+    memset(ipaddr, 0, INET_ADDRSTRLEN);
+    inet_ntop(AF_INET, &(((struct sockaddr_in *)&si_other)->sin_addr), ipaddr, slen);
+    printf("Got data from %s\n", ipaddr);
 
     /* set to non-blocking socket after 1st receive */
    // opts = opts | O_NONBLOCK;
@@ -68,15 +60,19 @@ void reliablyReceive(unsigned short int myUDPport, char* destinationFile)
 
     while(recvd > 0)
     {
+        /* copy header to new buffer */
+        recvd_seqnum = *((unsigned int *) &buffer[0]);
+        unsigned short flags = *((unsigned short *) &buffer[8]);
+        if(flags & FLAG_FIN)
+        {
+            printf("Got FIN, going to quit...\n");
+            break;
+        }
+
         totPacketsRecvd++;
 
-        /* copy header to new buffer */
-        // memset(header, 0, HEADERSIZE);
-        // memcpy(header, buffer, HEADERSIZE);
-        // sscanf(header, "%u%u", &seqnum, &acknum);
-        recvd_seqnum = *((unsigned int *) &buffer[0]);
-        // recvd_acknum = *((unsigned int *) &buffer[4]);
-        printf("Recvd %d bytes, SEQ=%u", recvd, recvd_seqnum);
+        printf("Recvd %d bytes, SEQ=%u\n", recvd, recvd_seqnum);
+        fflush(stdout);
 
         /* check packet sequencing */
         if(recvd_seqnum == currentSeqNum)
@@ -84,16 +80,29 @@ void reliablyReceive(unsigned short int myUDPport, char* destinationFile)
             /* packet is in correct sequence */
             fwrite(buffer + HEADERSIZE, sizeof(char), recvd - HEADERSIZE, fp);
             currentSeqNum += (recvd - HEADERSIZE);
+        } else {
+            printf("Got unexpected packet!\n");
         }
 
         /* send ACK */
-        createAndSendPacket(s, NULL, 0, 0, &currentSeqNum, (struct sockaddr*) &si_other);
+        struct tcp_header header = {
+            .seqNum = 0,
+            .ackNum = currentSeqNum
+        };
+        createAndSendPacket(s, NULL, 0, &header, (struct sockaddr *) &si_other);
         
         memset(buffer, 0, PACKETSIZE);
         // usleep(1000);
         recvd = recvfrom(s, buffer, PACKETSIZE, 0,
                          (struct sockaddr *) &si_other, &slen);
     }
+
+    /* send FINACK packet */
+    struct tcp_header header = {
+        .flags = FLAG_FIN | FLAG_ACK,
+    };
+    printf("Sending FINACK! ");
+    createAndSendPacket(s, NULL, 0, &header, (struct sockaddr *) &si_other);
 
     close(s);
     fclose(fp);
