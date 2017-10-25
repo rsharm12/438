@@ -19,9 +19,12 @@
 #include <signal.h>
 #include <string.h>
 #include <sys/time.h>
+#include <fcntl.h>
 
 #include "tcp.h"
 
+struct timespec startspec;
+struct timespec endspec;
 struct sockaddr_in si_me;
 struct sockaddr_in si_other;
 int s;
@@ -36,10 +39,8 @@ unsigned int totPacketsRecvd = 0;
 char fileBuffer[FILEBUFSIZE];
 char buffer[PACKETSIZE];
 
-struct timeval timeout = {
-    .tv_sec = 0, .tv_usec = 40000
-};
-
+struct timeval timeout;
+struct timeval f_timeout;
 
 void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
                       char* filename, unsigned long long int bytesToTransfer)
@@ -58,9 +59,12 @@ void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
         bytesToTransfer = fileSize;
     printf("Need to send %lld bytes to %s...\n", bytesToTransfer, hostname);
 
+    clock_gettime(CLOCK_REALTIME, &startspec);
+
     setupSockaddrMe(&si_me, hostUDPport);
     s = createAndBindSocket(hostUDPport, &si_me);
     setupSockaddrOther(&si_other, hostname, hostUDPport);
+    int opts = fcntl(s, F_GETFL);
 
     /* Send data and receive acknowledgements on s */
     unsigned int sentSoFar = 0;  // sequence number
@@ -74,7 +78,9 @@ void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
             /* limit if we have fewer bytes to send than are in the buffer */
             toSendThisRound = bytesToTransfer - sentSoFar;
 
-        while(1){
+        while(1)
+        {
+            memset(buffer, 0, PACKETSIZE);
             /* try to send packet */
             struct tcp_header header = {
                 .seqNum = sentSoFar,
@@ -89,10 +95,12 @@ void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
             FD_SET(s, &set);
 
             /* check for ACK */
+            timeout.tv_sec = 0;
+            timeout.tv_usec = 50000;
             select(s+1, &set, NULL, NULL, &timeout);
+            printf("Took 0.%ld...", (50000-timeout.tv_usec)/1000);
 
             if(FD_ISSET(s, &set)){
-
                 recvd = recvfrom(s, buffer, PACKETSIZE, 0,
                          (struct sockaddr *) &si_other, &slen);
 
@@ -112,36 +120,59 @@ void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
 
         /* packet has been sent and ack'd */
         sentSoFar += toSendThisRound;
-        printf("Sent %d bytes so far\n", sentSoFar);
+        printf("Sent %d bytes so far\n\n", sentSoFar);
     }
 
-    /* reset timeout to 1 sec for fin */
-    timeout.tv_sec = 1;
-    timeout.tv_usec = 0;
+    clock_gettime(CLOCK_REALTIME, &endspec);
+    unsigned int sec = endspec.tv_sec - startspec.tv_sec;
+    unsigned int msec = (endspec.tv_nsec - startspec.tv_nsec) / 1000000;
+    printf("\nTime taken = %u.%u\n", sec, msec);
+
+    printf("\nFile sent, trying to close connection...\n");
+
+    usleep(500000);
+
+    /* empty out the socket read buffer */
+    opts = opts | O_NONBLOCK;
+    fcntl(s, F_SETFL, opts);
+    while(-1 != recvfrom(s, buffer, PACKETSIZE, 0, (struct sockaddr *) &si_other, &slen));
+
+    opts = opts & ~O_NONBLOCK;
+    fcntl(s, F_SETFL, opts);
 
     while(1)
     {
+        memset(buffer, 0, PACKETSIZE);
         /* send FIN packet */
         struct tcp_header header = {
             .flags = FLAG_FIN,
         };
-        sent = createAndSendPacket(s, NULL, 0, &header,
-                                (struct sockaddr *) &si_other);
+        sent = createAndSendPacket(s, NULL, 0, &header, (struct sockaddr *) &si_other);
+
         FD_ZERO(&set);
         FD_SET(s, &set);
+
         /* check for FINACK */
-        select(s+1, &set, NULL, NULL, &timeout);
+        /* reset timeout to 1 sec for fin */
+        f_timeout.tv_sec = 1;
+        f_timeout.tv_usec = 0;
+        select(s+1, &set, NULL, NULL, &f_timeout);
         if(FD_ISSET(s, &set))
         {
             recvd = recvfrom(s, buffer, PACKETSIZE, 0,
                     (struct sockaddr *) &si_other, &slen);
             /* extract FLAGS from received packet */
+            int finseq = *((unsigned int *) &buffer[0]);
+            int finack = *((unsigned int *) &buffer[4]);
             unsigned short flags = *((unsigned short *) &buffer[8]);
+            printf("Got %d bytes, SEQ=%d ACK=%d FL=%u\n", recvd, finseq, finack, flags);
             if(flags & (FLAG_FIN | FLAG_ACK))
             {
                 printf("Got FINACK\n");
                 break;
             }
+        } else {
+            printf("No FINACK received...\n");
         }
     }
 

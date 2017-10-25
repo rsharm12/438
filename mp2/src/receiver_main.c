@@ -19,6 +19,8 @@
 
 #include "tcp.h"
 
+struct timespec startspec;
+struct timespec endspec;
 struct sockaddr_in si_me;
 struct sockaddr_in si_other;
 int s;
@@ -49,6 +51,8 @@ void reliablyReceive(unsigned short int myUDPport, char* destinationFile)
     /* Now receive data and send acknowledgements */
     memset(buffer, 0, PACKETSIZE);
     recvd = recvfrom(s, buffer, PACKETSIZE, 0, (struct sockaddr *)&si_other, &slen);
+
+    clock_gettime(CLOCK_REALTIME, &startspec);
     
     memset(ipaddr, 0, INET_ADDRSTRLEN);
     inet_ntop(AF_INET, &(((struct sockaddr_in *)&si_other)->sin_addr), ipaddr, slen);
@@ -63,16 +67,16 @@ void reliablyReceive(unsigned short int myUDPport, char* destinationFile)
         /* copy header to new buffer */
         recvd_seqnum = *((unsigned int *) &buffer[0]);
         unsigned short flags = *((unsigned short *) &buffer[8]);
+
+        printf("Recvd %d bytes, SEQ=%u FL=%u\n", recvd, recvd_seqnum, flags);
+        fflush(stdout);
+
         if(flags & FLAG_FIN)
         {
             printf("Got FIN, going to quit...\n");
             break;
         }
-
         totPacketsRecvd++;
-
-        printf("Recvd %d bytes, SEQ=%u\n", recvd, recvd_seqnum);
-        fflush(stdout);
 
         /* check packet sequencing */
         if(recvd_seqnum == currentSeqNum)
@@ -91,6 +95,8 @@ void reliablyReceive(unsigned short int myUDPport, char* destinationFile)
         };
         createAndSendPacket(s, NULL, 0, &header, (struct sockaddr *) &si_other);
         
+        printf("\n");
+        
         memset(buffer, 0, PACKETSIZE);
         // usleep(1000);
         recvd = recvfrom(s, buffer, PACKETSIZE, 0,
@@ -103,6 +109,11 @@ void reliablyReceive(unsigned short int myUDPport, char* destinationFile)
     };
     printf("Sending FINACK! ");
     createAndSendPacket(s, NULL, 0, &header, (struct sockaddr *) &si_other);
+
+    clock_gettime(CLOCK_REALTIME, &endspec);
+    unsigned int sec = endspec.tv_sec - startspec.tv_sec;
+    unsigned int msec = (endspec.tv_nsec - startspec.tv_nsec) / 1000000;
+    printf("\nTime taken = %u.%u\n", sec, msec);
 
     close(s);
     fclose(fp);
