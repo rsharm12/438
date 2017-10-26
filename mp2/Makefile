@@ -51,9 +51,9 @@ clean :
 #The % sign means "match one or more characters". You specify it in the target, and when a file
 #dependency is checked, if its name matches this pattern, this rule is used. You can also use the % 
 #in your list of dependencies, and it will insert whatever characters were matched for the target name.
-obj/reliable_sender.o: src/sender.cpp
+obj/sender_main.o: src/sender.cpp
 	$(CXX) $(COMPILERFLAGS) -c -o $@ $<
-obj/reliable_receiver.o: src/receiver.cpp
+obj/receiver_main.o: src/receiver.cpp
 	$(CXX) $(COMPILERFLAGS) -c -o $@ $<
 
 obj:
