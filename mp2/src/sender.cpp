@@ -22,9 +22,9 @@ void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
     TCP tcp(hostUDPport);
     tcp.setupSockaddrOther(hostname);
     thread sendData(&TCP::senderSendData, &tcp, fp, bytesToTransfer);
-    thread receiveACK(&TCP::senderReceiveACK, &tcp);
+    //thread receiveACK(&TCP::senderReceiveACK, &tcp);
     sendData.join();
-    receiveACK.join();
+    //receiveACK.join();
 
     fclose(fp);
 }

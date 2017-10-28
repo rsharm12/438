@@ -3,6 +3,7 @@
 
 
 #include <thread>
+#include <string>
 #include <cstdio>
 #include <cstring>
 #include <iostream>
@@ -11,6 +12,9 @@
 #include <atomic>
 #include <mutex>
 #include <queue>
+#include <unordered_map>
+#include <map>
+#include <algorithm>
 
 /* networking header files */
 #include <arpa/inet.h>
@@ -67,6 +71,29 @@ public:
 	    	cout << " RW="  << rcwnd << endl;
 	    }
 	};
+    struct TCP_cgst_ctrl {
+   		unsigned int cwnd;
+   		unsigned int ssthresh;
+   		unsigned int dupACKcount;
+   		TCP_cgst_ctrl() {
+	    	cwnd = 1460;
+	    	ssthresh = 64000;
+	    	dupACKcount = 0;
+	    }
+		void log() {
+			cout << " cwnd=" << cwnd;
+			cout << " ssthresh=" << ssthresh;
+			cout << " dupACK="  << dupACKcount << endl;
+		} 
+	};
+
+	struct Packet {
+		unsigned long long int pkt_length;
+		char packet[DATASIZE];
+   		Packet() {
+	    	pkt_length = 0;
+	    }
+	};
 
 	static Header extractHeader(char *packet);
 
@@ -85,6 +112,13 @@ public:
 	/* receiver local variables */
 	mutex rcvrACK_mtx;
 	queue<unsigned int> rcvrACK_q;
+
+	/* sender local variables */
+	TCP_cgst_ctrl sender_ctrl;
+	// not sure which is faster here
+	// unordered_map<unsigned int, Packet*> packets_sent;
+	map<unsigned int, Packet*> packets_sent;
+	unsigned int sendBase;
 
 private:
 
@@ -274,23 +308,145 @@ void TCP::receiverSendACK(TCP * tcp)
 
 void TCP::senderReceiveACK(TCP * tcp)
 {
-
-
-
-
-
+		
 
 }
 void TCP::senderSendData(TCP * tcp, FILE* fp, unsigned long long int bytesToTransfer)
 {
+	char packet[PACKETSIZE];
+	unsigned int recvd, sent, recvd_acknum;
+ 	unsigned int totSentSoFar = 0;  // sequence number
+ 	TCP::Header header;
+ 	TCP::Header s_header;
+ 	TCP::Packet to_send;
+ 	header.seqNum = 0;
+ 	tcp->sendBase = 0;
+ 	fd_set set;
+ 	bool shouldIncreaseWindow = false;
+ 	bool resendPackets = false;
+ 	bool stopSending = false;
+ 	bool firstTimeThru = true;
+ 	struct timeval timeout;
 
+ 	tcp->starttime = chrono::high_resolution_clock::now();
 
+    while(totSentSoFar < bytesToTransfer)
+    {
+        /* read next part of file */
 
+        /* populate sender congestion window */
+        tcp->sender_ctrl.log();
+        while(header.seqNum >= tcp->sendBase && header.seqNum < (tcp->sendBase + tcp->sender_ctrl.cwnd) && !resendPackets && !stopSending)
+        {
+	        memset(to_send.packet, 0, DATASIZE);
+	        int toSendThisRound = fread(to_send.packet, sizeof(char), DATASIZE, fp);
+	        if(toSendThisRound > bytesToTransfer - totSentSoFar) {
+	            /* limit if we have fewer bytes to send than are in the buffer */
+	            toSendThisRound = bytesToTransfer - totSentSoFar;
+	            stopSending = true;
+	        }
 
+	        to_send.pkt_length = toSendThisRound;
+	        tcp->packets_sent[header.seqNum] = &to_send;
+	       	header.seqNum += toSendThisRound;
+	    }
+	    /* send all packets in current congestion window */		
+	    while(!tcp->packets_sent.empty()) 
+	    {
+	    	for ( auto it = tcp->packets_sent.begin(); it != tcp->packets_sent.end(); ++it ) {
+	    		s_header.seqNum = it->first;
+	    		if(0 != (sent = tcp->createAndSendPacket(it->second->packet, it->second->pkt_length, s_header))){
+	    			/* start timer for oldest unACKed packet */
+	    			//if(it == tcp->packets_sent.begin()) start_timer(&it->first);
+	    			totSentSoFar += sent;
+	    		}
+	    	}
 
+	    	FD_ZERO(&set);
+	        FD_SET(tcp->sock, &set);
+
+	        /* check for ACK */
+	        timeout.tv_sec = 0;
+	        timeout.tv_usec = 50000;
+	        select(tcp->sock+1, &set, NULL, NULL, &timeout);
+	        printf("Took 0.%ld...", (50000-timeout.tv_usec)/1000);
+
+	        if(FD_ISSET(tcp->sock, &set)){
+	            recvd = recvfrom(tcp->sock, packet, PACKETSIZE, 0,
+	                     (struct sockaddr *) &tcp->si_other, &tcp->slen);
+
+	            /* extract ACK # from received packet */
+	            recvd_acknum = *((unsigned int *) &packet[4]);
+	            auto min_elem = std::min_element(tcp->packets_sent.begin(), tcp->packets_sent.end());
+	        	if(recvd_acknum < min_elem->first) {
+	                printf("Got unexpected ACK=%u\n", recvd_acknum);
+	        	} else {
+	        		resendPackets = false;
+	        		/* loop through packets_sent to see if they are ACKed by cumulative ACK */
+		            while( recvd_acknum >= min_elem->first + min_elem->second->pkt_length )
+		            {
+		            	shouldIncreaseWindow = true;
+		            	tcp->sendBase += min_elem->second->pkt_length;
+		            	tcp->packets_sent.erase(min_elem);
+		            	if(tcp->packets_sent.empty()) break;
+		            	if(!firstTimeThru) 
+		            		printf("Processing ACK=%u again...\n", recvd_acknum);
+		                else 
+		                	printf("Got ACK=%u\n", recvd_acknum);
+		                min_elem = std::min_element(tcp->packets_sent.begin(), tcp->packets_sent.end());
+		                firstTimeThru = false;
+		            } 
+		        }
+	            if(shouldIncreaseWindow) {
+	           		tcp->sender_ctrl.cwnd += 1460;
+	           		shouldIncreaseWindow = false;
+	           	}
+	        /* TIMEOUT */
+	        } else {
+	        	resendPackets = true;
+	        	tcp->sender_ctrl.cwnd = 1460;
+	            printf("No ACK received...\n");
+	        }
+	        memset(packet, 0, PACKETSIZE);
+	        firstTimeThru = true;
+		}
+    }
+    /* send FIN packet */
+	while(1)
+	{
+	    header.seqNum = 0;
+	    header.ackNum = 0;
+	    header.flags = FLAG_FIN;
+	    header.rcwnd = 0;
+	    sent = tcp->createAndSendPacket(NULL, 0, header);
+
+	    FD_ZERO(&set);
+	    FD_SET(tcp->sock, &set);
+
+	    /* check for FINACK */
+	    /* reset timeout to 1 sec for fin */
+	    timeout.tv_sec = 1;
+	    timeout.tv_usec = 0;
+	    select(tcp->sock+1, &set, NULL, NULL, &timeout);
+	    if(FD_ISSET(tcp->sock, &set))
+	    {
+	        recvd = recvfrom(tcp->sock, packet, PACKETSIZE, 0,
+	                (struct sockaddr *) &tcp->si_other, &tcp->slen);
+	        /* extract FLAGS from received packet */
+	        int finseq = *((unsigned int *) &packet[0]);
+	        int finack = *((unsigned int *) &packet[4]);
+	        unsigned short flags = *((unsigned short *) &packet[8]);
+	        printf("Got %d bytes, SEQ=%d ACK=%d FL=%u\n", recvd, finseq, finack, flags);
+	        if(flags & (FLAG_FIN | FLAG_ACK))
+	        {
+	            printf("Got FINACK\n");
+	            break;
+	        }
+	    } else {
+	        printf("No FINACK received...\n");
+	    }
+	}
 }
-
-
 
 
 #endif // TCP_H
