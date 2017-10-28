@@ -3,8 +3,10 @@
 
 using namespace std;
 
-void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
-                      char* filename, unsigned long long int bytesToTransfer)
+void reliablyTransfer(
+    char* hostname, unsigned short int hostUDPport,
+    char* filename, unsigned long long int bytesToTransfer
+)
 {
  	FILE *fp;
     fp = fopen(filename, "rb");
@@ -21,10 +23,13 @@ void reliablyTransfer(char* hostname, unsigned short int hostUDPport,
 
     TCP tcp(hostUDPport);
     tcp.setupSockaddrOther(hostname);
+
     thread sendData(&TCP::senderSendData, &tcp, fp, bytesToTransfer);
     //thread receiveACK(&TCP::senderReceiveACK, &tcp);
     sendData.join();
     //receiveACK.join();
+
+    tcp.senderCloseConnection();
 
     fclose(fp);
 }
