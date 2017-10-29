@@ -49,10 +49,17 @@ namespace TCP
     uint32_t packetsRecvd;
 
     /* UDP structures */
-    int sock;
-    uint16_t udpPort;
-    struct sockaddr_in si_me;
-    struct sockaddr_in si_other;
+    struct UDP {
+        int sock;
+        uint16_t udpPort;
+        struct sockaddr_in si_me;
+        struct sockaddr_in si_other;
+        socklen_t slen_me = (socklen_t) sizeof(struct sockaddr_in);
+        socklen_t slen_other;
+        UDP(uint16_t udpPort);
+        int recv(char *buffer, uint32_t dataSize);
+        int send(const char * packet, int packetSize);
+    }
 
     struct Header {
         uint32_t seqNum;
@@ -68,8 +75,12 @@ namespace TCP
     struct Packet {
         Header header;
         char data[DATASIZE];
+        uint32_t dataSize;
 
+        Packet();
         Packet(Header header, const char *data, uint32_t dataSize);
+        void update(const char *buffer, uint32_t bufferSize);
+        void toBuffer(char *buffer);
         static Header extractHeader(const char *packet);
     };
 
@@ -84,14 +95,11 @@ namespace TCP
         void sendData(ifstream & fStream, uint64_t bytesToTransfer);
     };
 
-    class Receiver
+    namespace Receiver
     {
-    private:
-
-    public:
-        Receiver(uint16_t port);
-        ~Receiver();
-    };
+        static void receiveData(UDP & udp, ofstream & fStream);
+        static void sendACK(UDP & udp);
+    }
 
     /* functions */
     static void diep(const char *s) {
