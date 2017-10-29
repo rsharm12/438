@@ -7,7 +7,10 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <mutex>
+#include <queue>
 #include <string>
+#include <thread>
 
 /* networking header files */
 #include <arpa/inet.h>
@@ -56,10 +59,11 @@ namespace TCP
         struct sockaddr_in si_other;
         socklen_t slen_me = (socklen_t) sizeof(struct sockaddr_in);
         socklen_t slen_other;
+
         UDP(uint16_t udpPort);
         int recv(char *buffer, uint32_t dataSize);
-        int send(const char * packet, int packetSize);
-    }
+        int send(const char *packet, int packetSize);
+    };
 
     struct Header {
         uint32_t seqNum;
@@ -89,16 +93,16 @@ namespace TCP
     private:
 
     public:
-        Sender(uint16_t port);
-        ~Sender();
+        // Sender(uint16_t port);
+        // ~Sender();
 
         void sendData(ifstream & fStream, uint64_t bytesToTransfer);
     };
 
     namespace Receiver
     {
-        static void receiveData(UDP & udp, ofstream & fStream);
-        static void sendACK(UDP & udp);
+        static void receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q);
+        static void sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q);
     }
 
     /* functions */

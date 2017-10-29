@@ -14,8 +14,8 @@ void reliablyReceive(uint16_t udpPort, string filename)
     mutex rcvrACK_mtx;
     queue<uint32_t> rcvrACK_q;
 
-    thread receiveData(&Receiver::receiveData, outfile, udp, rcvrACK_mtx, rcvrACK_q);
-    thread sendACK(&Receiver::sendACK, udp, rcvrACK_mtx, rcvrACK_q);
+    thread receiveData(&TCP::Receiver::receiveData, &udp, &outfile, &rcvrACK_mtx, &rcvrACK_q);
+    thread sendACK(&TCP::Receiver::sendACK, &udp, &rcvrACK_mtx, &rcvrACK_q);
     receiveData.join();
     sendACK.join();
 }

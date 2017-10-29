@@ -4,7 +4,9 @@
 namespace TCP
 {
 
-UDP::UDP(uint16_t udpPort)
+/* UDP */
+
+UDP::UDP(uint16_t udpPort) : udpPort(udpPort)
 {
     /* set up me */
     memset((void *) &si_me, 0, sizeof (si_me));
@@ -52,6 +54,7 @@ void Header::log()
 }
 
 /* Packet */
+
 Packet::Packet()
 {
     dataSize = 0;
@@ -103,33 +106,33 @@ Header Packet::extractHeader(const char *packet)
 
 /* Sender */
 
-Sender::Sender(uint16_t port)
-{
-    udpPort = port;
+// Sender::Sender(uint16_t port)
+// {
+//     udpPort = port;
 
-    sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    if (sock == -1)
-        diep("Socket create error");
+//     sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+//     if (sock == -1)
+//         diep("Socket create error");
 
-    if (bind(sock, (sockaddr*) &si_me, sizeof (si_me)) == -1)
-        diep("bind");
-}
+//     if (bind(sock, (sockaddr*) &si_me, sizeof (si_me)) == -1)
+//         diep("bind");
+// }
 
-Sender::~Sender()
-{
-    using namespace std::chrono;
+// Sender::~Sender()
+// {
+//     using namespace std::chrono;
 
-    cout << "Closing socket" << endl;
-    close(sock);
+//     cout << "Closing socket" << endl;
+//     close(sock);
 
-    endtime = high_resolution_clock::now();
-    duration<double> time_span =
-        duration_cast<duration<double>>(endtime - starttime);
+//     endtime = high_resolution_clock::now();
+//     duration<double> time_span =
+//         duration_cast<duration<double>>(endtime - starttime);
 
-    cout << "Took " << time_span.count() << " seconds" << endl;
-    cout << "Packet Stats: Sent=" << packetsSent;
-    cout << " Recvd=" << packetsRecvd << endl;
-}
+//     cout << "Took " << time_span.count() << " seconds" << endl;
+//     cout << "Packet Stats: Sent=" << packetsSent;
+//     cout << " Recvd=" << packetsRecvd << endl;
+// }
 
 void Sender::sendData(ifstream & fStream, uint64_t bytesToTransfer)
 {
@@ -138,32 +141,24 @@ void Sender::sendData(ifstream & fStream, uint64_t bytesToTransfer)
 
 /* Receiver */
 
-Receiver::Receiver(uint16_t port)
-{
-    /* TODO: set up sockaddrme */
-    
+// Receiver::~Receiver()
+// {
+//     using namespace std::chrono;
 
-}
+//     cout << "Closing socket" << endl;
+//     close(sock);
 
-Receiver::~Receiver()
-{
-    using namespace std::chrono;
+//     endtime = high_resolution_clock::now();
+//     duration<double> time_span =
+//         duration_cast<duration<double>>(endtime - starttime);
 
-    cout << "Closing socket" << endl;
-    close(sock);
+//     cout << "Took " << time_span.count() << " seconds" << endl;
+//     cout << "Packet Stats: Sent=" << packetsSent;
+//     cout << " Recvd=" << packetsRecvd << endl;
 
-    endtime = high_resolution_clock::now();
-    duration<double> time_span =
-        duration_cast<duration<double>>(endtime - starttime);
+// }
 
-    cout << "Took " << time_span.count() << " seconds" << endl;
-    cout << "Packet Stats: Sent=" << packetsSent;
-    cout << " Recvd=" << packetsRecvd << endl;
-
-}
-
-void Receiver::receiveData(UDP & udp, ofstream & fStream, mutex & rcvrACK_mtx,
-                           queue<uint32_t> & rcvrACK_q)
+void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
 {
     int recvd;
     uint32_t bytesRcvdSoFar = 0;
@@ -173,7 +168,7 @@ void Receiver::receiveData(UDP & udp, ofstream & fStream, mutex & rcvrACK_mtx,
     Packet packet;
 
     memset(buffer, 0, PACKETSIZE);
-    recvd = udp.recv(buffer, PACKETSIZE);
+    recvd = udp->recv(buffer, PACKETSIZE);
     if(recvd == -1) {
         cout << "Received Error" << endl;
     }
@@ -206,18 +201,18 @@ void Receiver::receiveData(UDP & udp, ofstream & fStream, mutex & rcvrACK_mtx,
             cout << "Got unexpected packet!" << endl;
         }
 
-        rcvrACK_mtx.lock();
-        rcvrACK_q.push(bytesRcvdSoFar);
-        rcvrACK_mtx.unlock();
+        rcvrACK_mtx->lock();
+        rcvrACK_q->push(bytesRcvdSoFar);
+        rcvrACK_mtx->unlock();
 
         /* write to file */
         if(shouldWrite) {
-            fStream.write(packet.data, recvd - HEADERSIZE);
+            fStream->write(packet.data, recvd - HEADERSIZE);
             shouldWrite = false;
         }
 
         memset(buffer, 0, PACKETSIZE);
-        recvd = udp.recv(buffer, PACKETSIZE);
+        recvd = udp->recv(buffer, PACKETSIZE);
 
         if(recvd == -1) {
             cout << "Received Error!!!!!!!!!!!!" << endl;
@@ -229,13 +224,13 @@ void Receiver::receiveData(UDP & udp, ofstream & fStream, mutex & rcvrACK_mtx,
     Packet fin_ack(Header(0, 0, FLAG_FIN | FLAG_ACK, 0), nullptr, 0);
     fin_ack.toBuffer(buffer);
     cout << "Sending FINACK!" << endl;
-    udp.send(buffer, HEADERSIZE);
+    udp->send(buffer, HEADERSIZE);
 
     // exit(EXIT_SUCCESS);
 }
 
 
-void Receiver::sendACK(UDP & udp, mutex & rcvrACK_mtx, queue<uint32_t> & rcvrACK_q)
+void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
 {
     char buffer[PACKETSIZE];
 
@@ -245,21 +240,21 @@ void Receiver::sendACK(UDP & udp, mutex & rcvrACK_mtx, queue<uint32_t> & rcvrACK
         bool shouldACK = false;
 
         usleep(1000); // sleep for 1 ms
-        rcvrACK_mtx.lock();
+        rcvrACK_mtx->lock();
 
-        if(rcvrACK_q.size() > 1)
+        if(rcvrACK_q->size() > 1)
             cout << "Possible delay..." << endl;
 
-        while(!rcvrACK_q.empty())
+        while(!rcvrACK_q->empty())
         {
             shouldACK = true;
-            uint32_t curr = rcvrACK_q.front();
-            rcvrACK_q.pop();
+            uint32_t curr = rcvrACK_q->front();
+            rcvrACK_q->pop();
             if(curr > rcvdSoFar)
                 rcvdSoFar = curr;
         }
 
-        rcvrACK_mtx.unlock();
+        rcvrACK_mtx->unlock();
 
         if(shouldACK)
         {
@@ -267,12 +262,9 @@ void Receiver::sendACK(UDP & udp, mutex & rcvrACK_mtx, queue<uint32_t> & rcvrACK
             ack_pkt.toBuffer(buffer);
             cout << "Sending ACK... ";
             ack_pkt.header.log();
-            udp.send(buffer, HEADERSIZE);
+            udp->send(buffer, HEADERSIZE);
         }
     }
 }
-
-
-
 
 } // namespace TCP
