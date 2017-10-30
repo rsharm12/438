@@ -5,6 +5,8 @@ using namespace std;
 
 void reliablyReceive(uint16_t udpPort, string filename)
 {
+    using namespace std::chrono;
+
     TCP::UDP udp(udpPort);
 
     ofstream outfile(filename, ios::binary);
@@ -18,6 +20,15 @@ void reliablyReceive(uint16_t udpPort, string filename)
     thread sendACK(&TCP::Receiver::sendACK, &udp, &rcvrACK_mtx, &rcvrACK_q);
     receiveData.join();
     sendACK.join();
+
+    // TODO: fix duration calculation
+    TCP::endtime = high_resolution_clock::now();
+    duration<double> time_span =
+        duration_cast<duration<double>>(TCP::endtime - TCP::starttime);
+
+    cout << "Took " << (time_span - seconds(TIMEOUT)).count() << " seconds" << endl;
+    cout << "Packet Stats: Sent=" << TCP::packetsSent;
+    cout << " Recvd=" << TCP::packetsRecvd << endl;
 }
 
 int main(int argc, char** argv)
@@ -31,9 +42,9 @@ int main(int argc, char** argv)
         exit(1);
     }
 
-    udpPort = static_cast<uint16_t>(stoul(argv[2]));
+    udpPort = static_cast<uint16_t>(stoul(argv[1]));
 
-    reliablyReceive(udpPort, argv[3]);
+    reliablyReceive(udpPort, argv[2]);
 
     return (EXIT_SUCCESS);
 }

@@ -1,0 +1,1000 @@
+Oct 27 15:26:31 rsharm12-VirtualBox rsyslogd: [origin software="rsyslogd" swVersion="8.16.0" x-pid="683" x-info="http://www.rsyslog.com"] rsyslogd was HUPed
+Oct 27 15:26:31 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:26:31 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-21
+Oct 27 15:26:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:26:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:26:51 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:26:51 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-22
+Oct 27 15:26:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:26:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:26:58 rsharm12-VirtualBox anacron[677]: Job `cron.daily' terminated
+Oct 27 15:27:11 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:27:11 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-23
+Oct 27 15:27:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:27:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:27:31 rsharm12-VirtualBox apt.systemd.daily[2237]: An error occurred: 'Temporary failure resolving 'us.archive.ubuntu.com''
+Oct 27 15:27:31 rsharm12-VirtualBox apt.systemd.daily[2237]: The URI 'http://security.ubuntu.com/ubuntu/pool/main/s/samba/samba-libs_4.3.11+dfsg-0ubuntu0.16.04.11_amd64.deb' failed to download, aborting
+Oct 27 15:27:31 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:27:31 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-24
+Oct 27 15:27:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:27:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:27:31 rsharm12-VirtualBox systemd[1]: Started Daily apt upgrade and clean activities.
+Oct 27 15:27:31 rsharm12-VirtualBox systemd[1]: Startup finished in 4.508s (kernel) + 6min 2.619s (userspace) = 6min 7.127s.
+Oct 27 15:27:34 rsharm12-VirtualBox AptDaemon.Worker: INFO: Updating cache
+Oct 27 15:27:34 rsharm12-VirtualBox org.debian.apt[679]: 15:27:34 AptDaemon.Worker [INFO]: Updating cache
+Oct 27 15:27:34 rsharm12-VirtualBox gnome-session[1635]: (gnome-software:1854): Gs-WARNING **: failed to call gs_plugin_refresh on apt: apt transaction returned result exit-failed
+Oct 27 15:27:34 rsharm12-VirtualBox AptDaemon.Worker: INFO: Finished transaction /org/debian/apt/transaction/56a048f16987430da02386ee4a9e1c66
+Oct 27 15:27:34 rsharm12-VirtualBox org.debian.apt[679]: 15:27:34 AptDaemon.Worker [INFO]: Finished transaction /org/debian/apt/transaction/56a048f16987430da02386ee4a9e1c66
+Oct 27 15:27:51 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:27:51 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-25
+Oct 27 15:27:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:27:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:28:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:28:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-26
+Oct 27 15:28:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:28:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:28:31 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:28:31 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-27
+Oct 27 15:28:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:28:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:28:51 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:28:51 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-28
+Oct 27 15:28:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:28:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:29:11 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:29:11 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-29
+Oct 27 15:29:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:29:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:29:31 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:29:31 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-30
+Oct 27 15:29:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:29:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:29:51 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:29:51 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-31
+Oct 27 15:29:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:29:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:30:11 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:30:11 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-32
+Oct 27 15:30:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:30:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:30:31 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:30:31 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-33
+Oct 27 15:30:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:30:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:30:51 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:30:51 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-34
+Oct 27 15:30:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:30:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:31:11 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:31:11 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-35
+Oct 27 15:31:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:31:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:31:30 rsharm12-VirtualBox anacron[677]: Job `cron.weekly' started
+Oct 27 15:31:30 rsharm12-VirtualBox anacron[22548]: Updated timestamp for job `cron.weekly' to 2017-10-27
+Oct 27 15:31:31 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:58007->[::1]:53: read: connection refused
+Oct 27 15:31:31 rsharm12-VirtualBox snapd[716]: 2017/10/27 15:31:31.007798 snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:58007->[::1]:53: read: connection refused
+Oct 27 15:31:31 rsharm12-VirtualBox snapd[716]: 2017/10/27 15:31:31.007815 stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:58007->[::1]:53: read: connection refused
+Oct 27 15:31:31 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:58007->[::1]:53: read: connection refused
+Oct 27 15:31:31 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:31:31 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-36
+Oct 27 15:31:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:31:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:31:32 rsharm12-VirtualBox anacron[677]: Job `cron.weekly' terminated
+Oct 27 15:31:51 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:31:51 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-37
+Oct 27 15:31:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:31:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:32:11 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:32:11 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-38
+Oct 27 15:32:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:32:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:32:31 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:32:31 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-39
+Oct 27 15:32:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:32:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:32:51 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:32:51 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-40
+Oct 27 15:32:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:32:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:33:11 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:33:11 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-41
+Oct 27 15:33:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:33:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:33:31 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:33:31 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-42
+Oct 27 15:33:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:33:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:33:51 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:33:51 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-43
+Oct 27 15:33:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:33:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:34:11 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:34:11 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-44
+Oct 27 15:34:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:34:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:34:31 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:34:31 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-45
+Oct 27 15:34:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:34:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:34:51 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:34:51 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-46
+Oct 27 15:34:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:34:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:35:11 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:35:11 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-47
+Oct 27 15:35:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:35:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:35:31 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:35:31 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-48
+Oct 27 15:35:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:35:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:35:51 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:35:51 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-49
+Oct 27 15:35:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:35:51 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:36:11 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:36:11 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-50
+Oct 27 15:36:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:36:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:36:30 rsharm12-VirtualBox systemd[1]: Starting Cleanup of Temporary Directories...
+Oct 27 15:36:30 rsharm12-VirtualBox systemd-tmpfiles[22594]: [/usr/lib/tmpfiles.d/var.conf:14] Duplicate line for path "/var/log", ignoring.
+Oct 27 15:36:30 rsharm12-VirtualBox systemd[1]: Started Cleanup of Temporary Directories.
+Oct 27 15:36:30 rsharm12-VirtualBox anacron[677]: Job `cron.monthly' started
+Oct 27 15:36:30 rsharm12-VirtualBox anacron[677]: Job `cron.monthly' terminated
+Oct 27 15:36:30 rsharm12-VirtualBox anacron[677]: Normal exit (3 jobs run)
+Oct 27 15:36:31 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:36:31 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-51
+Oct 27 15:36:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:36:31 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:36:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:36:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-52
+Oct 27 15:36:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:36:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:37:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:37:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-53
+Oct 27 15:37:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:37:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:37:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:37:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-54
+Oct 27 15:37:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:37:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:37:39 rsharm12-VirtualBox AptDaemon: INFO: Quitting due to inactivity
+Oct 27 15:37:39 rsharm12-VirtualBox org.debian.apt[679]: 15:37:39 AptDaemon [INFO]: Quitting due to inactivity
+Oct 27 15:37:39 rsharm12-VirtualBox org.debian.apt[679]: 15:37:39 AptDaemon [INFO]: Quitting was requested
+Oct 27 15:37:39 rsharm12-VirtualBox AptDaemon: INFO: Quitting was requested
+Oct 27 15:37:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:37:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-55
+Oct 27 15:37:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:37:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:38:11 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:38:11 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-56
+Oct 27 15:38:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:38:11 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:38:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:38:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-57
+Oct 27 15:38:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:38:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:38:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:38:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-58
+Oct 27 15:38:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:38:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:39:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:39:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-59
+Oct 27 15:39:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:39:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:39:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:39:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-60
+Oct 27 15:39:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:39:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:39:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:39:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-61
+Oct 27 15:39:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:39:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:40:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:40:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-62
+Oct 27 15:40:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:40:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:40:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:40:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-63
+Oct 27 15:40:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:40:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:40:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:40:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-64
+Oct 27 15:40:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:40:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:41:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:41:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-65
+Oct 27 15:41:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:41:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:41:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:41:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-66
+Oct 27 15:41:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:41:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:41:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:41:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-67
+Oct 27 15:41:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:41:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:42:04 rsharm12-VirtualBox gnome-session[1635]: ** (update-notifier:2114): WARNING **: log file empty (logrotate?) /var/log/dpkg.log
+Oct 27 15:42:04 rsharm12-VirtualBox gnome-session[1635]: ** (update-notifier:2114): WARNING **: log file empty (logrotate?) /var/log/apt/term.log
+Oct 27 15:42:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:42:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-68
+Oct 27 15:42:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:42:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:42:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:42:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-69
+Oct 27 15:42:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:42:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:42:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:42:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-70
+Oct 27 15:42:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:42:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:43:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:43:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-71
+Oct 27 15:43:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:43:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:43:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:43:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-72
+Oct 27 15:43:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:43:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:43:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:43:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-73
+Oct 27 15:43:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:43:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:44:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:44:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-74
+Oct 27 15:44:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:44:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:44:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:44:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-75
+Oct 27 15:44:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:44:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:44:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:44:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-76
+Oct 27 15:44:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:44:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:45:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:45:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-77
+Oct 27 15:45:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:45:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:45:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:45:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-78
+Oct 27 15:45:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:45:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:45:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:45:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-79
+Oct 27 15:45:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:45:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:46:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:46:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-80
+Oct 27 15:46:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:46:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:46:30 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:60126->[::1]:53: read: connection refused
+Oct 27 15:46:30 rsharm12-VirtualBox snapd[716]: 2017/10/27 15:46:30.987872 snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:60126->[::1]:53: read: connection refused
+Oct 27 15:46:30 rsharm12-VirtualBox snapd[716]: 2017/10/27 15:46:30.987891 stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:60126->[::1]:53: read: connection refused
+Oct 27 15:46:30 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:60126->[::1]:53: read: connection refused
+Oct 27 15:46:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:46:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-81
+Oct 27 15:46:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:46:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:46:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:46:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-82
+Oct 27 15:46:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:46:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:47:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:47:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-83
+Oct 27 15:47:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:47:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:47:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:47:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-84
+Oct 27 15:47:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:47:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:47:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:47:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-85
+Oct 27 15:47:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:47:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:48:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:48:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-86
+Oct 27 15:48:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:48:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:48:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:48:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-87
+Oct 27 15:48:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:48:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:48:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:48:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-88
+Oct 27 15:48:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:48:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:49:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:49:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-89
+Oct 27 15:49:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:49:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:49:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:49:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-90
+Oct 27 15:49:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:49:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:49:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:49:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-91
+Oct 27 15:49:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:49:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:50:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:50:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-92
+Oct 27 15:50:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:50:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:50:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:50:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-93
+Oct 27 15:50:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:50:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:50:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:50:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-94
+Oct 27 15:50:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:50:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:51:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:51:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-95
+Oct 27 15:51:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:51:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:51:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:51:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-96
+Oct 27 15:51:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:51:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:51:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:51:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-97
+Oct 27 15:51:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:51:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:52:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:52:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-98
+Oct 27 15:52:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:52:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:52:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:52:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-99
+Oct 27 15:52:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:52:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:52:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:52:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-100
+Oct 27 15:52:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:52:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:53:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:53:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-101
+Oct 27 15:53:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:53:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:53:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:53:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-102
+Oct 27 15:53:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:53:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:53:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:53:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-103
+Oct 27 15:53:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:53:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:54:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:54:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-104
+Oct 27 15:54:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:54:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:54:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:54:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-105
+Oct 27 15:54:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:54:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:54:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:54:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-106
+Oct 27 15:54:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:54:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:55:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:55:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-107
+Oct 27 15:55:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:55:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:55:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:55:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-108
+Oct 27 15:55:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:55:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:55:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:55:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-109
+Oct 27 15:55:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:55:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:56:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:56:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-110
+Oct 27 15:56:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:56:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:56:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:56:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-111
+Oct 27 15:56:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:56:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:56:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:56:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-112
+Oct 27 15:56:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:56:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:57:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:57:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-113
+Oct 27 15:57:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:57:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:57:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:57:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-114
+Oct 27 15:57:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:57:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:57:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:57:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-115
+Oct 27 15:57:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:57:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:58:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:58:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-116
+Oct 27 15:58:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:58:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:58:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:58:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-117
+Oct 27 15:58:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:58:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:58:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:58:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-118
+Oct 27 15:58:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:58:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:59:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:59:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-119
+Oct 27 15:59:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:59:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:59:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:59:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-120
+Oct 27 15:59:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:59:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 15:59:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 15:59:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-121
+Oct 27 15:59:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 15:59:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:00:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:00:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-122
+Oct 27 16:00:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:00:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:00:32 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:00:32 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-123
+Oct 27 16:00:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:00:32 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:00:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:00:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-124
+Oct 27 16:00:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:00:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:01:12 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:01:12 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-125
+Oct 27 16:01:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:01:12 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:01:30 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:51708->[::1]:53: read: connection refused
+Oct 27 16:01:30 rsharm12-VirtualBox snapd[716]: 2017/10/27 16:01:30.988557 snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:51708->[::1]:53: read: connection refused
+Oct 27 16:01:30 rsharm12-VirtualBox snapd[716]: 2017/10/27 16:01:30.988636 stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:51708->[::1]:53: read: connection refused
+Oct 27 16:01:30 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:51708->[::1]:53: read: connection refused
+Oct 27 16:01:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:01:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-126
+Oct 27 16:01:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:01:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:01:52 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:01:52 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-127
+Oct 27 16:01:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:01:52 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:02:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:02:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-128
+Oct 27 16:02:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:02:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:02:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:02:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-129
+Oct 27 16:02:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:02:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:02:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:02:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-130
+Oct 27 16:02:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:02:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:03:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:03:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-131
+Oct 27 16:03:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:03:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:03:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:03:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-132
+Oct 27 16:03:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:03:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:03:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:03:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-133
+Oct 27 16:03:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:03:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:04:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:04:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-134
+Oct 27 16:04:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:04:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:04:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:04:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-135
+Oct 27 16:04:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:04:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:04:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:04:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-136
+Oct 27 16:04:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:04:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:05:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:05:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-137
+Oct 27 16:05:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:05:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:05:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:05:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-138
+Oct 27 16:05:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:05:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:05:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:05:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-139
+Oct 27 16:05:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:05:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:06:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:06:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-140
+Oct 27 16:06:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:06:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:06:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:06:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-141
+Oct 27 16:06:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:06:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:06:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:06:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-142
+Oct 27 16:06:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:06:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:07:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:07:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-143
+Oct 27 16:07:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:07:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:07:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:07:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-144
+Oct 27 16:07:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:07:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:07:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:07:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-145
+Oct 27 16:07:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:07:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:08:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:08:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-146
+Oct 27 16:08:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:08:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:08:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:08:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-147
+Oct 27 16:08:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:08:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:08:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:08:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-148
+Oct 27 16:08:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:08:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:09:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:09:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-149
+Oct 27 16:09:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:09:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:09:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:09:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-150
+Oct 27 16:09:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:09:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:09:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:09:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-151
+Oct 27 16:09:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:09:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:10:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:10:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-152
+Oct 27 16:10:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:10:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:10:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:10:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-153
+Oct 27 16:10:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:10:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:10:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:10:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-154
+Oct 27 16:10:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:10:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:11:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:11:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-155
+Oct 27 16:11:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:11:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:11:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:11:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-156
+Oct 27 16:11:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:11:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:11:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:11:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-157
+Oct 27 16:11:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:11:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:12:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:12:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-158
+Oct 27 16:12:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:12:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:12:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:12:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-159
+Oct 27 16:12:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:12:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:12:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:12:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-160
+Oct 27 16:12:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:12:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:13:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:13:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-161
+Oct 27 16:13:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:13:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:13:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:13:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-162
+Oct 27 16:13:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:13:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:13:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:13:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-163
+Oct 27 16:13:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:13:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:14:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:14:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-164
+Oct 27 16:14:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:14:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:14:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:14:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-165
+Oct 27 16:14:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:14:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:14:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:14:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-166
+Oct 27 16:14:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:14:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:15:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:15:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-167
+Oct 27 16:15:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:15:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:15:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:15:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-168
+Oct 27 16:15:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:15:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:15:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:15:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-169
+Oct 27 16:15:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:15:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:16:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:16:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-170
+Oct 27 16:16:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:16:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:16:30 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:40079->[::1]:53: read: connection refused
+Oct 27 16:16:30 rsharm12-VirtualBox snapd[716]: 2017/10/27 16:16:30.987821 snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:40079->[::1]:53: read: connection refused
+Oct 27 16:16:30 rsharm12-VirtualBox snapd[716]: 2017/10/27 16:16:30.987837 stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:40079->[::1]:53: read: connection refused
+Oct 27 16:16:30 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:40079->[::1]:53: read: connection refused
+Oct 27 16:16:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:16:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-171
+Oct 27 16:16:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:16:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:16:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:16:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-172
+Oct 27 16:16:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:16:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:17:01 rsharm12-VirtualBox CRON[22703]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Oct 27 16:17:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:17:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-173
+Oct 27 16:17:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:17:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:17:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:17:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-174
+Oct 27 16:17:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:17:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:17:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:17:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-175
+Oct 27 16:17:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:17:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:18:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:18:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-176
+Oct 27 16:18:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:18:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:18:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:18:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-177
+Oct 27 16:18:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:18:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:18:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:18:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-178
+Oct 27 16:18:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:18:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:19:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:19:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-179
+Oct 27 16:19:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:19:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:19:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:19:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-180
+Oct 27 16:19:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:19:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:19:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:19:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-181
+Oct 27 16:19:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:19:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:20:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:20:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-182
+Oct 27 16:20:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:20:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:20:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:20:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-183
+Oct 27 16:20:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:20:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:20:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:20:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-184
+Oct 27 16:20:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:20:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:21:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:21:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-185
+Oct 27 16:21:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:21:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:21:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:21:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-186
+Oct 27 16:21:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:21:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:21:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:21:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-187
+Oct 27 16:21:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:21:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:22:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:22:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-188
+Oct 27 16:22:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:22:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:22:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:22:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-189
+Oct 27 16:22:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:22:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:22:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:22:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-190
+Oct 27 16:22:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:22:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:23:00 rsharm12-VirtualBox org.gnome.evolution.dataserver.Sources5[1493]: ** (evolution-source-registry:1770): WARNING **: secret_service_search_sync: must specify at least one attribute to match
+Oct 27 16:23:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:23:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-191
+Oct 27 16:23:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:23:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:23:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:23:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-192
+Oct 27 16:23:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:23:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:23:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:23:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-193
+Oct 27 16:23:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:23:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:24:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:24:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-194
+Oct 27 16:24:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:24:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:24:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:24:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-195
+Oct 27 16:24:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:24:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:24:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:24:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-196
+Oct 27 16:24:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:24:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:25:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:25:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-197
+Oct 27 16:25:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:25:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:25:33 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:25:33 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-198
+Oct 27 16:25:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:25:33 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:25:53 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:25:53 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-199
+Oct 27 16:25:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:25:53 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:26:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:26:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-200
+Oct 27 16:26:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:26:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:26:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:26:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-201
+Oct 27 16:26:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:26:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:26:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:26:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-202
+Oct 27 16:26:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:26:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:27:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:27:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-203
+Oct 27 16:27:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:27:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:27:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:27:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-204
+Oct 27 16:27:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:27:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:27:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:27:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-205
+Oct 27 16:27:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:27:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:28:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:28:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-206
+Oct 27 16:28:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:28:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:28:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:28:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-207
+Oct 27 16:28:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:28:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:28:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:28:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-208
+Oct 27 16:28:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:28:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:29:13 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:29:13 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-209
+Oct 27 16:29:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:29:13 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:29:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:29:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-210
+Oct 27 16:29:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:29:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:29:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:29:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-211
+Oct 27 16:29:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:29:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:30:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:30:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-212
+Oct 27 16:30:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:30:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:30:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:30:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-213
+Oct 27 16:30:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:30:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:30:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:30:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-214
+Oct 27 16:30:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:30:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:31:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:31:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-215
+Oct 27 16:31:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:31:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:31:30 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:41986->[::1]:53: read: connection refused
+Oct 27 16:31:30 rsharm12-VirtualBox snapd[716]: 2017/10/27 16:31:30.987646 snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:41986->[::1]:53: read: connection refused
+Oct 27 16:31:30 rsharm12-VirtualBox snapd[716]: 2017/10/27 16:31:30.987668 stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:41986->[::1]:53: read: connection refused
+Oct 27 16:31:30 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:41986->[::1]:53: read: connection refused
+Oct 27 16:31:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:31:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-216
+Oct 27 16:31:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:31:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:31:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:31:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-217
+Oct 27 16:31:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:31:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:32:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:32:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-218
+Oct 27 16:32:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:32:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:32:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:32:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-219
+Oct 27 16:32:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:32:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:32:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:32:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-220
+Oct 27 16:32:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:32:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:33:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:33:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-221
+Oct 27 16:33:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:33:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:33:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:33:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-222
+Oct 27 16:33:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:33:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:33:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:33:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-223
+Oct 27 16:33:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:33:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:34:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:34:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-224
+Oct 27 16:34:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:34:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:34:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:34:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-225
+Oct 27 16:34:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:34:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:34:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:34:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-226
+Oct 27 16:34:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:34:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:35:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:35:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-227
+Oct 27 16:35:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:35:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:35:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:35:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-228
+Oct 27 16:35:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:35:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:35:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:35:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-229
+Oct 27 16:35:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:35:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:36:01 rsharm12-VirtualBox CRON[22757]: (root) CMD (   test -x /etc/cron.daily/popularity-contest && /etc/cron.daily/popularity-contest --crond)
+Oct 27 16:36:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:36:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-230
+Oct 27 16:36:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:36:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:36:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:36:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-231
+Oct 27 16:36:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:36:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:36:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:36:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-232
+Oct 27 16:36:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:36:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:37:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:37:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-233
+Oct 27 16:37:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:37:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:37:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:37:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-234
+Oct 27 16:37:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:37:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:37:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:37:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-235
+Oct 27 16:37:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:37:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:38:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:38:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-236
+Oct 27 16:38:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:38:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:38:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:38:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-237
+Oct 27 16:38:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:38:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:38:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:38:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-238
+Oct 27 16:38:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:38:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:39:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:39:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-239
+Oct 27 16:39:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:39:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:39:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:39:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-240
+Oct 27 16:39:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:39:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:39:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:39:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-241
+Oct 27 16:39:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:39:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:40:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:40:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-242
+Oct 27 16:40:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:40:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:40:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:40:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-243
+Oct 27 16:40:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:40:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:40:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:40:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-244
+Oct 27 16:40:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:40:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:41:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:41:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-245
+Oct 27 16:41:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:41:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:41:30 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:59970->[::1]:53: read: connection refused
+Oct 27 16:41:30 rsharm12-VirtualBox snapd[716]: 2017/10/27 16:41:30.987692 snapmgr.go:411: Cannot prepare auto-refresh change: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:59970->[::1]:53: read: connection refused
+Oct 27 16:41:30 rsharm12-VirtualBox snapd[716]: 2017/10/27 16:41:30.987709 stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:59970->[::1]:53: read: connection refused
+Oct 27 16:41:30 rsharm12-VirtualBox /usr/lib/snapd/snapd[716]: stateengine.go:98: state ensure error: Post https://search.apps.ubuntu.com/api/v1/snaps/metadata: dial tcp: lookup search.apps.ubuntu.com on [::1]:53: read udp [::1]:59970->[::1]:53: read: connection refused
+Oct 27 16:41:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:41:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-246
+Oct 27 16:41:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:41:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:41:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:41:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-247
+Oct 27 16:41:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:41:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:42:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:42:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-248
+Oct 27 16:42:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:42:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:42:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:42:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-249
+Oct 27 16:42:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:42:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:42:55 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:42:55 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-250
+Oct 27 16:42:55 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:42:55 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:43:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:43:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-251
+Oct 27 16:43:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:43:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:43:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:43:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-252
+Oct 27 16:43:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:43:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:43:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:43:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-253
+Oct 27 16:43:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:43:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:44:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:44:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-254
+Oct 27 16:44:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:44:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:44:34 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:44:34 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-255
+Oct 27 16:44:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:44:34 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:44:54 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:44:54 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-256
+Oct 27 16:44:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.
+Oct 27 16:44:54 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for 192.168.61.3 on enp0s3.IPv4.
+Oct 27 16:45:14 rsharm12-VirtualBox avahi-daemon[686]: Withdrawing address record for 192.168.61.3 on enp0s3.
+Oct 27 16:45:14 rsharm12-VirtualBox avahi-daemon[686]: Host name conflict, retrying with rsharm12-VirtualBox-257
+Oct 27 16:45:14 rsharm12-VirtualBox avahi-daemon[686]: Registering new address record for fe80::a00:27ff:fe34:935 on enp0s3.*.

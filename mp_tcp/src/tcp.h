@@ -11,6 +11,8 @@
 #include <queue>
 #include <string>
 #include <thread>
+#include <unordered_map>
+#include <cmath>
 
 /* networking header files */
 #include <arpa/inet.h>
@@ -39,6 +41,8 @@
 #define FLAG_ACK   0x1
 #define FLAG_FIN   0x2
 
+#define TIMEOUT    5
+
 namespace TCP
 {
     using namespace std;
@@ -54,13 +58,15 @@ namespace TCP
     /* UDP structures */
     struct UDP {
         int sock;
-        uint16_t udpPort;
+        // uint16_t udpPort;
         struct sockaddr_in si_me;
         struct sockaddr_in si_other;
         socklen_t slen_me = (socklen_t) sizeof(struct sockaddr_in);
         socklen_t slen_other;
 
         UDP(uint16_t udpPort);
+        UDP(uint16_t udpPort, string hostname);
+        ~UDP();
         int recv(char *buffer, uint32_t dataSize);
         int send(const char *packet, int packetSize);
     };
@@ -88,22 +94,40 @@ namespace TCP
         static Header extractHeader(const char *packet);
     };
 
-    class Sender
+    enum CCState { SLOW_START, CNG_AVOID, FAST_REC };
+
+    struct CongestionControl {
+        mutex cc_mtx;
+        double f_size;
+        uint64_t size;            // size of window in number of packets
+        uint64_t ssthresh;        // threshold in bytes
+        uint32_t dupACKcount;     // counter for duplicate ACKs
+        uint64_t sendBase;        // first SEQ num that is sent not ACKed
+        uint64_t nextSeqNum;      // first SEQ num that has not been sent
+        uint64_t totalSize;       // every number should be <= to totalSize
+        unordered_map<uint64_t, Packet> cwnd;
+
+        bool isDone;
+
+        CCState currState;
+
+        CongestionControl(uint64_t totalSize);
+        void log();
+    };
+
+
+    namespace Sender
     {
-    private:
-
-    public:
-        // Sender(uint16_t port);
-        // ~Sender();
-
-        void sendData(ifstream & fStream, uint64_t bytesToTransfer);
+        static void sendData(UDP * udp, CongestionControl * cc);
+        static void recvACK(UDP * udp, CongestionControl * cc);
+        static void updateWindow(CongestionControl *cc, ifstream * fStream);
     };
 
     namespace Receiver
     {
         static void receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q);
         static void sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q);
-    }
+    };
 
     /* functions */
     static void diep(const char *s) {
