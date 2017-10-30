@@ -1,0 +1,266 @@
+Need to send 524288 bytes to 192.168.61.3:8080
+updateWindow: read 1460 bytes.
+
+updateWindow: S size=1460 f_size=1460 ssthresh=65536 dupACK=0 sendBase=0 nextSeqNum=0 cwnd=1
+
+Sending 1460 bytes.  SEQ=0 ACK=0 FL=0 RW=0
+sendData: S size=1460 f_size=1460 ssthresh=65536 dupACK=0 sendBase=0 nextSeqNum=0 cwnd=1
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=0 nextSeqNum=0 cwnd=1
+
+
+Sending 1460 bytes.  SEQ=0 ACK=0 FL=0 RW=0
+sendData: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=0 nextSeqNum=0 cwnd=1
+Took 0ms
+Received 12 bytes. SEQ=0 ACK=1460 FL=1 RW=0
+New ACK received.
+Trying to remove 0... yes!
+Switching to CNG_AVOID...
+recvACK: C size=2920 f_size=2920 ssthresh=730 dupACK=0 sendBase=1460 nextSeqNum=1460 cwnd=0
+updateWindow: read 1460 bytes.
+
+updateWindow: C size=2920 f_size=2920 ssthresh=730 dupACK=0 sendBase=1460 nextSeqNum=1460 cwnd=1
+
+Sending 1460 bytes.  SEQ=1460 ACK=0 FL=0 RW=0
+sendData: C size=2920 f_size=2920 ssthresh=730 dupACK=0 sendBase=1460 nextSeqNum=1460 cwnd=1
+
+Took 0ms
+Received 12 bytes. SEQ=0 ACK=2920 FL=1 RW=0
+New ACK received.
+Trying to remove 1460... yes!
+recvACK: C size=3650 f_size=3650 ssthresh=730 dupACK=0 sendBase=2920 nextSeqNum=2920 cwnd=0
+updateWindow: read 1460 bytes.
+
+updateWindow: C size=3650 f_size=3650 ssthresh=730 dupACK=0 sendBase=2920 nextSeqNum=2920 cwnd=1
+
+
+Sending 1460 bytes.  SEQ=2920 ACK=0 FL=0 RW=0
+sendData: C size=3650 f_size=3650 ssthresh=730 dupACK=0 sendBase=2920 nextSeqNum=2920 cwnd=1
+Took 0ms
+Received 12 bytes. SEQ=0 ACK=4380 FL=1 RW=0
+New ACK received.
+Trying to remove 2920... yes!
+recvACK: C size=4234 f_size=4234 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=2117 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
+Took 50ms
+Timeout!
+recvACK: S size=1460 f_size=1460 ssthresh=730 dupACK=0 sendBase=4380 nextSeqNum=4380 cwnd=0
+
