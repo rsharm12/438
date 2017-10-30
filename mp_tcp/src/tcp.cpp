@@ -176,7 +176,7 @@ void Sender::sendData(UDP * udp, CongestionControl * cc)
             break;
 
         /* data to be sent from cwnd */
-        for(; cc->nextSeqNum < cc->size; cc->nextSeqNum += DATASIZE)
+        for(; cc->nextSeqNum < cc->sendBase + cc->size; cc->nextSeqNum += DATASIZE)
         {
             if(cc->cwnd.find(cc->nextSeqNum) == cc->cwnd.end())
                 /* packet not loaded */
@@ -209,18 +209,19 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
 
     while(1)
     {
+        usleep(1000);
         cout << endl;
 
         FD_ZERO(&set);
         FD_SET(udp->sock, &set);
+
+        cc->cc_mtx.lock();
 
         /* check for ACK */
         timeout.tv_sec = 0;
         timeout.tv_usec = 50000;
         select(udp->sock+1, &set, NULL, NULL, &timeout);
         cout <<  "Took " << (50000-timeout.tv_usec)/1000 << "ms" << endl;
-
-        cc->cc_mtx.lock();
 
         if(FD_ISSET(udp->sock, &set))
         {
@@ -323,8 +324,6 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
         cout << "recvACK: ";
         cc->log();
         cc->cc_mtx.unlock();
-
-        usleep(1000);
     }
 
     cc->cc_mtx.unlock();
@@ -341,7 +340,7 @@ void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
     {
         cc->cc_mtx.lock();
         /* data to be read and placed in cwnd */
-        for(int seqNum = cc->nextSeqNum; seqNum < cc->size; seqNum += DATASIZE)
+        for(int seqNum = cc->nextSeqNum; seqNum < cc->sendBase + cc->size; seqNum += DATASIZE)
         {
             if(cc->cwnd.find(seqNum) != cc->cwnd.end())
                 /* packet already exists */
