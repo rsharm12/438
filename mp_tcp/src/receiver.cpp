@@ -16,9 +16,9 @@ void reliablyReceive(uint16_t udpPort, string filename)
     mutex rcvrACK_mtx;
     queue<uint32_t> rcvrACK_q;
 
-    TCP::Receiver::waitForConnection(&udp);
+    //TCP::Receiver::waitForConnection(&udp);
 
-    TCP::starttime = high_resolution_clock::now();
+    //TCP::starttime = high_resolution_clock::now();
 
     thread receiveData(&TCP::Receiver::receiveData, &udp, &outfile, &rcvrACK_mtx, &rcvrACK_q);
     thread sendACK(&TCP::Receiver::sendACK, &udp, &rcvrACK_mtx, &rcvrACK_q);
@@ -38,6 +38,8 @@ void reliablyReceive(uint16_t udpPort, string filename)
 int main(int argc, char** argv)
 {
     uint16_t udpPort;
+
+    cout.setf(ios::unitbuf);
 
     if (argc != 3)
     {

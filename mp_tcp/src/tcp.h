@@ -23,6 +23,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <errno.h>
 
 #define PACKETSIZE  1472
 #define HEADERSIZE  12
@@ -42,7 +43,7 @@
 #define FLAG_FIN   0x2
 #define FLAG_SYN   0x4
 
-#define TIMEOUT    1
+#define TIMEOUT    5
 
 namespace TCP
 {
@@ -62,12 +63,15 @@ namespace TCP
         // uint16_t udpPort;
         struct sockaddr_in si_me;
         struct sockaddr_in si_other;
+        struct sockaddr_in si_other_tmp;
         socklen_t slen_me = (socklen_t) sizeof(struct sockaddr_in);
         socklen_t slen_other;
+        socklen_t slen_other_tmp;
 
         UDP(uint16_t udpPort);
         UDP(uint16_t udpPort, string hostname);
         ~UDP();
+        int recv(char *buffer, uint32_t dataSize, struct sockaddr_in * si, socklen_t * sl);
         int recv(char *buffer, uint32_t dataSize);
         int send(const char *packet, int packetSize);
     };

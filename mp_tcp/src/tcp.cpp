@@ -51,10 +51,26 @@ UDP::~UDP()
     close(sock);
 }
 
+int UDP::recv(char *buffer, uint32_t dataSize, struct sockaddr_in * si, socklen_t * sl)
+{
+    int recvd;
+    recvd = recvfrom(sock, buffer, dataSize, 0,
+                     (struct sockaddr *)si, sl);
+    if(recvd == -1) 
+        perror("ERROR:");
+
+    return recvd;
+}
+
 int UDP::recv(char *buffer, uint32_t dataSize)
 {
-    return recvfrom(sock, buffer, dataSize, 0,
-                     (struct sockaddr *)&si_other, &slen_other);
+    int recvd;
+    recvd = recvfrom(sock, buffer, dataSize, 0,
+                     (struct sockaddr *)&si_other_tmp, &slen_other_tmp);
+    if(recvd == -1) 
+        perror("ERROR:");
+
+    return recvd;
 }
 
 int UDP::send(const char * packet, int packetSize)
@@ -167,15 +183,14 @@ void Sender::setupConnection(UDP * udp)
 {
     int recvd;
     char buffer[PACKETSIZE];
-    fd_set set;
     struct timeval timeout;
 
     Packet packet(Header(0, 0, FLAG_SYN, 0), nullptr, 0);
 
-    // timeout.tv_sec = 1;
-    // timeout.tv_usec = 0;
+    timeout.tv_sec = 1;
+    timeout.tv_usec = 0;
 
-    // setsockopt(udp->sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+    // setsockopt(udp->sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(struct timeval));
 
     /* send SYN packet */
     while(1)
@@ -187,28 +202,19 @@ void Sender::setupConnection(UDP * udp)
         packet.header.log();
         udp->send(buffer, HEADERSIZE);
 
-        FD_ZERO(&set);
-        FD_SET(udp->sock, &set);
-
         /* check for SYNACK */
-        /* reset timeout to 1 sec for syn */
-        timeout.tv_sec = 5;
-        timeout.tv_usec = 0;
-        select(udp->sock+1, &set, NULL, NULL, &timeout);
-
         memset(buffer, 0, PACKETSIZE);
+        recvd = udp->recv(buffer, HEADERSIZE);
 
-        if(FD_ISSET(udp->sock, &set))
+        if(recvd > 0)
         {
-            recvd = udp->recv(buffer, PACKETSIZE);
-
             /* extract FLAGS from received packet */
             Header gotHeader = Packet::extractHeader(buffer);
 
             cout << "Got " << recvd << " bytes.";
             gotHeader.log();
 
-            if(gotHeader.flags & (FLAG_SYN | FLAG_ACK))
+            if(gotHeader.flags == (FLAG_SYN | FLAG_ACK))
             {
                 cout << "Got SYNACK!" << endl;
                 break;
@@ -221,7 +227,7 @@ void Sender::setupConnection(UDP * udp)
 
     // Packet ack(Header(0, 0, FLAG_ACK, 0), nullptr, 0);
     // ack.toBuffer(buffer);
-    // cout << "Sending (SYN)ACK!" << endl;
+    // cout << "Sending (synchronize)ACK!" << endl;
     // udp->send(buffer, HEADERSIZE);
 }
 
@@ -232,12 +238,13 @@ void Sender::sendData(UDP * udp, CongestionControl * cc)
     while(1)
     {
         cc->cc_mtx.lock();
+        // cout << "sendData: Acquired cc_mtx" << endl;
 
         if(cc->isDone)
             break;
 
         /* data to be sent from cwnd */
-        for(; cc->nextSeqNum < cc->sendBase + cc->size; cc->nextSeqNum += DATASIZE)
+        for(; cc->nextSeqNum < (cc->sendBase + cc->size); cc->nextSeqNum += DATASIZE)
         {
             if(cc->cwnd.find(cc->nextSeqNum) == cc->cwnd.end())
                 /* packet not loaded */
@@ -252,10 +259,12 @@ void Sender::sendData(UDP * udp, CongestionControl * cc)
             cc->log();
         }
 
+        // cout << "Released cc_mtx" << endl;
         cc->cc_mtx.unlock();
         usleep(1000);
     }
 
+    // cout << "Released cc_mtx" << endl;
     cc->cc_mtx.unlock();
 
     cout << "sendData is done!" << endl;
@@ -263,10 +272,25 @@ void Sender::sendData(UDP * udp, CongestionControl * cc)
 
 void Sender::recvACK(UDP * udp, CongestionControl * cc)
 {
-    int recvd;
+    int recvd = -1;
     char buffer[PACKETSIZE];
     fd_set set;
     struct timeval timeout;
+
+    cout << "recvACK: will try receiving data now" << endl;
+    usleep(50000);
+
+    // while(recvd == -1)
+    // {
+    //     cout << "recvACK: recvd still -1" << endl;
+    //     memset(buffer, 0, PACKETSIZE);
+    //     recvd = udp->recv(buffer, HEADERSIZE);
+    //     if(recvd == -1) {
+    //         cout << "Received Error" << endl;
+    //     }
+    // }
+
+    cout << "recvACK: Got first set of data!!!" << endl;
 
     while(1)
     {
@@ -277,6 +301,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
         FD_SET(udp->sock, &set);
 
         cc->cc_mtx.lock();
+        // cout << "recvACK: Acquired cc_mtx" << endl;
 
         /* check for ACK */
         timeout.tv_sec = 0;
@@ -287,15 +312,18 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
         if(FD_ISSET(udp->sock, &set))
         {
             memset(buffer, 0, PACKETSIZE);
-            recvd = udp->recv(buffer, PACKETSIZE);
+            recvd = udp->recv(buffer, HEADERSIZE);
+            if(recvd == -1)
+                perror("ERROR:");
     
             Header header = Packet::extractHeader(buffer);
             cout << "Received " << recvd << " bytes.";
             header.log();
 
             /* errant SYNACK packet */
-            if(header.flags | (FLAG_SYN | FLAG_ACK)){
+            if(header.flags == (FLAG_SYN | FLAG_ACK)){
                 cout << "ERROR SYNACK" << endl;
+                // cout << "Released cc_mtx" << endl;
                 cc->cc_mtx.unlock();
                 continue;
             }
@@ -395,9 +423,11 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
 
         cout << "recvACK: ";
         cc->log();
+        // cout << "Released cc_mtx" << endl;
         cc->cc_mtx.unlock();
     }
 
+    // cout << "Released cc_mtx" << endl;
     cc->cc_mtx.unlock();
 
     cout << "recvACK is done!" << endl;
@@ -411,6 +441,7 @@ void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
     while(readSoFar < cc->totalSize)
     {
         cc->cc_mtx.lock();
+        // cout << "updateWindow: Acquired cc_mtx" << endl;
         /* data to be read and placed in cwnd */
         for(int seqNum = cc->nextSeqNum; seqNum < cc->sendBase + cc->size; seqNum += DATASIZE)
         {
@@ -430,11 +461,11 @@ void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
         }
 
         if(shouldLog) {
-            cout << "\nupdateWindow: ";
             cc->log();
             shouldLog = false;
         }
 
+        // cout << "Released cc_mtx" << endl;
         cc->cc_mtx.unlock();
         usleep(1000);
     }
@@ -474,7 +505,7 @@ void Sender::closeConnection(UDP * udp)
 
         if(FD_ISSET(udp->sock, &set))
         {
-            recvd = udp->recv(buffer, PACKETSIZE);
+            recvd = udp->recv(buffer, HEADERSIZE);
 
             /* extract FLAGS from received packet */
             Header gotHeader = Packet::extractHeader(buffer);
@@ -503,7 +534,7 @@ void Receiver::waitForConnection(UDP * udp)
     while(1) 
     {
         memset(buffer, 0, PACKETSIZE);
-        recvd = udp->recv(buffer, PACKETSIZE);
+        recvd = udp->recv(buffer, HEADERSIZE);
         /* extract FLAGS from received packet */
         Header gotHeader = Packet::extractHeader(buffer);
 
@@ -519,16 +550,30 @@ void Receiver::waitForConnection(UDP * udp)
 
     Packet synack(Header(0, 0, FLAG_SYN | FLAG_ACK, 0), nullptr, 0);
     synack.toBuffer(buffer);
-    cout << "Sending SYNACK!" << endl;
+    cout << "Sending SYNACK! ";
+    synack.header.log();
     /* send 3 SYNACKs in case of dropped packets */
     udp->send(buffer, HEADERSIZE);
     udp->send(buffer, HEADERSIZE);
     udp->send(buffer, HEADERSIZE);
+
+    // memset(buffer, 0, PACKETSIZE);
+    // recvd = udp->recv(buffer, HEADERSIZE);
+    // /* extract FLAGS from received packet */
+    // Header gotHeader = Packet::extractHeader(buffer);
+
+    // cout << "Got " << recvd << " bytes.";
+    // gotHeader.log();
+
+    // if(gotHeader.flags & (FLAG_ACK))
+    //     cout << "Got ACK!" << endl;
 }
 
 
 void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
 {
+    cout << "receiveData has started..." << endl;
+
     int recvd = -1;
     uint32_t bytesRcvdSoFar = 0;
     char buffer[PACKETSIZE];
@@ -539,11 +584,14 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queu
     while(recvd == -1)
     {
         memset(buffer, 0, PACKETSIZE);
-        recvd = udp->recv(buffer, PACKETSIZE);
+        recvd = udp->recv(buffer, PACKETSIZE, &(udp->si_other), &(udp->slen_other));
         if(recvd == -1) {
             cout << "Received Error" << endl;
+            perror("Received Error");
         }
     }
+
+    TCP::starttime = chrono::high_resolution_clock::now();
 
     while(1)
     {
@@ -572,7 +620,9 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queu
         }
 
         rcvrACK_mtx->lock();
+        // cout << "receiveData: acquired rcvrACK_mtx" << endl;
         rcvrACK_q->push(bytesRcvdSoFar);
+        // cout << "released rcvrACK_mtx" << endl;
         rcvrACK_mtx->unlock();
 
         /* write to file */
@@ -602,6 +652,7 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queu
 void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
 {
     using namespace chrono;
+    cout << "sendACK started..." << endl;
 
     char buffer[PACKETSIZE];
     high_resolution_clock::time_point last_ACK_time;
@@ -613,6 +664,7 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
 
         usleep(1000); // sleep for 1 ms
         rcvrACK_mtx->lock();
+        // cout << "sendACK: acquired rcvrACK_mtx" << endl;
 
         if(rcvrACK_q->size() > 1)
             cout << "Possible delay..." << endl;
@@ -626,6 +678,7 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
                 rcvdSoFar = curr;
         }
 
+        // cout << "released rcvrACK_mtx" << endl;
         rcvrACK_mtx->unlock();
 
         if(shouldACK)
@@ -644,6 +697,8 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
             duration_cast<duration<double>>(now - last_ACK_time);
         if(time_span > seconds(TIMEOUT) && TCP::packetsSent > 0) break;
     }
+
+    cout << "sendACK HAS QUIT!!!" << endl;
 }
 
 } // namespace TCP

@@ -17,7 +17,7 @@ void reliablyTransfer(string hostname, uint16_t udpPort,
     cout << "Need to send " << bytesToTransfer << " bytes to ";
     cout << hostname << ":" << udpPort << endl;
 
-    TCP::Sender::setupConnection(&udp);
+    //TCP::Sender::setupConnection(&udp);
 
     TCP::starttime = high_resolution_clock::now();
 
@@ -51,6 +51,8 @@ int main(int argc, char** argv)
 {
     uint16_t udpPort;
     uint64_t numBytes;
+
+    cout.setf(ios::unitbuf);
 
     if (argc != 5)
     {
