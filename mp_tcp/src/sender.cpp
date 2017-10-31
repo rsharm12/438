@@ -17,7 +17,11 @@ void reliablyTransfer(string hostname, uint16_t udpPort,
     cout << "Need to send " << bytesToTransfer << " bytes to ";
     cout << hostname << ":" << udpPort << endl;
 
+    TCP::Sender::setupConnection(&udp);
+
     TCP::starttime = high_resolution_clock::now();
+
+    TCP::Sender::senderTimeouts = 0;
 
     TCP::CongestionControl cc(bytesToTransfer);
 
@@ -28,55 +32,18 @@ void reliablyTransfer(string hostname, uint16_t udpPort,
     recvACK.join();
     updateWindow.join();
 
-    int recvd;
-    char buffer[PACKETSIZE];
-    fd_set set;
-    struct timeval timeout;
+    TCP::endtime = high_resolution_clock::now();
+    duration<double> time_span =
+        duration_cast<duration<double>>(TCP::endtime - TCP::starttime);
+
+    cout << "Took " << time_span.count() << " seconds" << endl;
+    cout << "Packet Stats: Sent=" << TCP::packetsSent;
+    cout << " Recvd=" << TCP::packetsRecvd;
+    cout << " Timeouts=" << TCP::Sender::senderTimeouts << endl;
+    cout << "min packets=" << bytesToTransfer/DATASIZE << endl;
 
     /* send FIN packet */
-    while(1)
-    {
-        TCP::Packet packet(TCP::Header(0, 0, FLAG_FIN, 0), nullptr, 0);
-
-        packet.toBuffer(buffer);
-
-        /* send FIN */
-        cout << "Sending FIN...";
-        packet.header.log();
-        udp.send(buffer, HEADERSIZE);
-
-        FD_ZERO(&set);
-        FD_SET(udp.sock, &set);
-
-        /* check for FINACK */
-        /* reset timeout to 1 sec for fin */
-        timeout.tv_sec = 1;
-        timeout.tv_usec = 0;
-        select(udp.sock+1, &set, NULL, NULL, &timeout);
-
-        memset(buffer, 0, PACKETSIZE);
-
-        if(FD_ISSET(udp.sock, &set))
-        {
-            recvd = udp.recv(buffer, PACKETSIZE);
-
-            /* extract FLAGS from received packet */
-            TCP::Header gotHeader = TCP::Packet::extractHeader(buffer);
-            gotHeader.log();
-
-            cout << "Got " << recvd << " bytes.";
-            gotHeader.log();
-
-            if(gotHeader.flags & (FLAG_FIN | FLAG_ACK))
-            {
-                cout << "Got FINACK!" << endl;
-                break;
-            }
-        } else {
-            /* timeout */
-            cout << "No FINACK received..." << endl;
-        }
-    }
+    TCP::Sender::closeConnection(&udp);
 
 }
 

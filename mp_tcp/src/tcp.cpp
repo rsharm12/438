@@ -163,6 +163,67 @@ void CongestionControl::log()
 }
 
 /* Sender */
+void Sender::setupConnection(UDP * udp)
+{
+    int recvd;
+    char buffer[PACKETSIZE];
+    fd_set set;
+    struct timeval timeout;
+
+    Packet packet(Header(0, 0, FLAG_SYN, 0), nullptr, 0);
+
+    // timeout.tv_sec = 1;
+    // timeout.tv_usec = 0;
+
+    // setsockopt(udp->sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+
+    /* send SYN packet */
+    while(1)
+    {
+        packet.toBuffer(buffer);
+
+        /* send SYN */
+        cout << "Sending SYN...";
+        packet.header.log();
+        udp->send(buffer, HEADERSIZE);
+
+        FD_ZERO(&set);
+        FD_SET(udp->sock, &set);
+
+        /* check for SYNACK */
+        /* reset timeout to 1 sec for syn */
+        timeout.tv_sec = 5;
+        timeout.tv_usec = 0;
+        select(udp->sock+1, &set, NULL, NULL, &timeout);
+
+        memset(buffer, 0, PACKETSIZE);
+
+        if(FD_ISSET(udp->sock, &set))
+        {
+            recvd = udp->recv(buffer, PACKETSIZE);
+
+            /* extract FLAGS from received packet */
+            Header gotHeader = Packet::extractHeader(buffer);
+
+            cout << "Got " << recvd << " bytes.";
+            gotHeader.log();
+
+            if(gotHeader.flags & (FLAG_SYN | FLAG_ACK))
+            {
+                cout << "Got SYNACK!" << endl;
+                break;
+            }
+        } else {
+            /* timeout */
+            cout << "No SYNACK received..." << endl;
+        }
+    }
+
+    // Packet ack(Header(0, 0, FLAG_ACK, 0), nullptr, 0);
+    // ack.toBuffer(buffer);
+    // cout << "Sending (SYN)ACK!" << endl;
+    // udp->send(buffer, HEADERSIZE);
+}
 
 void Sender::sendData(UDP * udp, CongestionControl * cc)
 {
@@ -232,6 +293,15 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
             cout << "Received " << recvd << " bytes.";
             header.log();
 
+            /* errant SYNACK packet */
+            if(header.flags | (FLAG_SYN | FLAG_ACK)){
+                cout << "ERROR SYNACK" << endl;
+                cc->cc_mtx.unlock();
+                continue;
+            }
+
+            TCP::packetsRecvd++;
+
             if(header.ackNum >= cc->totalSize)
             {
                 cc->isDone = true;
@@ -242,6 +312,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
             {
                 /* duplicate ACK received */
                 cout << "Duplicate ACK received." << endl;
+
 
                 cc->dupACKcount++;
                 if(cc->dupACKcount == 3 && cc->currState != FAST_REC)
@@ -313,6 +384,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
             /* TIMEOUT: restart timer for any ACK */
             cout << "Timeout!" << endl;
 
+            senderTimeouts++;
             cc->currState = SLOW_START;
             cc->ssthresh = cc->size/2;
             cc->size = DATASIZE;
@@ -368,28 +440,110 @@ void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
     }
 
     cout << "updateWindow is done!" << endl;
+}
 
+void Sender::closeConnection(UDP * udp)
+{
+    int recvd;
+    char buffer[PACKETSIZE];
+    fd_set set;
+    struct timeval timeout;
 
+    /* send FIN packet */
+    while(1)
+    {
+        Packet packet(Header(0, 0, FLAG_FIN, 0), nullptr, 0);
+
+        packet.toBuffer(buffer);
+
+        /* send FIN */
+        cout << "Sending FIN...";
+        packet.header.log();
+        udp->send(buffer, HEADERSIZE);
+
+        FD_ZERO(&set);
+        FD_SET(udp->sock, &set);
+
+        /* check for FINACK */
+        /* reset timeout to 1 sec for fin */
+        timeout.tv_sec = 1;
+        timeout.tv_usec = 0;
+        select(udp->sock+1, &set, NULL, NULL, &timeout);
+
+        memset(buffer, 0, PACKETSIZE);
+
+        if(FD_ISSET(udp->sock, &set))
+        {
+            recvd = udp->recv(buffer, PACKETSIZE);
+
+            /* extract FLAGS from received packet */
+            Header gotHeader = Packet::extractHeader(buffer);
+
+            cout << "Got " << recvd << " bytes.";
+            gotHeader.log();
+
+            if(gotHeader.flags & (FLAG_FIN | FLAG_ACK))
+            {
+                cout << "Got FINACK!" << endl;
+                break;
+            }
+        } else {
+            /* timeout */
+            cout << "No FINACK received..." << endl;
+        }
+    }
 }
 
 /* Receiver */
+void Receiver::waitForConnection(UDP * udp)
+{
+    int recvd;
+    char buffer[PACKETSIZE];
+
+    while(1) 
+    {
+        memset(buffer, 0, PACKETSIZE);
+        recvd = udp->recv(buffer, PACKETSIZE);
+        /* extract FLAGS from received packet */
+        Header gotHeader = Packet::extractHeader(buffer);
+
+        cout << "Got " << recvd << " bytes.";
+        gotHeader.log();
+
+        if(gotHeader.flags & (FLAG_SYN))
+        {
+            cout << "Got SYN!" << endl;
+            break;
+        }
+    }
+
+    Packet synack(Header(0, 0, FLAG_SYN | FLAG_ACK, 0), nullptr, 0);
+    synack.toBuffer(buffer);
+    cout << "Sending SYNACK!" << endl;
+    /* send 3 SYNACKs in case of dropped packets */
+    udp->send(buffer, HEADERSIZE);
+    udp->send(buffer, HEADERSIZE);
+    udp->send(buffer, HEADERSIZE);
+}
+
 
 void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
 {
-    int recvd;
+    int recvd = -1;
     uint32_t bytesRcvdSoFar = 0;
     char buffer[PACKETSIZE];
     bool shouldWrite = false;
     Header header;
     Packet packet;
 
-    memset(buffer, 0, PACKETSIZE);
-    recvd = udp->recv(buffer, PACKETSIZE);
-    if(recvd == -1) {
-        cout << "Received Error" << endl;
+    while(recvd == -1)
+    {
+        memset(buffer, 0, PACKETSIZE);
+        recvd = udp->recv(buffer, PACKETSIZE);
+        if(recvd == -1) {
+            cout << "Received Error" << endl;
+        }
     }
-
-    starttime = chrono::high_resolution_clock::now();
 
     while(1)
     {

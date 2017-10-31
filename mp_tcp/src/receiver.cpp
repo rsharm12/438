@@ -16,6 +16,10 @@ void reliablyReceive(uint16_t udpPort, string filename)
     mutex rcvrACK_mtx;
     queue<uint32_t> rcvrACK_q;
 
+    TCP::Receiver::waitForConnection(&udp);
+
+    TCP::starttime = high_resolution_clock::now();
+
     thread receiveData(&TCP::Receiver::receiveData, &udp, &outfile, &rcvrACK_mtx, &rcvrACK_q);
     thread sendACK(&TCP::Receiver::sendACK, &udp, &rcvrACK_mtx, &rcvrACK_q);
     receiveData.join();
@@ -26,7 +30,7 @@ void reliablyReceive(uint16_t udpPort, string filename)
     duration<double> time_span =
         duration_cast<duration<double>>(TCP::endtime - TCP::starttime);
 
-    cout << "Took " << (time_span - seconds(TIMEOUT)).count() << " seconds" << endl;
+    cout << "Took " << time_span.count() << " seconds" << endl;
     cout << "Packet Stats: Sent=" << TCP::packetsSent;
     cout << " Recvd=" << TCP::packetsRecvd << endl;
 }

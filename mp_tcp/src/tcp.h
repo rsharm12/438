@@ -40,8 +40,9 @@
  /* TCP FLAG BITMAP */
 #define FLAG_ACK   0x1
 #define FLAG_FIN   0x2
+#define FLAG_SYN   0x4
 
-#define TIMEOUT    5
+#define TIMEOUT    1
 
 namespace TCP
 {
@@ -118,13 +119,17 @@ namespace TCP
 
     namespace Sender
     {
+        uint32_t senderTimeouts;
+        static void setupConnection(UDP * udp);
         static void sendData(UDP * udp, CongestionControl * cc);
         static void recvACK(UDP * udp, CongestionControl * cc);
         static void updateWindow(CongestionControl *cc, ifstream * fStream);
+        static void closeConnection(UDP * udp);
     };
 
     namespace Receiver
     {
+        static void waitForConnection(UDP * udp);
         static void receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q);
         static void sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q);
     };
