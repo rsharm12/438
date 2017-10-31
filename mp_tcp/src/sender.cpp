@@ -8,8 +8,6 @@ void reliablyTransfer(string hostname, uint16_t udpPort,
 {
     using namespace std::chrono;
 
-    TCP::UDP udp(udpPort, hostname);
-
     ifstream infile(filename, ios::binary);
     if (!infile.is_open())
         TCP::diep("Could not open file to send");
@@ -17,13 +15,12 @@ void reliablyTransfer(string hostname, uint16_t udpPort,
     cout << "Need to send " << bytesToTransfer << " bytes to ";
     cout << hostname << ":" << udpPort << endl;
 
-    TCP::Sender::setupConnection(&udp);
-
-    TCP::starttime = high_resolution_clock::now();
-
+    TCP::UDP udp(udpPort, hostname);
+    TCP::CongestionControl cc(bytesToTransfer);
     TCP::Sender::senderTimeouts = 0;
 
-    TCP::CongestionControl cc(bytesToTransfer);
+    // TCP::Sender::setupConnection(&udp);
+    // TCP::starttime = high_resolution_clock::now();
 
     thread sendData(&TCP::Sender::sendData, &udp, &cc);
     thread recvACK(&TCP::Sender::recvACK, &udp, &cc);
@@ -40,11 +37,10 @@ void reliablyTransfer(string hostname, uint16_t udpPort,
     cout << "Packet Stats: Sent=" << TCP::packetsSent;
     cout << " Recvd=" << TCP::packetsRecvd;
     cout << " Timeouts=" << TCP::Sender::senderTimeouts << endl;
-    cout << "min packets=" << bytesToTransfer/DATASIZE << endl;
+    // cout << "min packets=" << bytesToTransfer/DATASIZE << endl;
 
     /* send FIN packet */
     TCP::Sender::closeConnection(&udp);
-
 }
 
 int main(int argc, char** argv)

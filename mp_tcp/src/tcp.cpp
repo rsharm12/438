@@ -1,18 +1,17 @@
 // #include "tcp.h"
 
-
 namespace TCP
 {
 
 /* UDP */
 
-UDP::UDP(uint16_t udpPort) //: udpPort(udpPort)
+UDP::UDP(uint16_t udpPort)
 {
     /* set up me */
     memset((void *) &si_me, 0, sizeof (si_me));
     si_me.sin_family = AF_INET;
     si_me.sin_port = htons(udpPort);
-    si_me.sin_addr.s_addr = htonl(INADDR_ANY); 
+    si_me.sin_addr.s_addr = htonl(INADDR_ANY);
 
     sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (sock == -1)
@@ -28,7 +27,7 @@ UDP::UDP(uint16_t udpPort, string hostname)
     memset((void *) &si_me, 0, sizeof (si_me));
     si_me.sin_family = AF_INET;
     si_me.sin_port = htons(udpPort);
-    si_me.sin_addr.s_addr = htonl(INADDR_ANY); 
+    si_me.sin_addr.s_addr = htonl(INADDR_ANY);
 
     sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (sock == -1)
@@ -38,11 +37,11 @@ UDP::UDP(uint16_t udpPort, string hostname)
         TCP::diep("bind");
 
     /* set up other */
-    memset((void* ) &si_other, 0, sizeof (si_other));
+    memset((void *) &si_other, 0, sizeof (si_other));
     si_other.sin_family = AF_INET;
     si_other.sin_port = htons(udpPort);
     if (inet_pton(AF_INET, hostname.c_str(), &(si_other.sin_addr)) != 1)
-        diep("inet_pton() failed\n");
+        diep("inet_pton() failed");
 }
 
 UDP::~UDP()
@@ -51,26 +50,40 @@ UDP::~UDP()
     close(sock);
 }
 
-int UDP::recv(char *buffer, uint32_t dataSize)
+int UDP::recv(char *buffer, uint32_t dataSize, bool shouldSave)
 {
-    return recvfrom(sock, buffer, dataSize, 0,
-                     (struct sockaddr *)&si_other, &slen_other);
+    int recv;
+
+    if(shouldSave)
+        recv = recvfrom(sock, buffer, dataSize, 0,
+                        (struct sockaddr *)&si_other, &slen_other);
+    else
+        recv = recvfrom(sock, buffer, dataSize, 0,
+                        (struct sockaddr *)&si_tmp, &slen_tmp);
+
+    if(-1 == recv)
+        perror("UDP::recv ERROR");
+    return recv;
 }
 
-int UDP::send(const char * packet, int packetSize)
+int UDP::send(const char *packet, int packetSize)
 {
-    return sendto(sock, packet, packetSize, 0,
-                  (const sockaddr *) &si_other, sizeof(si_other));
+    int sent = sendto(sock, packet, packetSize, 0,
+                      (const sockaddr *) &si_other, slen_other);
+    if(-1 == sent)
+        perror("UDP::send ERROR");
+    return sent;
 }
 
 /* Header */
 
-Header::Header() : seqNum(0), ackNum(0), flags(0), rcwnd(0)
+Header::Header() : seqNum(0), ackNum(0), dataLen(0), flags(0), rcwnd(0)
 {
 }
 
-Header::Header(uint32_t seqNum, uint32_t ackNum, uint16_t flags, uint16_t rcwnd) :
-    seqNum(seqNum), ackNum(ackNum), flags(flags), rcwnd(rcwnd)
+Header::Header(uint32_t seqNum, uint32_t ackNum, uint32_t dataLen,
+               uint16_t flags, uint16_t rcwnd) :
+    seqNum(seqNum), ackNum(ackNum), dataLen(dataLen), flags(flags), rcwnd(rcwnd)
 {
 }
 
@@ -78,6 +91,7 @@ void Header::log()
 {
     cout << " SEQ=" << seqNum;
     cout << " ACK=" << ackNum;
+    cout << " DLEN=" << dataLen;
     cout << " FL="  << flags;
     cout << " RW="  << rcwnd << endl;
 }
@@ -86,63 +100,61 @@ void Header::log()
 
 Packet::Packet()
 {
-    dataSize = 0;
     memset(data, 0, DATASIZE);
 }
 
-Packet::Packet(Header header, const char *data, uint32_t dataSize)
+Packet::Packet(Header header, const char *data)
 {
     this->header = header;
-    if (dataSize > DATASIZE)
-        this->dataSize = DATASIZE;
-    else
-        this->dataSize = dataSize;
-    memcpy(this->data, data, this->dataSize);
+    if(this->header.dataLen > DATASIZE)
+        this->header.dataLen = DATASIZE;
+    memcpy(this->data, data, this->header.dataLen);
 }
-
 
 void Packet::update(const char *buffer, uint32_t bufferSize)
 {
     this->header = extractHeader(buffer);
     memset(this->data, 0, DATASIZE);
     if (bufferSize > DATASIZE)
-        this->dataSize = DATASIZE;
+        this->header.dataLen = DATASIZE;
     else
-        this->dataSize = bufferSize;
-    memcpy(this->data, buffer+HEADERSIZE, this->dataSize);
+        this->header.dataLen = bufferSize - HEADERSIZE;
+    memcpy(this->data, buffer+HEADERSIZE, this->header.dataLen);
 }
-
 
 void Packet::toBuffer(char *buffer)
 {
     memset(buffer, 0, PACKETSIZE);
     memcpy(&buffer[0], &(header.seqNum), sizeof(uint32_t));
     memcpy(&buffer[4], &(header.ackNum), sizeof(uint32_t));
-    memcpy(&buffer[8], &(header.flags), sizeof(uint16_t));
-    memcpy(&buffer[10], &(header.rcwnd), sizeof(uint16_t));
-    memcpy(&buffer[HEADERSIZE / sizeof(char)], data, this->dataSize);
-
+    memcpy(&buffer[8], &(header.dataLen), sizeof(uint32_t));
+    memcpy(&buffer[12], &(header.flags), sizeof(uint16_t));
+    memcpy(&buffer[14], &(header.rcwnd), sizeof(uint16_t));
+    memcpy(&buffer[HEADERSIZE / sizeof(char)], data, header.dataLen);
 }
-
 
 Header Packet::extractHeader(const char *packet)
 {
     return Header(*((uint32_t *) &packet[0]),
                   *((uint32_t *) &packet[4]),
-                  *((uint16_t *) &packet[8]),
-                  *((uint16_t *) &packet[10]));
+                  *((uint32_t *) &packet[8]),
+                  *((uint16_t *) &packet[12]),
+                  *((uint16_t *) &packet[14]));
 }
+
+/* CongestionControl */
 
 CongestionControl::CongestionControl(uint64_t totalSize) : totalSize(totalSize)
 {
-    f_size = DATASIZE;
+    currState = SLOW_START;
+    isDone = false;
+
+    f_size = (double) DATASIZE;
     size = DATASIZE;
     ssthresh = 65536; // 64 KB
     dupACKcount = 0;
     sendBase = 0;
     nextSeqNum = 0;
-    isDone = false;
-    currState = SLOW_START;
 }
 
 void CongestionControl::log()
@@ -154,15 +166,16 @@ void CongestionControl::log()
         case FAST_REC: cout << "F"; break;
     }
     cout << " size=" << size;
-    cout << " f_size=" << (uint64_t)f_size;
+    cout << " f_size=" << std::setprecision(2) << std::fixed << f_size;
     cout << " ssthresh=" << ssthresh;
     cout << " dupACK="  << dupACKcount;
     cout << " sendBase="  << sendBase;
     cout << " nextSeqNum=" << nextSeqNum;
-    cout << " cwnd=" << cwnd.size() << endl;  
+    cout << " cwnd=" << cwnd.size() << endl;
 }
 
 /* Sender */
+
 void Sender::setupConnection(UDP * udp)
 {
     int recvd;
@@ -237,27 +250,29 @@ void Sender::sendData(UDP * udp, CongestionControl * cc)
             break;
 
         /* data to be sent from cwnd */
-        for(; cc->nextSeqNum < cc->sendBase + cc->size; cc->nextSeqNum += DATASIZE)
+        for(; cc->nextSeqNum < (cc->sendBase + cc->size); cc->nextSeqNum += DATASIZE)
         {
             if(cc->cwnd.find(cc->nextSeqNum) == cc->cwnd.end())
                 /* packet not loaded */
                 break;
+
             Packet packet = cc->cwnd[cc->nextSeqNum];
             packet.toBuffer(buffer);
-            udp->send(buffer, packet.dataSize + HEADERSIZE);
-            TCP::packetsSent++;
+
             cout << "\nSending " << packet.dataSize << " bytes. ";
             packet.header.log();
             cout << "sendData: ";
             cc->log();
+
+            udp->send(buffer, packet.header.dataLen + HEADERSIZE);
+            TCP::packetsSent++;
         }
 
         cc->cc_mtx.unlock();
-        usleep(1000);
+        usleep(100);
     }
 
     cc->cc_mtx.unlock();
-
     cout << "sendData is done!" << endl;
 }
 
@@ -288,7 +303,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
         {
             memset(buffer, 0, PACKETSIZE);
             recvd = udp->recv(buffer, PACKETSIZE);
-    
+
             Header header = Packet::extractHeader(buffer);
             cout << "Received " << recvd << " bytes.";
             header.log();
@@ -306,8 +321,8 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
             {
                 cc->isDone = true;
                 break;
-            }        
-            
+            }
+
             if(header.ackNum < cc->sendBase)
             {
                 /* duplicate ACK received */
@@ -326,7 +341,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
                     cc->nextSeqNum = cc->sendBase;
                 }
             }
-            else 
+            else
             {
                 /* new ACK received */
                 cout << "New ACK received." << endl;
@@ -345,7 +360,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
                     }
                 }
 
-                /* should be true: 
+                /* should be true:
                  * cc->sendBase = header.ackNum;
                  */
                 if(cc->sendBase != header.ackNum)
@@ -411,32 +426,36 @@ void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
     while(readSoFar < cc->totalSize)
     {
         cc->cc_mtx.lock();
+
         /* data to be read and placed in cwnd */
-        for(int seqNum = cc->nextSeqNum; seqNum < cc->sendBase + cc->size; seqNum += DATASIZE)
+        for(uint32_t seqNum = cc->nextSeqNum;
+            seqNum < (cc->sendBase + cc->size);
+            seqNum += DATASIZE)
         {
             if(cc->cwnd.find(seqNum) != cc->cwnd.end())
                 /* packet already exists */
                 continue;
+
             Packet packet;
             fStream->read(packet.data, DATASIZE);
-            packet.dataSize = fStream->gcount();
-            cout << "updateWindow: read " << packet.dataSize << " bytes." << endl;
+            packet.header.dataLen = fStream->gcount();
+            cout << "updateWindow: read " << packet.header.dataLen << " bytes." << endl;
+            readSoFar += packet.header.dataLen;
+
             packet.header.seqNum = seqNum;
             cc->cwnd[seqNum] = packet;
 
             shouldLog = true;
-
-            readSoFar += packet.dataSize;
         }
 
         if(shouldLog) {
-            cout << "\nupdateWindow: ";
+            cout << "updateWindow: ";
             cc->log();
             shouldLog = false;
         }
 
         cc->cc_mtx.unlock();
-        usleep(1000);
+        usleep(100);
     }
 
     cout << "updateWindow is done!" << endl;
@@ -452,8 +471,7 @@ void Sender::closeConnection(UDP * udp)
     /* send FIN packet */
     while(1)
     {
-        Packet packet(Header(0, 0, FLAG_FIN, 0), nullptr, 0);
-
+        Packet packet(Header(0, 0, 0, FLAG_FIN, 0), nullptr, 0);
         packet.toBuffer(buffer);
 
         /* send FIN */
@@ -474,7 +492,7 @@ void Sender::closeConnection(UDP * udp)
 
         if(FD_ISSET(udp->sock, &set))
         {
-            recvd = udp->recv(buffer, PACKETSIZE);
+            recvd = udp->recv(buffer, HEADERSIZE, false);
 
             /* extract FLAGS from received packet */
             Header gotHeader = Packet::extractHeader(buffer);
@@ -495,15 +513,16 @@ void Sender::closeConnection(UDP * udp)
 }
 
 /* Receiver */
+
 void Receiver::waitForConnection(UDP * udp)
 {
     int recvd;
     char buffer[PACKETSIZE];
 
-    while(1) 
+    while(1)
     {
         memset(buffer, 0, PACKETSIZE);
-        recvd = udp->recv(buffer, PACKETSIZE);
+        recvd = udp->recv(buffer, PACKETSIZE, true);
         /* extract FLAGS from received packet */
         Header gotHeader = Packet::extractHeader(buffer);
 
@@ -526,8 +545,8 @@ void Receiver::waitForConnection(UDP * udp)
     udp->send(buffer, HEADERSIZE);
 }
 
-
-void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
+void Receiver::receiveData(UDP *udp, ofstream *fStream,
+                           mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
 {
     int recvd = -1;
     uint32_t bytesRcvdSoFar = 0;
@@ -539,10 +558,10 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queu
     while(recvd == -1)
     {
         memset(buffer, 0, PACKETSIZE);
-        recvd = udp->recv(buffer, PACKETSIZE);
-        if(recvd == -1) {
-            cout << "Received Error" << endl;
-        }
+        recvd = udp->recv(buffer, HEADERSIZE, true);
+        // if(recvd == -1) {
+        //     cout << "Received Error" << endl;
+        // }
     }
 
     while(1)

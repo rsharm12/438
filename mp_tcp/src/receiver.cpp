@@ -7,8 +7,6 @@ void reliablyReceive(uint16_t udpPort, string filename)
 {
     using namespace std::chrono;
 
-    TCP::UDP udp(udpPort);
-
     ofstream outfile(filename, ios::binary);
     if (!outfile.is_open())
         TCP::diep("Could not open file to send");
@@ -16,16 +14,16 @@ void reliablyReceive(uint16_t udpPort, string filename)
     mutex rcvrACK_mtx;
     queue<uint32_t> rcvrACK_q;
 
-    TCP::Receiver::waitForConnection(&udp);
+    TCP::UDP udp(udpPort);
 
-    TCP::starttime = high_resolution_clock::now();
+    // TCP::Receiver::waitForConnection(&udp);
+    // TCP::starttime = high_resolution_clock::now();
 
     thread receiveData(&TCP::Receiver::receiveData, &udp, &outfile, &rcvrACK_mtx, &rcvrACK_q);
     thread sendACK(&TCP::Receiver::sendACK, &udp, &rcvrACK_mtx, &rcvrACK_q);
     receiveData.join();
     sendACK.join();
 
-    // TODO: fix duration calculation
     TCP::endtime = high_resolution_clock::now();
     duration<double> time_span =
         duration_cast<duration<double>>(TCP::endtime - TCP::starttime);

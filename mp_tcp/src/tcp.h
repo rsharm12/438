@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <cstring>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <mutex>
 #include <queue>
@@ -25,16 +26,17 @@
 #include <fcntl.h>
 
 #define PACKETSIZE  1472
-#define HEADERSIZE  12
+#define HEADERSIZE  16
 #define DATASIZE    (PACKETSIZE - HEADERSIZE)
 /*
  * HEADER:
  *        4 bytes - seq number
  *        4 bytes - ack number
+ *        4 bytes - data length
  *        2 bytes - flags
  *        2 bytes - rcv window
  * DATA:
- *        up to 1460 bytes - data
+ *        up to 1456 bytes - data
  */
 
  /* TCP FLAG BITMAP */
@@ -62,43 +64,49 @@ namespace TCP
         // uint16_t udpPort;
         struct sockaddr_in si_me;
         struct sockaddr_in si_other;
+        struct sockaddr_storage si_tmp;
         socklen_t slen_me = (socklen_t) sizeof(struct sockaddr_in);
-        socklen_t slen_other;
+        socklen_t slen_other = (socklen_t) sizeof(struct sockaddr_in);
+        socklen_t slen_tmp = (socklen_t) sizeof(struct sockaddr_storage);
 
         UDP(uint16_t udpPort);
         UDP(uint16_t udpPort, string hostname);
         ~UDP();
-        int recv(char *buffer, uint32_t dataSize);
+        int recv(char *buffer, uint32_t dataSize, bool shouldSave);
         int send(const char *packet, int packetSize);
     };
 
     struct Header {
         uint32_t seqNum;
         uint32_t ackNum;
+        uint32_t dataLen;
         uint16_t flags;
         uint16_t rcwnd;
 
         Header();
-        Header(uint32_t seqNum, uint32_t ackNum, uint16_t flags, uint16_t rcwnd);
+        Header(uint32_t seqNum, uint32_t ackNum, uint32_t dataLen,
+               uint16_t flags, uint16_t rcwnd);
         void log();
     };
 
     struct Packet {
         Header header;
         char data[DATASIZE];
-        uint32_t dataSize;
 
         Packet();
-        Packet(Header header, const char *data, uint32_t dataSize);
+        Packet(Header header, const char *data);
         void update(const char *buffer, uint32_t bufferSize);
         void toBuffer(char *buffer);
-        static Header extractHeader(const char *packet);
+        static Header extractHeader(const char *buffer);
     };
 
     enum CCState { SLOW_START, CNG_AVOID, FAST_REC };
 
     struct CongestionControl {
         mutex cc_mtx;
+        CCState currState;
+        bool isDone;
+
         double f_size;
         uint64_t size;            // size of window in number of packets
         uint64_t ssthresh;        // threshold in bytes
@@ -106,11 +114,8 @@ namespace TCP
         uint64_t sendBase;        // first SEQ num that is sent not ACKed
         uint64_t nextSeqNum;      // first SEQ num that has not been sent
         uint64_t totalSize;       // every number should be <= to totalSize
+
         unordered_map<uint64_t, Packet> cwnd;
-
-        bool isDone;
-
-        CCState currState;
 
         CongestionControl(uint64_t totalSize);
         void log();
