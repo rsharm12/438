@@ -1,5 +1,5 @@
 #If you use threads, add -pthread here.
-COMPILERFLAGS = -std=c++1y -Wall -Wextra -Wno-sign-compare -Ofast 
+COMPILERFLAGS = -std=c++1y -Wall -Wextra -Wno-sign-compare -Ofast
 
 #Any libraries you might need linked in.
 LINKLIBS = -lpthread
@@ -28,14 +28,14 @@ all : obj reliable_sender reliable_receiver
 reliable_receiver: $(SERVEROBJECTS)
 	$(CXX) $(COMPILERFLAGS) $^ -o $@ $(LINKLIBS)
 
-#So, how does all of this work? This rule is saying 
+#So, how does all of this work? This rule is saying
 #
-#"I am how you make the thing called client. If the thing called client is required, but doesn't 
-#exist / is out of date, then the way to make it is to run 
-#`$(CC) $(COMPILERFLAGS) $^ -o $@ $(LINKLIBS)`. 
+#"I am how you make the thing called client. If the thing called client is required, but doesn't
+#exist / is out of date, then the way to make it is to run
+#`$(CC) $(COMPILERFLAGS) $^ -o $@ $(LINKLIBS)`.
 #But, you can't start doing that until you are sure all of my dependencies ($(CLIENTOBJECTS)) are up to date."
 #
-#In this case, CLIENTOBJECTS is just obj/client.o. So, if obj/client.o doesn't exist or is out of date, 
+#In this case, CLIENTOBJECTS is just obj/client.o. So, if obj/client.o doesn't exist or is out of date,
 #make will first look for a rule to build it. That rule is the 'obj/%.o' one, below; the % is a wildcard.
 reliable_sender: $(CLIENTOBJECTS)
 	$(CXX) $(COMPILERFLAGS) $^ -o $@ $(LINKLIBS)
@@ -49,7 +49,7 @@ clean :
 
 #$<: the first dependency in the list; here, src/%.c. (Of course, we could also have used $^).
 #The % sign means "match one or more characters". You specify it in the target, and when a file
-#dependency is checked, if its name matches this pattern, this rule is used. You can also use the % 
+#dependency is checked, if its name matches this pattern, this rule is used. You can also use the %
 #in your list of dependencies, and it will insert whatever characters were matched for the target name.
 obj/sender.o: src/sender.cpp
 	$(CXX) $(COMPILERFLAGS) -c -o $@ $<
