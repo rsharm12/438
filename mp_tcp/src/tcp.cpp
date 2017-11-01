@@ -12,7 +12,7 @@ UDP::UDP(uint16_t udpPort) //: udpPort(udpPort)
     memset((void *) &si_me, 0, sizeof (si_me));
     si_me.sin_family = AF_INET;
     si_me.sin_port = htons(udpPort);
-    si_me.sin_addr.s_addr = htonl(INADDR_ANY); 
+    si_me.sin_addr.s_addr = htonl(INADDR_ANY);
 
     sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (sock == -1)
@@ -28,7 +28,7 @@ UDP::UDP(uint16_t udpPort, string hostname)
     memset((void *) &si_me, 0, sizeof (si_me));
     si_me.sin_family = AF_INET;
     si_me.sin_port = htons(udpPort);
-    si_me.sin_addr.s_addr = htonl(INADDR_ANY); 
+    si_me.sin_addr.s_addr = htonl(INADDR_ANY);
 
     sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (sock == -1)
@@ -56,7 +56,7 @@ int UDP::recv(char *buffer, uint32_t dataSize, struct sockaddr_in * si, socklen_
     int recvd;
     recvd = recvfrom(sock, buffer, dataSize, 0,
                      (struct sockaddr *)si, sl);
-    if(recvd == -1) 
+    if(recvd == -1)
         perror("ERROR");
 
     return recvd;
@@ -67,7 +67,7 @@ int UDP::recv(char *buffer, uint32_t dataSize)
     int recvd;
     recvd = recvfrom(sock, buffer, dataSize, 0,
                      (struct sockaddr *)&si_other_tmp, &slen_other_tmp);
-    if(recvd == -1) 
+    if(recvd == -1)
         perror("ERROR");
 
     return recvd;
@@ -181,7 +181,7 @@ void CongestionControl::log()
     cout << " dupACK="  << dupACKcount;
     cout << " sendBase="  << sendBase;
     cout << " nextSeqNum=" << nextSeqNum;
-    cout << " cwnd=" << cwnd.size() << endl;  
+    cout << " cwnd=" << cwnd.size() << endl;
 }
 
 /* Sender */
@@ -239,6 +239,8 @@ void Sender::setupConnection(UDP * udp)
 
 void Sender::sendData(UDP * udp, CongestionControl * cc)
 {
+    using namespace std::chrono_literals;
+
     char buffer[PACKETSIZE];
 
     while(1)
@@ -264,7 +266,9 @@ void Sender::sendData(UDP * udp, CongestionControl * cc)
         }
 
         cc->cc_mtx.unlock();
-        usleep(50000);
+        // usleep(50000);
+        this_thread::sleep_for(20ms);
+
     }
     cc->cc_mtx.unlock();
 
@@ -317,14 +321,14 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
         // cout <<  "Took " << (800000-timeout.tv_usec)/1000 << "ms" << endl;
         memset(buffer, 0, PACKETSIZE);
         recvd = udp->recv(buffer, HEADERSIZE);
-           
+
         if(recvd > 0)//FD_ISSET(udp->sock, &set))
         {
             // memset(buffer, 0, PACKETSIZE);
             // recvd = udp->recv(buffer, HEADERSIZE);
             // if(recvd == -1)
             //     perror("ERROR:");
-    
+
             Header header = Packet::extractHeader(buffer);
             cout << "Received " << recvd << " bytes.";
             header.log();
@@ -345,8 +349,8 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
             {
                 cc->isDone = true;
                 break;
-            }        
-            
+            }
+
             if(header.ackNum < cc->sendBase)
             {
                 /* duplicate ACK received */
@@ -366,7 +370,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
                     cc->nextSeqNum = cc->sendBase;
                 }
             }
-            else 
+            else
             {
                 /* new ACK received */
                 cout << "New ACK received." << endl;
@@ -385,7 +389,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
                     }
                 }
 
-                /* should be true: 
+                /* should be true:
                  * cc->sendBase = header.ackNum;
                  */
                 if(cc->sendBase != header.ackNum)
@@ -446,12 +450,14 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
 
 void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
 {
+    using namespace std::chrono_literals;
+
     uint64_t readSoFar = 0;
     bool shouldLog = false;
 
     while(readSoFar < cc->totalSize)
     {
-        cc->cc_mtx.lock();
+        // cc->cc_mtx.lock();
         /* data to be read and placed in cwnd */
         for(int seqNum = cc->nextSeqNum; seqNum < cc->sendBase + cc->size; seqNum += DATASIZE)
         {
@@ -475,8 +481,10 @@ void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
             shouldLog = false;
         }
 
-        cc->cc_mtx.unlock();
-        usleep(1000);
+        // cc->cc_mtx.unlock();
+        this_thread::sleep_for(1000us);
+        // usleep(1000);
+
     }
 
     cout << "updateWindow is done!" << endl;
@@ -540,7 +548,7 @@ void Receiver::waitForConnection(UDP * udp)
     int recvd;
     char buffer[PACKETSIZE];
 
-    while(1) 
+    while(1)
     {
         memset(buffer, 0, PACKETSIZE);
         recvd = udp->recv(buffer, HEADERSIZE);

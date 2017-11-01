@@ -48,7 +48,7 @@
 #define FLAG_FIN   0x2
 #define FLAG_SYN   0x4
 
-#define TIMEOUT    500
+#define TIMEOUT    1000
 
 namespace TCP
 {
