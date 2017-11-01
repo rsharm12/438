@@ -20,6 +20,8 @@ void reliablyReceive(uint16_t udpPort, string filename)
 
     //TCP::starttime = high_resolution_clock::now();
 
+    // 11, 21, 18, 16, 19, 16
+
     thread receiveData(&TCP::Receiver::receiveData, &udp, &outfile, &rcvrACK_mtx, &rcvrACK_q);
     thread sendACK(&TCP::Receiver::sendACK, &udp, &rcvrACK_mtx, &rcvrACK_q);
     receiveData.join();
@@ -30,16 +32,16 @@ void reliablyReceive(uint16_t udpPort, string filename)
     duration<double> time_span =
         duration_cast<duration<double>>(TCP::endtime - TCP::starttime);
 
-    cout << "Took " << time_span.count() << " seconds" << endl;
-    cout << "Packet Stats: Sent=" << TCP::packetsSent;
-    cout << " Recvd=" << TCP::packetsRecvd << endl;
+    cerr << "Took " << time_span.count() << " seconds" << endl;
+    cerr << "Packet Stats: Sent=" << TCP::packetsSent;
+    cerr << " Recvd=" << TCP::packetsRecvd << endl;
 }
 
 int main(int argc, char** argv)
 {
     uint16_t udpPort;
 
-    cout.setf(ios::unitbuf);
+   // cout.setf(ios::unitbuf);
 
     if (argc != 3)
     {

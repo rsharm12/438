@@ -107,6 +107,7 @@ Header::Header(uint32_t seqNum, uint32_t ackNum, uint16_t flags, uint16_t rcwnd)
 
 void Header::log()
 {
+    return;
     cout << " SEQ=" << seqNum;
     cout << " ACK=" << ackNum;
     cout << " FL="  << flags;
@@ -166,8 +167,8 @@ Header Packet::extractHeader(const char *packet)
 
 CongestionControl::CongestionControl(uint64_t totalSize) : totalSize(totalSize)
 {
-    f_size = DATASIZE;
-    size = DATASIZE;
+    f_size = 10*DATASIZE;
+    size = 10*DATASIZE;
     ssthresh = 65536; // 64 KB
     dupACKcount = 0;
     sendBase = 0;
@@ -178,6 +179,7 @@ CongestionControl::CongestionControl(uint64_t totalSize) : totalSize(totalSize)
 
 void CongestionControl::log()
 {
+    return;
     switch(currState)
     {
         case SLOW_START: cout << "S"; break;
@@ -268,9 +270,9 @@ void Sender::sendData(UDP * udp, CongestionControl * cc)
             packet.toBuffer(buffer);
             udp->send(buffer, packet.dataSize + HEADERSIZE);
             TCP::packetsSent++;
-            cout << "\nSending " << packet.dataSize << " bytes. ";
+            // cout << "\nSending " << packet.dataSize << " bytes. ";
             packet.header.log();
-            cout << "sendData: ";
+            // cout << "sendData: ";
             cc->log();
         }
 
@@ -316,7 +318,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
     while(1)
     {
         usleep(1000);
-        cout << endl;
+        // cout << endl;
 
         // FD_ZERO(&set);
         // FD_SET(udp->sock, &set);
@@ -340,12 +342,12 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
             //     perror("ERROR:");
     
             Header header = Packet::extractHeader(buffer);
-            cout << "Received " << recvd << " bytes.";
+            // cout << "Received " << recvd << " bytes.";
             header.log();
 
             /* errant SYNACK packet */
             if(header.flags == (FLAG_SYN | FLAG_ACK)){
-                cout << "ERROR SYNACK" << endl;
+                // cout << "ERROR SYNACK" << endl;
                 // cout << "Released cc_mtx" << endl;
                 //cc->cc_mtx.unlock();
                 continue;
@@ -364,14 +366,15 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
             if(header.ackNum < cc->sendBase)
             {
                 /* duplicate ACK received */
-                cout << "Duplicate ACK received." << endl;
+                // cout << "Duplicate ACK received." << endl;
 
 
                 cc->dupACKcount++;
+                dupACKs++;
                 if(cc->dupACKcount == 3 && cc->currState != FAST_REC)
                 {
                     /* switching to Fast Recovery */
-                    cout << "Switching to fast recovery..." << endl;
+                    // cout << "Switching to fast recovery..." << endl;
                     cc->currState = FAST_REC;
                     cc->ssthresh = cc->size/2;
                     cc->size += 3*DATASIZE;
@@ -382,19 +385,19 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
             else 
             {
                 /* new ACK received */
-                cout << "New ACK received." << endl;
+                // cout << "New ACK received." << endl;
 
                 /* remove all ACKed packets from map */
                 for(; cc->sendBase < header.ackNum; cc->sendBase += DATASIZE)
                 {
-                    cout << "Trying to remove " << cc->sendBase;
+                    // cout << "Trying to remove " << cc->sendBase;
                     if(cc->cwnd.find(cc->sendBase) != cc->cwnd.end())
                     {
                         /* erase only if present in map */
                         cc->cwnd.erase(cc->sendBase);
-                        cout << "... yes!" << endl;
+                        // cout << "... yes!" << endl;
                     } else {
-                        cout << "... nope!" << endl;
+                        // cout << "... nope!" << endl;
                     }
                 }
 
@@ -402,7 +405,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
                  * cc->sendBase = header.ackNum;
                  */
                 if(cc->sendBase != header.ackNum)
-                    cout << "sendBase != ackNum" << endl;
+                    // cout << "sendBase != ackNum" << endl;
 
                 if(cc->nextSeqNum < cc->sendBase)
                     cc->nextSeqNum = cc->sendBase;
@@ -416,7 +419,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
                     if(cc->size >= cc->ssthresh)
                     {
                         cc->currState = CNG_AVOID;
-                        cout << "Switching to CNG_AVOID..." << endl;
+                        // cout << "Switching to CNG_AVOID..." << endl;
                     }
                     break;
                 case CNG_AVOID:
@@ -435,7 +438,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
         }
         else{
             /* TIMEOUT: restart timer for any ACK */
-            cout << "Timeout!" << endl;
+            // cout << "Timeout!" << endl;
 
             senderTimeouts++;
             cc->currState = SLOW_START;
@@ -446,11 +449,11 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
             cc->nextSeqNum = cc->sendBase;
         }
 
-        cout << "recvACK: ";
+        // cout << "recvACK: ";
         cc->log();
         // cout << "Released cc_mtx" << endl;
         cc->cc_mtx.unlock();
-        usleep(80000);
+        //usleep(80000);
     }
 
     // cout << "Released cc_mtx" << endl;
@@ -466,7 +469,7 @@ void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
 
     while(readSoFar < cc->totalSize)
     {
-        cc->cc_mtx.lock();
+        //cc->cc_mtx.lock();
         // cout << "updateWindow: Acquired cc_mtx" << endl;
         /* data to be read and placed in cwnd */
         for(int seqNum = cc->nextSeqNum; seqNum < cc->sendBase + cc->size; seqNum += DATASIZE)
@@ -477,7 +480,7 @@ void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
             Packet packet;
             fStream->read(packet.data, DATASIZE);
             packet.dataSize = fStream->gcount();
-            cout << "updateWindow: read " << packet.dataSize << " bytes." << endl;
+            // cout << "updateWindow: read " << packet.dataSize << " bytes." << endl;
             packet.header.seqNum = seqNum;
             cc->cwnd[seqNum] = packet;
 
@@ -492,7 +495,7 @@ void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
         }
 
         // cout << "Released cc_mtx" << endl;
-        cc->cc_mtx.unlock();
+       // cc->cc_mtx.unlock();
         usleep(1000);
     }
 
@@ -625,13 +628,13 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queu
         TCP::packetsRecvd++;
 
         /* check SEQ number of packet */
-        cout << "Received " << recvd << " bytes.";
+        // cout << "Received " << recvd << " bytes.";
         packet.header.log();
 
         /* check for FIN */
         if(packet.header.flags & FLAG_FIN)
         {
-            cout << "Got FIN, going to quit..." << endl;
+            // cout << "Got FIN, going to quit..." << endl;
             break;
         }
 
@@ -642,7 +645,7 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queu
             bytesRcvdSoFar += (recvd - HEADERSIZE);
             shouldWrite = true;
         } else {
-            cout << "Got unexpected packet!" << endl;
+            // cout << "Got unexpected packet!" << endl;
         }
 
         rcvrACK_mtx->lock();
@@ -688,12 +691,12 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
         uint32_t rcvdSoFar = 0;
         bool shouldACK = false;
 
-        usleep(50000); // sleep for 1 ms
+        //usleep(50000); // sleep for 1 ms
         rcvrACK_mtx->lock();
         // cout << "sendACK: acquired rcvrACK_mtx" << endl;
 
-        if(rcvrACK_q->size() > 1)
-            cout << "Possible delay..." << endl;
+        // if(rcvrACK_q->size() > 1)
+            // cout << "Possible delay..." << endl;
 
         while(!rcvrACK_q->empty())
         {
@@ -712,9 +715,8 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
             last_ACK_time = high_resolution_clock::now();
             Packet ack_pkt(Header(0, rcvdSoFar, FLAG_ACK, 0), nullptr, 0);
             ack_pkt.toBuffer(buffer);
-            cout << "Sending ACK... ";
+            // cout << "Sending ACK... ";
             ack_pkt.header.log();
-            cout << 
             udp->send(buffer, HEADERSIZE);
             TCP::packetsSent++;
         }
@@ -722,7 +724,7 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
         high_resolution_clock::time_point now = high_resolution_clock::now();
         duration<double> time_span =
             duration_cast<duration<double>>(now - last_ACK_time);
-        if(time_span > seconds(TIMEOUT) && TCP::packetsSent > 0) break;
+        if(time_span > milliseconds(TIMEOUT) && TCP::packetsSent > 0) break;
     }
 
     cout << "sendACK HAS QUIT!!!" << endl;

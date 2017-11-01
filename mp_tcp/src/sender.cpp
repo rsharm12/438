@@ -36,11 +36,12 @@ void reliablyTransfer(string hostname, uint16_t udpPort,
     duration<double> time_span =
         duration_cast<duration<double>>(TCP::endtime - TCP::starttime);
 
-    cout << "Took " << time_span.count() << " seconds" << endl;
-    cout << "Packet Stats: Sent=" << TCP::packetsSent;
-    cout << " Recvd=" << TCP::packetsRecvd;
-    cout << " Timeouts=" << TCP::Sender::senderTimeouts << endl;
-    cout << "min packets=" << bytesToTransfer/DATASIZE << endl;
+    cerr << "Took " << time_span.count() << " seconds" << endl;
+    cerr << "Packet Stats: Sent=" << TCP::packetsSent;
+    cerr << " Recvd=" << TCP::packetsRecvd;
+    cerr << " Timeouts=" << TCP::Sender::senderTimeouts;
+    cerr << " dupACKs="<< TCP::Sender::dupACKs << endl;
+    cerr << "min packets=" << bytesToTransfer/DATASIZE << endl;
 
     /* send FIN packet */
     TCP::Sender::closeConnection(&udp);
@@ -52,7 +53,7 @@ int main(int argc, char** argv)
     uint16_t udpPort;
     uint64_t numBytes;
 
-    cout.setf(ios::unitbuf);
+  //  cout.setf(ios::unitbuf);
 
     if (argc != 5)
     {

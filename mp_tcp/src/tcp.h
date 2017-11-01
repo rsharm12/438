@@ -48,7 +48,7 @@
 #define FLAG_FIN   0x2
 #define FLAG_SYN   0x4
 
-#define TIMEOUT    1
+#define TIMEOUT    500
 
 namespace TCP
 {
@@ -128,6 +128,7 @@ namespace TCP
 
     namespace Sender
     {
+        uint32_t dupACKs;
         uint32_t senderTimeouts;
         static void setupConnection(UDP * udp);
         static void sendData(UDP * udp, CongestionControl * cc);
