@@ -14,6 +14,11 @@
 #include <unordered_map>
 #include <cmath>
 
+// #include <valgrind/drd.h>
+// #define _GLIBCXX_SYNCHRONIZATION_HAPPENS_BEFORE(addr) ANNOTATE_HAPPENS_BEFORE(addr)
+// #define _GLIBCXX_SYNCHRONIZATION_HAPPENS_AFTER(addr)  ANNOTATE_HAPPENS_AFTER(addr)
+
+
 /* networking header files */
 #include <arpa/inet.h>
 #include <netinet/in.h>
@@ -43,7 +48,7 @@
 #define FLAG_FIN   0x2
 #define FLAG_SYN   0x4
 
-#define TIMEOUT    5
+#define TIMEOUT    1
 
 namespace TCP
 {
@@ -65,8 +70,8 @@ namespace TCP
         struct sockaddr_in si_other;
         struct sockaddr_in si_other_tmp;
         socklen_t slen_me = (socklen_t) sizeof(struct sockaddr_in);
-        socklen_t slen_other;
-        socklen_t slen_other_tmp;
+        socklen_t slen_other = (socklen_t) sizeof(struct sockaddr_in);
+        socklen_t slen_other_tmp = (socklen_t) sizeof(struct sockaddr_in);
 
         UDP(uint16_t udpPort);
         UDP(uint16_t udpPort, string hostname);

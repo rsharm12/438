@@ -57,7 +57,7 @@ int UDP::recv(char *buffer, uint32_t dataSize, struct sockaddr_in * si, socklen_
     recvd = recvfrom(sock, buffer, dataSize, 0,
                      (struct sockaddr *)si, sl);
     if(recvd == -1) 
-        perror("ERROR:");
+        perror("ERROR");
 
     return recvd;
 }
@@ -68,16 +68,31 @@ int UDP::recv(char *buffer, uint32_t dataSize)
     recvd = recvfrom(sock, buffer, dataSize, 0,
                      (struct sockaddr *)&si_other_tmp, &slen_other_tmp);
     if(recvd == -1) 
-        perror("ERROR:");
+        perror("ERROR");
 
     return recvd;
 }
 
 int UDP::send(const char * packet, int packetSize)
 {
+//     char buffer[INET_ADDRSTRLEN];
+
+//     inet_ntop(AF_INET, &(si_other.sin_addr), buffer, INET_ADDRSTRLEN);
+//     cout << " addr=" << buffer;
+//     cout << " port=" << si_other.sin_port << endl;
+
     return sendto(sock, packet, packetSize, 0,
                   (const sockaddr *) &si_other, sizeof(si_other));
 }
+
+// void UDP::log()
+// {
+//     char buffer[INET_ADDRSTRLEN];
+
+//     inet_ntop(AF_INET, &(si_other.sin_addr), buffer, INET_ADDRSTRLEN);
+//     cout << " addr=" << buffer;
+//     cout << " port=" << si_other.sin_port << endl;
+// }
 
 /* Header */
 
@@ -261,7 +276,7 @@ void Sender::sendData(UDP * udp, CongestionControl * cc)
 
         // cout << "Released cc_mtx" << endl;
         cc->cc_mtx.unlock();
-        usleep(1000);
+        usleep(50000);
     }
 
     // cout << "Released cc_mtx" << endl;
@@ -277,6 +292,9 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
     fd_set set;
     struct timeval timeout;
 
+    timeout.tv_sec = 0;
+    timeout.tv_usec = 50000;
+
     cout << "recvACK: will try receiving data now" << endl;
     usleep(50000);
 
@@ -290,6 +308,9 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
     //     }
     // }
 
+    setsockopt(udp->sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(struct timeval));
+
+
     cout << "recvACK: Got first set of data!!!" << endl;
 
     while(1)
@@ -297,24 +318,26 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
         usleep(1000);
         cout << endl;
 
-        FD_ZERO(&set);
-        FD_SET(udp->sock, &set);
+        // FD_ZERO(&set);
+        // FD_SET(udp->sock, &set);
 
-        cc->cc_mtx.lock();
+        // cc->cc_mtx.lock();
         // cout << "recvACK: Acquired cc_mtx" << endl;
 
         /* check for ACK */
-        timeout.tv_sec = 0;
-        timeout.tv_usec = 50000;
-        select(udp->sock+1, &set, NULL, NULL, &timeout);
-        cout <<  "Took " << (50000-timeout.tv_usec)/1000 << "ms" << endl;
-
-        if(FD_ISSET(udp->sock, &set))
+        // timeout.tv_sec = 0;
+        // timeout.tv_usec = 800000;
+        // select(udp->sock+1, &set, NULL, NULL, &timeout);
+        // cout <<  "Took " << (800000-timeout.tv_usec)/1000 << "ms" << endl;
+        memset(buffer, 0, PACKETSIZE);
+        recvd = udp->recv(buffer, HEADERSIZE);
+           
+        if(recvd > 0)//FD_ISSET(udp->sock, &set))
         {
-            memset(buffer, 0, PACKETSIZE);
-            recvd = udp->recv(buffer, HEADERSIZE);
-            if(recvd == -1)
-                perror("ERROR:");
+            // memset(buffer, 0, PACKETSIZE);
+            // recvd = udp->recv(buffer, HEADERSIZE);
+            // if(recvd == -1)
+            //     perror("ERROR:");
     
             Header header = Packet::extractHeader(buffer);
             cout << "Received " << recvd << " bytes.";
@@ -324,9 +347,11 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
             if(header.flags == (FLAG_SYN | FLAG_ACK)){
                 cout << "ERROR SYNACK" << endl;
                 // cout << "Released cc_mtx" << endl;
-                cc->cc_mtx.unlock();
+                //cc->cc_mtx.unlock();
                 continue;
             }
+
+            cc->cc_mtx.lock();
 
             TCP::packetsRecvd++;
 
@@ -425,6 +450,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
         cc->log();
         // cout << "Released cc_mtx" << endl;
         cc->cc_mtx.unlock();
+        usleep(80000);
     }
 
     // cout << "Released cc_mtx" << endl;
@@ -662,7 +688,7 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
         uint32_t rcvdSoFar = 0;
         bool shouldACK = false;
 
-        usleep(1000); // sleep for 1 ms
+        usleep(50000); // sleep for 1 ms
         rcvrACK_mtx->lock();
         // cout << "sendACK: acquired rcvrACK_mtx" << endl;
 
@@ -688,6 +714,7 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
             ack_pkt.toBuffer(buffer);
             cout << "Sending ACK... ";
             ack_pkt.header.log();
+            cout << 
             udp->send(buffer, HEADERSIZE);
             TCP::packetsSent++;
         }
