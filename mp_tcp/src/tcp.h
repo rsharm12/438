@@ -25,7 +25,7 @@
 #include <signal.h>
 #include <fcntl.h>
 
-#define PACKETSIZE  1472
+#define PACKETSIZE  1400
 #define HEADERSIZE  16
 #define DATASIZE    (PACKETSIZE - HEADERSIZE)
 /*

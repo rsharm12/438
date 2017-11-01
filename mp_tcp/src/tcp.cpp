@@ -1,4 +1,4 @@
-// #include "tcp.h"
+#include "tcp.h"
 
 namespace TCP
 {
@@ -50,15 +50,15 @@ UDP::~UDP()
     close(sock);
 }
 
-int UDP::recv(char *buffer, uint32_t dataSize, bool shouldSave)
+int UDP::recv(char *buffer, uint32_t dataSize, int flags, bool shouldSave)
 {
     int recv;
 
     if(shouldSave)
-        recv = recvfrom(sock, buffer, dataSize, 0,
+        recv = recvfrom(sock, buffer, dataSize, flags,
                         (struct sockaddr *)&si_other, &slen_other);
     else
-        recv = recvfrom(sock, buffer, dataSize, 0,
+        recv = recvfrom(sock, buffer, dataSize, flags,
                         (struct sockaddr *)&si_tmp, &slen_tmp);
 
     if(-1 == recv)
@@ -66,9 +66,9 @@ int UDP::recv(char *buffer, uint32_t dataSize, bool shouldSave)
     return recv;
 }
 
-int UDP::send(const char *packet, int packetSize)
+int UDP::send(const char *packet, int packetSize, int flags)
 {
-    int sent = sendto(sock, packet, packetSize, 0,
+    int sent = sendto(sock, packet, packetSize, flags,
                       (const sockaddr *) &si_other, slen_other);
     if(-1 == sent)
         perror("UDP::send ERROR");
@@ -264,7 +264,7 @@ void Sender::sendData(UDP * udp, CongestionControl * cc)
             cout << "sendData: ";
             cc->log();
 
-            udp->send(buffer, packet.header.dataLen + HEADERSIZE);
+            udp->send(buffer, packet.header.dataLen + HEADERSIZE, 0);
             TCP::packetsSent++;
         }
 
@@ -286,7 +286,6 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
     while(1)
     {
         usleep(1000);
-        cout << endl;
 
         FD_ZERO(&set);
         FD_SET(udp->sock, &set);
@@ -550,22 +549,28 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream,
 {
     int recvd = -1;
     uint32_t bytesRcvdSoFar = 0;
+
     char buffer[PACKETSIZE];
-    bool shouldWrite = false;
     Header header;
     Packet packet;
 
     while(recvd == -1)
     {
         memset(buffer, 0, PACKETSIZE);
-        recvd = udp->recv(buffer, HEADERSIZE, true);
-        // if(recvd == -1) {
-        //     cout << "Received Error" << endl;
-        // }
+        recvd = udp->recv(buffer, PACKETSIZE, MSG_PEEK, true);
     }
+
+    TCP::starttime = high_resolution_clock::now();
 
     while(1)
     {
+        memset(buffer, 0, PACKETSIZE);
+        recvd = udp->recv(buffer, PACKETSIZE, 0, false);
+        if(recvd == -1) {
+            cout << "Received Error!!!!!!!!!!!!" << endl;
+            continue;
+        }
+
         packet.update(buffer, recvd);
         TCP::packetsRecvd++;
 
@@ -574,7 +579,7 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream,
         packet.header.log();
 
         /* check for FIN */
-        if(packet.header.flags & FLAG_FIN)
+        if(packet.header.flags == FLAG_FIN)
         {
             cout << "Got FIN, going to quit..." << endl;
             break;
@@ -585,7 +590,14 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream,
         {
             /* packet is in correct sequence */
             bytesRcvdSoFar += (recvd - HEADERSIZE);
-            shouldWrite = true;
+            /* write to file */
+            if(shouldWrite)
+            {
+                fStream->write(packet.data, packet.header.dataLen);
+                shouldWrite = false;
+            }
+        } else if(packet.header.seqNum < bytesRcvdSoFar) {
+            cout << "Got duplicate packet!" << endl;
         } else {
             cout << "Got unexpected packet!" << endl;
         }
@@ -593,28 +605,12 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream,
         rcvrACK_mtx->lock();
         rcvrACK_q->push(bytesRcvdSoFar);
         rcvrACK_mtx->unlock();
-
-        /* write to file */
-        if(shouldWrite) {
-            fStream->write(packet.data, recvd - HEADERSIZE);
-            shouldWrite = false;
-        }
-
-        memset(buffer, 0, PACKETSIZE);
-        recvd = udp->recv(buffer, PACKETSIZE);
-
-        if(recvd == -1) {
-            cout << "Received Error!!!!!!!!!!!!" << endl;
-            break;
-        }
-
     }
 
-    Packet fin_ack(Header(0, 0, FLAG_FIN | FLAG_ACK, 0), nullptr, 0);
+    Packet fin_ack(Header(0, 0, 0, FLAG_FIN | FLAG_ACK, 0), nullptr, 0);
     fin_ack.toBuffer(buffer);
     cout << "Sending FINACK!" << endl;
-    udp->send(buffer, HEADERSIZE);
-
+    udp->send(buffer, HEADERSIZE, 0);
 }
 
 
@@ -627,12 +623,12 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
 
     while(1)
     {
-        uint32_t rcvdSoFar = 0;
+        uint32_t largestAckInQueue = 0;
         bool shouldACK = false;
 
         usleep(1000); // sleep for 1 ms
-        rcvrACK_mtx->lock();
 
+        rcvrACK_mtx->lock();
         if(rcvrACK_q->size() > 1)
             cout << "Possible delay..." << endl;
 
@@ -641,8 +637,8 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
             shouldACK = true;
             uint32_t curr = rcvrACK_q->front();
             rcvrACK_q->pop();
-            if(curr > rcvdSoFar)
-                rcvdSoFar = curr;
+            if(curr > largestAckInQueue)
+                largestAckInQueue = curr;
         }
 
         rcvrACK_mtx->unlock();
@@ -650,11 +646,11 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
         if(shouldACK)
         {
             last_ACK_time = high_resolution_clock::now();
-            Packet ack_pkt(Header(0, rcvdSoFar, FLAG_ACK, 0), nullptr, 0);
+            Packet ack_pkt(Header(0, largestAckInQueue, 0, FLAG_ACK, 0), nullptr, 0);
             ack_pkt.toBuffer(buffer);
             cout << "Sending ACK... ";
             ack_pkt.header.log();
-            udp->send(buffer, HEADERSIZE);
+            udp->send(buffer, HEADERSIZE, 0);
             TCP::packetsSent++;
         }
 
@@ -663,6 +659,8 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
             duration_cast<duration<double>>(now - last_ACK_time);
         if(time_span > seconds(TIMEOUT) && TCP::packetsSent > 0) break;
     }
+
+    cout << "sendACK: done" << endl;
 }
 
 } // namespace TCP
