@@ -251,8 +251,10 @@ void Sender::sendData(UDP * udp, CongestionControl * cc)
         if(cc->isDone)
             break;
 
+        uint64_t lastPacketSize = DATASIZE;
+
         /* data to be sent from cwnd */
-        for(; cc->nextSeqNum < (cc->sendBase + cc->size); cc->nextSeqNum += DATASIZE)
+        for(; cc->nextSeqNum < (cc->sendBase + cc->size); cc->nextSeqNum += lastPacketSize)
         {
             if(cc->cwnd.find(cc->nextSeqNum) == cc->cwnd.end())
                 /* packet not loaded */
@@ -265,6 +267,8 @@ void Sender::sendData(UDP * udp, CongestionControl * cc)
             packet.header.log();
             // cout << "sendData: ";
             cc->log();
+
+            lastPacketSize = packet.dataSize;
         }
 
         cc->cc_mtx.unlock();
@@ -281,11 +285,11 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
 {
     int recvd = -1;
     char buffer[PACKETSIZE];
-    fd_set set;
+    // fd_set set;
     struct timeval timeout;
 
     timeout.tv_sec = 0;
-    timeout.tv_usec = 60000;
+    timeout.tv_usec = 50000;
 
     cout << "recvACK: will try receiving data now" << endl;
     usleep(50000);
@@ -299,11 +303,9 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
     //         cout << "Received Error" << endl;
     //     }
     // }
+    // cout << "recvACK: Got first set of data!!!" << endl;
 
     setsockopt(udp->sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(struct timeval));
-
-
-    cout << "recvACK: Got first set of data!!!" << endl;
 
     while(1)
     {
@@ -314,7 +316,6 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
         // FD_SET(udp->sock, &set);
 
         // cc->cc_mtx.lock();
-        // cout << "recvACK: Acquired cc_mtx" << endl;
 
         /* check for ACK */
         // timeout.tv_sec = 0;
@@ -376,9 +377,12 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
                 /* new ACK received */
                 // cout << "New ACK received." << endl;
 
+                uint32_t packetsAcked = 0;
+
                 /* remove all ACKed packets from map */
                 for(; cc->sendBase < header.ackNum; cc->sendBase += DATASIZE)
                 {
+                    packetsAcked++;
                     // cout << "Trying to remove " << cc->sendBase;
                     if(cc->cwnd.find(cc->sendBase) != cc->cwnd.end())
                     {
@@ -402,7 +406,7 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
                 switch(cc->currState)
                 {
                 case SLOW_START:
-                    cc->size += DATASIZE;
+                    cc->size += packetsAcked * DATASIZE;
                     cc->f_size = cc->size;
                     cc->dupACKcount = 0;
                     if(cc->size >= cc->ssthresh)
@@ -412,8 +416,11 @@ void Sender::recvACK(UDP * udp, CongestionControl * cc)
                     }
                     break;
                 case CNG_AVOID:
-                    cc->f_size += DATASIZE * (DATASIZE/cc->f_size);
-                    cc->size = floor(cc->f_size);
+                    for(int i = 0; i < packetsAcked; i++)
+                    {
+                        cc->f_size += DATASIZE * (DATASIZE/cc->f_size);
+                        cc->size = floor(cc->f_size);
+                    }
                     cc->dupACKcount = 0;
                     break;
                 case FAST_REC:
@@ -458,7 +465,7 @@ void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
 
     while(readSoFar < cc->totalSize)
     {
-        // cc->cc_mtx.lock();
+        cc->cc_mtx.lock();
         /* data to be read and placed in cwnd */
         for(int seqNum = cc->nextSeqNum; seqNum < cc->sendBase + cc->size; seqNum += DATASIZE)
         {
@@ -482,10 +489,9 @@ void Sender::updateWindow(CongestionControl * cc, ifstream * fStream)
             shouldLog = false;
         }
 
-        // cc->cc_mtx.unlock();
+        cc->cc_mtx.unlock();
         this_thread::sleep_for(1000us);
         // usleep(1000);
-
     }
 
     cout << "updateWindow is done!" << endl;
@@ -495,36 +501,36 @@ void Sender::closeConnection(UDP * udp)
 {
     int recvd;
     char buffer[PACKETSIZE];
-    fd_set set;
-    struct timeval timeout;
+    // fd_set set;
+    // struct timeval timeout;
+
+    Packet packet(Header(0, 0, FLAG_FIN, 0), nullptr, 0);
 
     /* send FIN packet */
-    while(1)
+    for(int i = 0; i < 3; i++)
     {
-        Packet packet(Header(0, 0, FLAG_FIN, 0), nullptr, 0);
-
+        memset(buffer, 0, PACKETSIZE);
         packet.toBuffer(buffer);
-
         /* send FIN */
         cout << "Sending FIN...";
         packet.header.log();
         udp->send(buffer, HEADERSIZE);
 
-        FD_ZERO(&set);
-        FD_SET(udp->sock, &set);
+        // FD_ZERO(&set);
+        // FD_SET(udp->sock, &set);
 
         /* check for FINACK */
-        /* reset timeout to 1 sec for fin */
-        timeout.tv_sec = 1;
-        timeout.tv_usec = 0;
-        select(udp->sock+1, &set, NULL, NULL, &timeout);
+        // /* reset timeout to 1 sec for fin */
+        // timeout.tv_sec = 1;
+        // timeout.tv_usec = 0;
+        // select(udp->sock+1, &set, NULL, NULL, &timeout);
 
         memset(buffer, 0, PACKETSIZE);
+        recvd = udp->recv(buffer, HEADERSIZE);
 
-        if(FD_ISSET(udp->sock, &set))
+        // if(FD_ISSET(udp->sock, &set))
+        if(recvd > 0)
         {
-            recvd = udp->recv(buffer, HEADERSIZE);
-
             /* extract FLAGS from received packet */
             Header gotHeader = Packet::extractHeader(buffer);
 
@@ -643,6 +649,7 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queu
 
         /* write to file */
         if(shouldWrite) {
+            // cout << "Writing " << recvd - HEADERSIZE << " bytes..." << endl;
             fStream->write(packet.data, recvd - HEADERSIZE);
             shouldWrite = false;
         }
@@ -659,10 +666,12 @@ void Receiver::receiveData(UDP *udp, ofstream *fStream, mutex *rcvrACK_mtx, queu
 
     Packet fin_ack(Header(0, 0, FLAG_FIN | FLAG_ACK, 0), nullptr, 0);
     fin_ack.toBuffer(buffer);
-    cout << "Sending FINACK!" << endl;
+    cout << "Sending FINACK 3 times!" << endl;
     udp->send(buffer, HEADERSIZE);
+    udp->send(buffer, HEADERSIZE);
+    udp->send(buffer, HEADERSIZE);
+    fStream->close();
     exit(EXIT_SUCCESS);
-
 }
 
 
@@ -707,6 +716,8 @@ void Receiver::sendACK(UDP *udp, mutex *rcvrACK_mtx, queue<uint32_t> *rcvrACK_q)
             udp->send(buffer, HEADERSIZE);
             TCP::packetsSent++;
         }
+
+        this_thread::sleep_for(10ms);
 
         // high_resolution_clock::time_point now = high_resolution_clock::now();
         // duration<double> time_span =
