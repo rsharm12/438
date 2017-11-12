@@ -5,7 +5,9 @@
 #include <unordered_map>
 #include <iostream>
 #include <limits>
-
+#include <map>
+#include <string>
+#include <stack>
 
 using namespace std;
 
@@ -17,11 +19,11 @@ public:
 	{
 		int vertex;
 		/* store vertex number mapped to edge weight of neighbors */
-		unordered_map<int, int> neighbors;
+		map<int, int> neighbors;
 		/* djikstra's data structures */	
-		unordered_map<int, bool> known;
-		unordered_map<int, int> cost;
-		unordered_map<int, int> predecessor;
+		map<int, bool> known;
+		map<int, int> cost;
+		map<int, int> predecessor;
 		Node(int v) 
 		{
 			vertex = v;
@@ -35,6 +37,8 @@ public:
 	void removeEdge(int v1, int v2);
 	Node * getNode(int v);
 	void print() const;
+	void printTopology(int start);
+	void sendMessage(int v1, int v2, string msg);
 
 	void djikstra(int v);
 

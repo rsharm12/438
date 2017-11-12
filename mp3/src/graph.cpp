@@ -35,7 +35,6 @@ void Graph::Node::print() const
 	cout << endl;
 }
 
-
 Graph::~Graph()
 {
 	for(auto it = vertices.begin(); it != vertices.end(); it++)
@@ -85,6 +84,64 @@ void Graph::print() const
 	}
 }
 
+void Graph::printTopology(int start)
+{
+	/* run djikstra from each vertex */
+	djikstra(start);
+
+	for(auto it = vertices[start]->cost.begin(); it != vertices[start]->cost.end(); it++)
+	{
+		/* ensure vertex is reachable */
+		if(vertices[start]->known[it->first])
+		{
+			int prevNode = it->first;
+			while(vertices[start]->predecessor[prevNode] != start)
+			{
+				if(prevNode == start) break;
+				prevNode = vertices[start]->predecessor[prevNode];
+			}
+			
+			cout << it->first << " " << prevNode << " " << it->second << endl;
+		}
+	}
+
+	cout << endl;
+}
+
+void Graph::sendMessage(int v1, int v2, string msg)
+{
+	/* run djikstra from sender vertex */
+	djikstra(v1);
+
+	stack<int> s;
+	int prevNode = vertices[v1]->predecessor[v2];
+	cout << "from " << v1 << " to " << v2 << " cost ";
+	if(vertices[v1]->known[v2])
+	{
+		/* find path from v1 to v2 */
+		while(prevNode != vertices[v1]->predecessor[v1])
+		{
+			s.push(prevNode);
+			prevNode = vertices[v1]->predecessor[prevNode];	
+		}
+
+		cout << vertices[v1]->cost[v2] << " hops ";
+
+		/* reverse predecessors */
+		while(!s.empty()) 
+		{
+			cout << s.top() << " ";
+			s.pop();
+		}
+	}
+	else
+	{
+		cout << "infinite hops unreachable ";
+	}
+
+	cout << "message " << msg << endl;
+}
+
 
 void Graph::djikstra(int v)
 {
@@ -113,7 +170,7 @@ void Graph::djikstra(int v)
 	int i = 0;
 	while(true)
 	{
-		cout << "currNode=" << currNode << endl;
+		//cout << "currNode=" << currNode << endl;
 		auto neighbors = vertices[currNode]->neighbors;
 		for(auto n_it = neighbors.begin(); n_it != neighbors.end(); n_it++)
 		{
@@ -121,9 +178,12 @@ void Graph::djikstra(int v)
 			int currCost = node->cost[n_it->first];
 			/* potential cost is path cost to current node from start + edge weight to neighbor */
 			int potentialCost = node->cost[currNode] + n_it->second;
-			if(potentialCost < currCost)
+			bool known = node->known[n_it->first];
+			if(potentialCost < currCost && !known) {
 				node->cost[n_it->first] = potentialCost;
-			cout << "neighbor=" << n_it->first << " currCost=" << currCost << " potentialCost=" << potentialCost << endl;
+				node->predecessor[n_it->first] = currNode;
+			}
+			//cout << "neighbor=" << n_it->first << " currCost=" << currCost << " potentialCost=" << potentialCost << endl;
 		}
 
 		/* select next unknown node based on minimum cost */
@@ -133,7 +193,7 @@ void Graph::djikstra(int v)
 		{
 			bool known = node->known[v_it->first];
 			int cost = node->cost[v_it->first];
-			cout << "vertex=" << v_it->first << " known=" << known << " cost=" << cost << endl;
+			//cout << "vertex=" << v_it->first << " known=" << known << " cost=" << cost << endl;
 			if(!known && cost < currLowestCost)
 			{
 				currLowestCost = cost;
@@ -141,10 +201,10 @@ void Graph::djikstra(int v)
 			}
 		}
 
-
 		if(currLowestNode == -1)
 			break;
 
+		//node->predecessor[currLowestNode] = currNode; 
 		currNode = currLowestNode;
 		node->known[currNode] = true;
 		i++;
