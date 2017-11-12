@@ -42,10 +42,11 @@ public:
 
 	void djikstra(int v);
 
+	
+	unordered_map<int, Node*> vertices;
+
 
 private:
-
-	unordered_map<int, Node*> vertices;
 
 };
 

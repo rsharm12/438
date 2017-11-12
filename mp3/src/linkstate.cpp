@@ -1,9 +1,63 @@
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include "graph.h"
 
+void addElements(Graph * graph, string line)
+{
+	int v1, v2, weight;
+	istringstream iss(line);
+	iss >> v1;
+	iss >> v2;
+	iss >> weight;
 
-int main(int argc, char** argv) {
+	if(graph->vertices.find(v1) == graph->vertices.end())
+	 	graph->addVertex(v1);
+	if(graph->vertices.find(v2) == graph->vertices.end())
+ 		graph->addVertex(v2);
+ 	if(weight == -999)
+ 		graph->removeEdge(v1, v2);
+	else 
+		graph->addEdge(v1, v2, weight);
+}
+
+void sendMessage(Graph * graph, string filename)
+{
+	int v1, v2;
+	string line;
+    string message;
+
+	ifstream messagefile (filename);
+
+	while(getline(messagefile, line))
+	{
+		istringstream iss(line);
+		iss >> v1 >> v2;
+		/* strip leading space */
+		iss.ignore(1, ' ');
+		getline(iss, message);
+
+		graph->sendMessage(v1, v2, message);
+		//cout << v1 << " " << v2 << message << endl;
+	}
+
+	messagefile.close();
+}
+
+void printTopology(Graph * graph)
+{
+	/* print topology at each vertex */
+    //graph->print();
+    for(auto it = graph->vertices.begin(); it != graph->vertices.end(); it++)
+    {
+     	graph->printTopology(it->first);
+    }
+}
+
+int main(int argc, char** argv) 
+{
     //printf("Number of arguments: %d", argc);
     if (argc != 4) {
         cout << "Usage: ./linkstate topofile messagefile changesfile" << endl;
@@ -11,45 +65,37 @@ int main(int argc, char** argv) {
     }
 
     Graph graph;
-    graph.addVertex(1);
-    graph.addVertex(2);
-    graph.addVertex(4);
+    string line;
 
-    graph.addEdge(1, 4, 1);
-    graph.addEdge(1, 2, 8);
+	/* fill in graph with initial topofile */
+	ifstream topofile (argv[1]);
+	while(getline(topofile, line))
+	{
+		addElements(&graph, line);
+	}
 
-    graph.addVertex(5);
-    graph.addVertex(3);
-    graph.addVertex(6);
-    graph.addVertex(7);
+	topofile.close();
 
-   //graph.addEdge(6, 7, 2);
-    graph.addEdge(4, 5, 1);
-    graph.addEdge(2, 5, 4);
-    graph.addEdge(2, 3, 3);
+	/* print topology at each vertex */
+	printTopology(&graph);
 
-    // for(int i=0; i<8; i++)
-    // 	graph.addVertex(i);
+    /* read message file and send messages*/
+	sendMessage(&graph, argv[2]);
+	cout << endl;
 
-    // graph.addEdge(0, 1, 1);
-    // graph.addEdge(0, 2, 5);
-    // graph.addEdge(1, 2, 8);
-    // graph.addEdge(1, 3, 9);
-    // graph.addEdge(1, 5, 7);
-    // graph.addEdge(2, 6, 5);
-    // graph.addEdge(3, 5, 3);
-    // graph.addEdge(5, 7, 9);
+	/* process changesfile and reprint topology + messages */
+	ifstream changesfile (argv[3]);
 
-    graph.print();
-    cout << endl;
-    for(int i=1; i<8; i++) {
-    	graph.printTopology(i); 
-    }
-	graph.sendMessage(2, 1, "hello");	
-	graph.sendMessage(4, 5, "whats");	
-	graph.sendMessage(1, 3, "up");	
-	graph.sendMessage(3, 4, "yolo");
-	graph.sendMessage(6, 3, "mission impossible");
+	while(getline(changesfile, line))
+	{
+		addElements(&graph, line);
+		printTopology(&graph);
+		sendMessage(&graph, argv[2]);
+		cout << endl;
+	}
+
+	changesfile.close();
+
     return 0;
 }
 
