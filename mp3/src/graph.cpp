@@ -10,25 +10,39 @@ void Graph::Node::print() const
     }
     cout << endl;
 
-    cout << "known: ";
-    for(auto it = known.begin(); it != known.end(); it++)
+    cout << "dv_cost: ";
+    for(auto it = dv_cost.begin(); it != dv_cost.end(); it++)
     {
         cout << it->first << "|" << it->second << " ";
     }
     cout << endl;
 
-    cout << "cost: ";
-    for(auto it = cost.begin(); it != cost.end(); it++)
+    cout << "dv_next_hop: ";
+    for(auto it = dv_next_hop.begin(); it != dv_next_hop.end(); it++)
     {
         cout << it->first << "|" << it->second << " ";
     }
     cout << endl;
 
-    cout << "predecessor: ";
-    for(auto it = predecessor.begin(); it != predecessor.end(); it++)
-    {
-        cout << it->first << "|" << it->second << " ";
-    }
+    // cout << "known: ";
+    // for(auto it = known.begin(); it != known.end(); it++)
+    // {
+    //     cout << it->first << "|" << it->second << " ";
+    // }
+    // cout << endl;
+
+    // cout << "cost: ";
+    // for(auto it = cost.begin(); it != cost.end(); it++)
+    // {
+    //     cout << it->first << "|" << it->second << " ";
+    // }
+    // cout << endl;
+
+    // cout << "predecessor: ";
+    // for(auto it = predecessor.begin(); it != predecessor.end(); it++)
+    // {
+    //     cout << it->first << "|" << it->second << " ";
+    // }
     cout << endl;
 }
 
@@ -214,4 +228,79 @@ void Graph::djikstra(int v)
         node->known[currNode] = true;
         i++;
     }
+}
+
+
+void Graph::distanceVector()
+{
+    /* sender to receiver for each message */
+    queue<tuple<int, int>> q;
+
+    /* initialze queue and update inital costs to infinity */
+    for(auto it = vertices.begin(); it != vertices.end(); it++)
+    {
+        int node = it->first;
+        Node * currNode = it->second;
+
+        for(auto n_it = currNode->neighbors.begin(); n_it != currNode->neighbors.end(); n_it++)
+        {
+            currNode->dv_cost[n_it->first] = n_it->second;
+            currNode->dv_next_hop[n_it->first] = n_it->first;
+            q.push(make_tuple(node, n_it->first));
+        }
+    }
+
+    while(!q.empty())
+    {
+        bool shouldBroadcast = false;
+        int sender = get<0>(q.front());
+        int receiver = get<1>(q.front());
+        q.pop();
+
+        Node * senderNode = getNode(sender);
+        Node * receiverNode = getNode(receiver);
+
+        for(auto sender_tbl = senderNode->dv_cost.begin(); sender_tbl != senderNode->dv_cost.end(); sender_tbl++)
+        {
+            int dst = sender_tbl->first; // destination to compare
+            if(dst == receiver) 
+                continue;
+            
+            int senderToReceiverCost = senderNode->neighbors[receiver]; // get edge weight
+            int senderToDstCost = sender_tbl->second;
+
+            /* receiver does not know about dest */
+            if(receiverNode->dv_cost.find(dst) == receiverNode->dv_cost.end())
+            {
+                receiverNode->dv_cost[dst] = senderToReceiverCost + senderToDstCost;
+                receiverNode->dv_next_hop[dst] = sender;
+                shouldBroadcast = true;
+            }
+            else
+            {
+                int receiverToDstCost = receiverNode->dv_cost[dst];
+                if(senderToReceiverCost + senderToDstCost < receiverToDstCost)
+                {
+                    receiverNode->dv_cost[dst] = senderToReceiverCost + senderToDstCost;
+                    receiverNode->dv_next_hop[dst] = sender;
+                    shouldBroadcast = true;
+                }
+
+            }
+
+        }
+
+        if(shouldBroadcast)
+        {
+            for(auto n_it = receiverNode->neighbors.begin(); n_it != receiverNode->neighbors.end(); n_it++)
+            {
+                q.push(make_tuple(receiver, n_it->first));
+            }
+
+        }
+
+        cout << sender << "->" << receiver << endl;
+        receiverNode->print();
+    }    
+
 }

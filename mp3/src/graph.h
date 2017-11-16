@@ -8,6 +8,8 @@
 #include <map>
 #include <string>
 #include <stack>
+#include <queue>
+#include <tuple>
 
 using namespace std;
 
@@ -26,6 +28,11 @@ public:
         map<int, bool> known;
         map<int, int> cost;
         map<int, int> predecessor;
+
+        /* distance vector data structures */
+        map<int, int> dv_cost;
+        map<int, int> dv_next_hop;
+
 
         Node(int v)
         {
@@ -47,6 +54,7 @@ public:
     void sendMessage(int v1, int v2, string msg);
 
     void djikstra(int v);
+    void distanceVector();
 
 private:
 
