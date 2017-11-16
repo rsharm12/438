@@ -1,14 +1,14 @@
 #If you use threads, add -pthread here.
 CPP = g++
-COMPILERFLAGS = -g -Wall -Wextra -Wno-sign-compare 
+COMPILERFLAGS = -std=c++11 -g -Wall -Wextra -Wno-sign-compare
 
 #Any libraries you might need linked in.
 LINKLIBS = -lpthread
 
 #The components of each program. When you create a src/foo.c source file, add obj/foo.o here, separated
 #by a space (e.g. SOMEOBJECTS = obj/foo.o obj/bar.o obj/baz.o).
-LINKSTATEOBJECTS = obj/linkstate.o
-DISTVECOBJECTS = obj/distvec.o
+LINKSTATEOBJECTS = obj/graph.o obj/linkstate.o
+DISTVECOBJECTS = obj/graph.o obj/distvec.o
 #CLIENTOBJECTS = obj/sender_main.o
 #TALKEROBJECTS = obj/talker.o
 #LISTENEROBJECTS = obj/listener.o
@@ -35,14 +35,14 @@ all : obj linkstate distvec
 
 
 
-#So, how does all of this work? This rule is saying 
+#So, how does all of this work? This rule is saying
 #
-#"I am how you make the thing called client. If the thing called client is required, but doesn't 
-#exist / is out of date, then the way to make it is to run 
-#`$(CC) $(COMPILERFLAGS) $^ -o $@ $(LINKLIBS)`. 
+#"I am how you make the thing called client. If the thing called client is required, but doesn't
+#exist / is out of date, then the way to make it is to run
+#`$(CC) $(COMPILERFLAGS) $^ -o $@ $(LINKLIBS)`.
 #But, you can't start doing that until you are sure all of my dependencies ($(CLIENTOBJECTS)) are up to date."
 #
-#In this case, CLIENTOBJECTS is just obj/client.o. So, if obj/client.o doesn't exist or is out of date, 
+#In this case, CLIENTOBJECTS is just obj/client.o. So, if obj/client.o doesn't exist or is out of date,
 #make will first look for a rule to build it. That rule is the 'obj/%.o' one, below; the % is a wildcard.
 linkstate: $(LINKSTATEOBJECTS)
 	$(CPP) $(COMPILERFLAGS) $^ -o $@ $(LINKLIBS)
@@ -65,7 +65,7 @@ clean :
 
 #$<: the first dependency in the list; here, src/%.c. (Of course, we could also have used $^).
 #The % sign means "match one or more characters". You specify it in the target, and when a file
-#dependency is checked, if its name matches this pattern, this rule is used. You can also use the % 
+#dependency is checked, if its name matches this pattern, this rule is used. You can also use the %
 #in your list of dependencies, and it will insert whatever characters were matched for the target name.
 obj/%.o: src/%.cpp
 	$(CPP) $(COMPILERFLAGS) -c -o $@ $<
