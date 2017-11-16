@@ -69,7 +69,7 @@ int main(int argc, char** argv)
 
     graph.distanceVector();
 
-    // /* print topology at each vertex */
+    /* print topology at each vertex */
     // graph.printTopology();
 
     // /* read message file and send messages*/

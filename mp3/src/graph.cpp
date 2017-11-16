@@ -263,9 +263,10 @@ void Graph::distanceVector()
         for(auto sender_tbl = senderNode->dv_cost.begin(); sender_tbl != senderNode->dv_cost.end(); sender_tbl++)
         {
             int dst = sender_tbl->first; // destination to compare
+            /* don't broadcast receivers cost to itself */
             if(dst == receiver) 
                 continue;
-            
+
             int senderToReceiverCost = senderNode->neighbors[receiver]; // get edge weight
             int senderToDstCost = sender_tbl->second;
 
@@ -290,6 +291,7 @@ void Graph::distanceVector()
 
         }
 
+        /* following changes in dv table broadcast to neighbors */
         if(shouldBroadcast)
         {
             for(auto n_it = receiverNode->neighbors.begin(); n_it != receiverNode->neighbors.end(); n_it++)
