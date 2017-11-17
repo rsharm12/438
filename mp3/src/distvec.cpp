@@ -40,8 +40,7 @@ void sendMessage(Graph * graph, string filename)
         iss.ignore(1, ' ');
         getline(iss, message);
 
-        graph->sendMessage(v1, v2, message);
-        //cout << v1 << " " << v2 << message << endl;
+        graph->sendMessageDV(v1, v2, message);
     }
 
     messagefile.close();
@@ -70,24 +69,25 @@ int main(int argc, char** argv)
     graph.distanceVector();
 
     /* print topology at each vertex */
-    // graph.printTopology();
+    graph.printTopology(false);
 
     // /* read message file and send messages*/
-    // sendMessage(&graph, argv[2]);
-    // cout << endl;
+    sendMessage(&graph, argv[2]);
+    cout << endl;
 
     // /* process changesfile and reprint topology + messages */
-    // ifstream changesfile (argv[3]);
+    ifstream changesfile (argv[3]);
 
-    // while(getline(changesfile, line))
-    // {
-    //     addElements(&graph, line);
-    //     graph.printTopology();
-    //     sendMessage(&graph, argv[2]);
-    //     cout << endl;
-    // }
+    while(getline(changesfile, line))
+    {
+        addElements(&graph, line);
+        graph.distanceVector();
+        graph.printTopology(false);
+        sendMessage(&graph, argv[2]);
+        cout << endl;
+    }
 
-    // changesfile.close();
+    changesfile.close();
 
     return 0;
 }

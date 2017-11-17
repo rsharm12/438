@@ -48,15 +48,18 @@ public:
     Node * getNode(int v);
 
     void print() const;
-    void printTopology();
-    void printTopology(int start);
+    void printTopology(bool isLinkState);
 
-    void sendMessage(int v1, int v2, string msg);
+    void sendMessageLS(int v1, int v2, string msg);
+    void sendMessageDV(int v1, int v2, string msg);
 
     void djikstra(int v);
     void distanceVector();
 
 private:
+
+    void printTopologyLS(int start);
+    void printTopologyDV(int vertex);
 
     unordered_map<int, Node*> vertices;
 

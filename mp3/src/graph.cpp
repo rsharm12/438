@@ -94,17 +94,19 @@ void Graph::print() const
     }
 }
 
-void Graph::printTopology()
+void Graph::printTopology(bool isLinkState)
 {
     /* print topology at each vertex */
-    //graph->print();
     for(auto it = vertices.begin(); it != vertices.end(); it++)
     {
-         printTopology(it->first);
+        if(isLinkState)
+            printTopologyLS(it->first);
+        else
+            printTopologyDV(it->first);
     }
 }
 
-void Graph::printTopology(int start)
+void Graph::printTopologyLS(int start)
 {
     /* run djikstra from each vertex */
     djikstra(start);
@@ -128,11 +130,22 @@ void Graph::printTopology(int start)
     cout << endl;
 }
 
-void Graph::sendMessage(int v1, int v2, string msg)
+void Graph::printTopologyDV(int vertex)
 {
-    /* run djikstra from sender vertex */
-    djikstra(v1);
 
+    for(auto it = vertices[vertex]->dv_cost.begin(); it != vertices[vertex]->dv_cost.end(); it++)
+    {
+        int dest = it->first;
+        int next_hop = vertices[vertex]->dv_next_hop[dest];
+        int cost = it->second;
+
+        cout << dest << " " << next_hop << " " << cost << endl;
+    }
+
+    cout << endl;
+}
+void Graph::sendMessageLS(int v1, int v2, string msg)
+{
     stack<int> s;
     int prevNode = vertices[v1]->predecessor[v2];
     cout << "from " << v1 << " to " << v2 << " cost ";
@@ -152,6 +165,29 @@ void Graph::sendMessage(int v1, int v2, string msg)
         {
             cout << s.top() << " ";
             s.pop();
+        }
+    }
+    else
+    {
+        cout << "infinite hops unreachable ";
+    }
+
+    cout << "message " << msg << endl;
+}
+
+void Graph::sendMessageDV(int v1, int v2, string msg)
+{
+    cout << "from " << v1 << " to " << v2 << " cost ";
+    if(vertices[v1]->dv_cost.find(v2) != vertices[v1]->dv_cost.end())
+    {
+        /* find path from v1 to v2 */
+        cout << vertices[v1]->dv_cost[v2] << " hops ";
+
+        int currNode = v1;
+        while(currNode != v2)
+        {
+            cout << currNode << " ";
+            currNode = vertices[currNode]->dv_next_hop[v2];
         }
     }
     else
@@ -242,6 +278,9 @@ void Graph::distanceVector()
         int node = it->first;
         Node * currNode = it->second;
 
+        //currNode->dv_cost[node] = 0;
+        //currNode->dv_next_hop[node] = node;
+
         for(auto n_it = currNode->neighbors.begin(); n_it != currNode->neighbors.end(); n_it++)
         {
             currNode->dv_cost[n_it->first] = n_it->second;
@@ -301,8 +340,8 @@ void Graph::distanceVector()
 
         }
 
-        cout << sender << "->" << receiver << endl;
-        receiverNode->print();
+        // cout << sender << "->" << receiver << endl;
+        // receiverNode->print();
     }    
 
 }

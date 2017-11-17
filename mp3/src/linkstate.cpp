@@ -40,7 +40,7 @@ void sendMessage(Graph * graph, string filename)
         iss.ignore(1, ' ');
         getline(iss, message);
 
-        graph->sendMessage(v1, v2, message);
+        graph->sendMessageLS(v1, v2, message);
         //cout << v1 << " " << v2 << message << endl;
     }
 
@@ -68,7 +68,7 @@ int main(int argc, char** argv)
     topofile.close();
 
     /* print topology at each vertex */
-    graph.printTopology();
+    graph.printTopology(true);
 
     /* read message file and send messages*/
     sendMessage(&graph, argv[2]);
@@ -80,7 +80,7 @@ int main(int argc, char** argv)
     while(getline(changesfile, line))
     {
         addElements(&graph, line);
-        graph.printTopology();
+        graph.printTopology(true);
         sendMessage(&graph, argv[2]);
         cout << endl;
     }
