@@ -278,8 +278,8 @@ void Graph::distanceVector()
         int node = it->first;
         Node * currNode = it->second;
 
-        //currNode->dv_cost[node] = 0;
-        //currNode->dv_next_hop[node] = node;
+        currNode->dv_cost[node] = 0;
+        currNode->dv_next_hop[node] = node;
 
         for(auto n_it = currNode->neighbors.begin(); n_it != currNode->neighbors.end(); n_it++)
         {
