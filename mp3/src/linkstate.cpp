@@ -58,6 +58,7 @@ int main(int argc, char** argv)
     Graph graph;
     string line;
 
+
     /* fill in graph with initial topofile */
     ifstream topofile (argv[1]);
     while(getline(topofile, line))

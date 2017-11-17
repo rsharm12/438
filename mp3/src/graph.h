@@ -10,6 +10,7 @@
 #include <stack>
 #include <queue>
 #include <tuple>
+#include <fstream>
 
 using namespace std;
 
@@ -55,6 +56,8 @@ public:
 
     void djikstra(int v);
     void distanceVector();
+
+    ofstream fout;
 
 private:
 

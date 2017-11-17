@@ -1,5 +1,6 @@
 #include "graph.h"
 
+
 void Graph::Node::print() const
 {
     cout << "vertex: " << vertex << endl;
@@ -48,6 +49,9 @@ void Graph::Node::print() const
 
 Graph::~Graph()
 {
+    if(fout.is_open())
+        fout.close();
+    
     for(auto it = vertices.begin(); it != vertices.end(); it++)
     {
         delete it->second;
@@ -139,10 +143,10 @@ void Graph::printTopologyDV(int vertex)
         int next_hop = vertices[vertex]->dv_next_hop[dest];
         int cost = it->second;
 
-        cout << dest << " " << next_hop << " " << cost << endl;
+        fout << dest << " " << next_hop << " " << cost << endl;
     }
 
-    cout << endl;
+    fout << endl;
 }
 void Graph::sendMessageLS(int v1, int v2, string msg)
 {
@@ -177,25 +181,25 @@ void Graph::sendMessageLS(int v1, int v2, string msg)
 
 void Graph::sendMessageDV(int v1, int v2, string msg)
 {
-    cout << "from " << v1 << " to " << v2 << " cost ";
+    fout << "from " << v1 << " to " << v2 << " cost ";
     if(vertices[v1]->dv_cost.find(v2) != vertices[v1]->dv_cost.end())
     {
         /* find path from v1 to v2 */
-        cout << vertices[v1]->dv_cost[v2] << " hops ";
+        fout << vertices[v1]->dv_cost[v2] << " hops ";
 
         int currNode = v1;
         while(currNode != v2)
         {
-            cout << currNode << " ";
+            fout << currNode << " ";
             currNode = vertices[currNode]->dv_next_hop[v2];
         }
     }
     else
     {
-        cout << "infinite hops unreachable ";
+        fout << "infinite hops unreachable ";
     }
 
-    cout << "message " << msg << endl;
+    fout << "message " << msg << endl;
 }
 
 void Graph::djikstra(int v)
@@ -277,6 +281,9 @@ void Graph::distanceVector()
     {
         int node = it->first;
         Node * currNode = it->second;
+
+        currNode->dv_cost.clear();
+        currNode->dv_next_hop.clear();
 
         currNode->dv_cost[node] = 0;
         currNode->dv_next_hop[node] = node;
