@@ -1,6 +1,5 @@
 #include "graph.h"
 
-
 void Graph::Node::print() const
 {
     cout << "vertex: " << vertex << endl;
@@ -308,7 +307,7 @@ void Graph::distanceVector()
         {
             int dst = sender_tbl->first; // destination to compare
             /* don't broadcast receivers cost to itself */
-            if(dst == receiver) 
+            if(dst == receiver)
                 continue;
 
             int senderToReceiverCost = senderNode->neighbors[receiver]; // get edge weight
@@ -347,6 +346,5 @@ void Graph::distanceVector()
 
         // cout << sender << "->" << receiver << endl;
         // receiverNode->print();
-    }    
-
+    }
 }
