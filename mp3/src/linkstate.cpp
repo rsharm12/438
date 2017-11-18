@@ -58,6 +58,7 @@ int main(int argc, char** argv)
     Graph graph;
     string line;
 
+    graph.fout.open("output.txt", std::ios::out);
 
     /* fill in graph with initial topofile */
     ifstream topofile (argv[1]);
@@ -73,7 +74,7 @@ int main(int argc, char** argv)
 
     /* read message file and send messages*/
     sendMessage(&graph, argv[2]);
-    cout << endl;
+    graph.fout << endl;
 
     /* process changesfile and reprint topology + messages */
     ifstream changesfile (argv[3]);
@@ -83,7 +84,7 @@ int main(int argc, char** argv)
         addElements(&graph, line);
         graph.printTopology(true);
         sendMessage(&graph, argv[2]);
-        cout << endl;
+        graph.fout << endl;
     }
 
     changesfile.close();

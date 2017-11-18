@@ -49,9 +49,7 @@ void Graph::Node::print() const
 
 Graph::~Graph()
 {
-    if(fout.is_open())
-        fout.close();
-    
+    fout.close();
     for(auto it = vertices.begin(); it != vertices.end(); it++)
     {
         delete it->second;
@@ -127,11 +125,11 @@ void Graph::printTopologyLS(int start)
                 prevNode = vertices[start]->predecessor[prevNode];
             }
 
-            cout << it->first << " " << prevNode << " " << it->second << endl;
+            fout << it->first << " " << prevNode << " " << it->second << endl;
         }
     }
 
-    cout << endl;
+    fout << endl;
 }
 
 void Graph::printTopologyDV(int vertex)
@@ -152,7 +150,7 @@ void Graph::sendMessageLS(int v1, int v2, string msg)
 {
     stack<int> s;
     int prevNode = vertices[v1]->predecessor[v2];
-    cout << "from " << v1 << " to " << v2 << " cost ";
+    fout << "from " << v1 << " to " << v2 << " cost ";
     if(vertices[v1]->known[v2])
     {
         /* find path from v1 to v2 */
@@ -162,21 +160,21 @@ void Graph::sendMessageLS(int v1, int v2, string msg)
             prevNode = vertices[v1]->predecessor[prevNode];
         }
 
-        cout << vertices[v1]->cost[v2] << " hops ";
+        fout << vertices[v1]->cost[v2] << " hops ";
 
         /* reverse predecessors */
         while(!s.empty())
         {
-            cout << s.top() << " ";
+            fout << s.top() << " ";
             s.pop();
         }
     }
     else
     {
-        cout << "infinite hops unreachable ";
+        fout << "infinite hops unreachable ";
     }
 
-    cout << "message " << msg << endl;
+    fout << "message " << msg << endl;
 }
 
 void Graph::sendMessageDV(int v1, int v2, string msg)
