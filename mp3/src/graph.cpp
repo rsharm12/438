@@ -352,7 +352,10 @@ void Graph::djikstra(int v)
             }
             else if(potentialCost == currCost && !known)
             {
-
+                /* need to apply tie breaker based on currNode ID vs
+                 * predecessor of destination node */
+                if(currNode < node->ls_predecessor[neighbor.first])
+                    node->ls_predecessor[neighbor.first] = currNode;
             }
         }
 
@@ -364,12 +367,15 @@ void Graph::djikstra(int v)
             bool known = node->ls_known[vertex.first];
             int cost = node->ls_cost[vertex.first];
 
-            if(!known && cost < currLowestCost)
+            if(known) // skip if known
+                continue;
+
+            if(cost < currLowestCost)
             {
                 currLowestCost = cost;
                 currLowestNode = vertex.first;
             }
-            else if(!known && cost == currLowestCost)
+            else if(cost == currLowestCost)
             {
                 /* tie breaker, choose node with lower ID */
                 if(vertex.first < currLowestNode)
@@ -380,6 +386,7 @@ void Graph::djikstra(int v)
             }
         }
 
+        // no unknown node with lowest value found, we are done
         if(currLowestNode == -1)
             break;
 
