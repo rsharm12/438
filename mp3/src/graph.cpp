@@ -97,6 +97,9 @@ int Graph::getEdge(int v1, int v2) const
 
 void Graph::addElements(string & line)
 {
+    if(line.length() == 0)
+        return;
+
     int v1, v2, weight;
     istringstream iss(line);
     iss >> v1;
@@ -193,6 +196,9 @@ void Graph::sendMessagesLS(ifstream & msgfile) const
 
     while(getline(msgfile, line))
     {
+        if(line.length() == 0)
+            continue;
+
         istringstream iss(line);
         iss >> v1 >> v2;
         /* strip leading space */
@@ -200,6 +206,9 @@ void Graph::sendMessagesLS(ifstream & msgfile) const
         getline(iss, message);
 
         sendMessageLS(v1, v2, message);
+
+        line.clear();
+        message.clear();
     }
 
     outStream << endl;
@@ -249,6 +258,9 @@ void Graph::sendMessagesDV(ifstream & msgfile) const
 
     while(getline(msgfile, line))
     {
+        if(line.length() == 0)
+            continue;
+
         istringstream iss(line);
         iss >> v1 >> v2;
         /* strip leading space */
@@ -256,6 +268,9 @@ void Graph::sendMessagesDV(ifstream & msgfile) const
         getline(iss, message);
 
         sendMessageDV(v1, v2, message);
+
+        line.clear();
+        message.clear();
     }
 
     outStream << endl;
@@ -448,8 +463,5 @@ void Graph::distanceVector()
             }
 
         }
-
-        // cout << sender << "->" << receiver << endl;
-        // receiverNode->print();
     }
 }
