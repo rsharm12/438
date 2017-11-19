@@ -63,7 +63,7 @@ private:
     void printTopologyLS(int start);
     void printTopologyDV(int vertex);
 
-    unordered_map<int, Node*> vertices;
+    map<int, Node*> vertices;
 
 };
 
