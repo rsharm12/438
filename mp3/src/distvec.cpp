@@ -1,94 +1,50 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
 #include "graph.h"
-
-void addElements(Graph * graph, string line)
-{
-    int v1, v2, weight;
-    istringstream iss(line);
-    iss >> v1;
-    iss >> v2;
-    iss >> weight;
-
-    if(graph->getNode(v1) == nullptr)
-        graph->addVertex(v1);
-    if(graph->getNode(v2) == nullptr)
-        graph->addVertex(v2);
-
-    if(weight == -999)
-        graph->removeEdge(v1, v2);
-    else
-        graph->addEdge(v1, v2, weight);
-}
-
-void sendMessage(Graph * graph, string filename)
-{
-    int v1, v2;
-    string line;
-    string message;
-
-    ifstream messagefile (filename);
-
-    while(getline(messagefile, line))
-    {
-        istringstream iss(line);
-        iss >> v1 >> v2;
-        /* strip leading space */
-        iss.ignore(1, ' ');
-        getline(iss, message);
-
-        graph->sendMessageDV(v1, v2, message);
-    }
-
-    messagefile.close();
-}
 
 int main(int argc, char** argv)
 {
-    //printf("Number of arguments: %d", argc);
     if (argc != 4) {
         cout << "Usage: ./distvec topofile messagefile changesfile" << endl;
         return -1;
     }
 
-    Graph graph;
+    ofstream outfile("output.txt", std::ios::out);
+    ifstream topofile (argv[1]);
+    ifstream msgfile (argv[2]);
+    ifstream changesfile (argv[3]);
+
+    Graph graph(outfile);
     string line;
 
-    graph.fout.open("output.txt", std::ios::out);
-
     /* fill in graph with initial topofile */
-    ifstream topofile (argv[1]);
     while(getline(topofile, line))
-    {
-        addElements(&graph, line);
-    }
+        graph.addElements(line);
 
     topofile.close();
 
-    graph.distanceVector();
-
-    /* print topology at each vertex */
-    graph.printTopology(false);
-
-    // /* read message file and send messages*/
-    sendMessage(&graph, argv[2]);
-    graph.fout << endl;
-
-    // /* process changesfile and reprint topology + messages */
-    ifstream changesfile (argv[3]);
-
-    while(getline(changesfile, line))
+    /* process changesfile and reprint topology + messages */
+    while (true)
     {
-        addElements(&graph, line);
+        /* run djikstra and print topology */
         graph.distanceVector();
-        graph.printTopology(false);
-        sendMessage(&graph, argv[2]);
-        graph.fout << endl;
+        graph.printForwardingTableDV();
+
+        /* read message file and send messages*/
+        msgfile.clear();
+        msgfile.seekg(0, ios::beg);
+        graph.sendMessagesDV(msgfile);
+
+        /* stop if all changes have been applied */
+        if (changesfile.eof())
+            break;
+
+        /* add the next change to the graph */
+        getline(changesfile, line);
+        graph.addElements(line);
     }
 
     changesfile.close();
+    msgfile.close();
+    outfile.close();
 
     return 0;
 }

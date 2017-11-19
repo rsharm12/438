@@ -1,5 +1,9 @@
 #include "graph.h"
 
+Graph::Node::Node(int v) : vertex(v)
+{
+}
+
 void Graph::Node::print() const
 {
     cout << "vertex: " << vertex << endl;
@@ -43,16 +47,21 @@ void Graph::Node::print() const
     // {
     //     cout << it->first << "|" << it->second << " ";
     // }
-    cout << endl;
+    // cout << endl;
+}
+
+Graph::Graph(ostream & output_stream)
+    : outStream(output_stream)
+{
 }
 
 Graph::~Graph()
 {
-    fout.close();
-    for(auto it = vertices.begin(); it != vertices.end(); it++)
+    for(auto& vertex : vertices)
     {
-        delete it->second;
+        delete vertex.second;
     }
+    vertices.clear();
 }
 
 void Graph::addVertex(int v)
@@ -63,210 +72,306 @@ void Graph::addVertex(int v)
 
 void Graph::addEdge(int v1, int v2, int weight)
 {
-    vertices[v1]->neighbors[v2] = weight;
-    vertices[v2]->neighbors[v1] = weight;
+    vertices.at(v1)->neighbors[v2] = weight;
+    vertices.at(v2)->neighbors[v1] = weight;
 }
 
 void Graph::removeEdge(int v1, int v2)
 {
-    vertices[v1]->neighbors.erase(v2);
-    vertices[v2]->neighbors.erase(v1);
+    vertices.at(v1)->neighbors.erase(v2);
+    vertices.at(v2)->neighbors.erase(v1);
 }
 
 Graph::Node * Graph::getNode(int v)
 {
-    if(vertices.find(v) == vertices.end())
-        return nullptr;
+    if(vertices.count(v))
+        return vertices.at(v);
 
-    return vertices[v];
+    return nullptr;
+}
+
+int Graph::getEdge(int v1, int v2) const
+{
+    return vertices.at(v1)->neighbors.at(v2);
+}
+
+void Graph::addElements(string & line)
+{
+    int v1, v2, weight;
+    istringstream iss(line);
+    iss >> v1;
+    iss >> v2;
+    iss >> weight;
+
+    if(getNode(v1) == nullptr)
+        addVertex(v1);
+    if(getNode(v2) == nullptr)
+        addVertex(v2);
+
+    if(weight == -999)
+        removeEdge(v1, v2);
+    else
+        addEdge(v1, v2, weight);
 }
 
 void Graph::print() const
 {
-    for(auto v_it = vertices.begin(); v_it != vertices.end(); v_it++)
+    for(const auto& vertex : vertices)
     {
-        cout << "vertex " << v_it->first << ": ";
-        auto neighbors = v_it->second->neighbors;
-        for(auto n_it = neighbors.begin(); n_it != neighbors.end(); n_it++)
+        cout << "vertex " << vertex.first << ": ";
+        for(const auto& neighbor : vertex.second->neighbors)
         {
-            cout << n_it->first << "|" << n_it->second << " ";
+            cout << neighbor.first << "|" << neighbor.second << " ";
         }
         cout << endl;
     }
 }
 
-void Graph::printTopology(bool isLinkState)
+void Graph::printForwardingTableLS() const
 {
-    /* print topology at each vertex */
-    for(auto it = vertices.begin(); it != vertices.end(); it++)
+    for(const auto& vertex : vertices)
     {
-        if(isLinkState)
-            printTopologyLS(it->first);
-        else
-            printTopologyDV(it->first);
-    }
-}
+        int start = vertex.first;
+        const Node * start_node = vertex.second;
 
-void Graph::printTopologyLS(int start)
-{
-    /* run djikstra from each vertex */
-    djikstra(start);
-
-    for(auto it = vertices[start]->cost.begin(); it != vertices[start]->cost.end(); it++)
-    {
-        /* ensure vertex is reachable */
-        if(vertices[start]->known[it->first])
+        for(const auto& cost : start_node->ls_cost)
         {
-            int prevNode = it->first;
-            while(vertices[start]->predecessor[prevNode] != start)
+            /* since LS stores predecessor only, we need to loop
+             * until we find the start node */
+
+            int dest = cost.first;
+            int path_cost = cost.second;
+
+            /* ensure destination is reachable */
+            if(start_node->ls_known.at(dest))
             {
-                if(prevNode == start) break;
-                prevNode = vertices[start]->predecessor[prevNode];
+                int nextHop = dest;
+
+                if(dest != start)
+                {
+                    while(start_node->ls_predecessor.at(nextHop) != start)
+                    {
+                        if(nextHop == start)
+                            break;
+                        nextHop = start_node->ls_predecessor.at(nextHop);
+                    }
+                }
+
+                outStream << dest << " " << nextHop << " " << path_cost << endl;
             }
-
-            fout << it->first << " " << prevNode << " " << it->second << endl;
         }
-    }
 
-    fout << endl;
+        outStream << endl;
+    }
 }
 
-void Graph::printTopologyDV(int vertex)
+void Graph::printForwardingTableDV() const
 {
-
-    for(auto it = vertices[vertex]->dv_cost.begin(); it != vertices[vertex]->dv_cost.end(); it++)
+    for(const auto& vertex : vertices)
     {
-        int dest = it->first;
-        int next_hop = vertices[vertex]->dv_next_hop[dest];
-        int cost = it->second;
+        // int start = vertex.first;
+        const Node * start_node = vertex.second;
 
-        fout << dest << " " << next_hop << " " << cost << endl;
+        for(const auto& cost : start_node->dv_cost)
+        {
+            int dest = cost.first;
+            int path_cost = cost.second;
+            int next_hop = start_node->dv_next_hop.at(dest);
+
+            outStream << dest << " " << next_hop << " " << path_cost << endl;
+        }
+
+        outStream << endl;
+    }
+}
+
+void Graph::sendMessagesLS(ifstream & msgfile) const
+{
+    int v1, v2;
+    string line;
+    string message;
+
+    while(getline(msgfile, line))
+    {
+        istringstream iss(line);
+        iss >> v1 >> v2;
+        /* strip leading space */
+        iss.ignore(1, ' ');
+        getline(iss, message);
+
+        sendMessageLS(v1, v2, message);
     }
 
-    fout << endl;
+    outStream << endl;
 }
-void Graph::sendMessageLS(int v1, int v2, string msg)
+
+void Graph::sendMessageLS(int v1, int v2, string & msg) const
 {
     stack<int> s;
-    int prevNode = vertices[v1]->predecessor[v2];
-    fout << "from " << v1 << " to " << v2 << " cost ";
-    if(vertices[v1]->known[v2])
+    const Node * v1_node = vertices.at(v1);
+
+    outStream << "from " << v1 << " to " << v2 << " ";
+
+    /* check if v2 is reachable */
+    if(v1_node->ls_known.at(v2))
     {
         /* find path from v1 to v2 */
-        while(prevNode != vertices[v1]->predecessor[v1])
+        int prevNode = v2;
+        while(prevNode != v1)
         {
+            prevNode = v1_node->ls_predecessor.at(prevNode);
             s.push(prevNode);
-            prevNode = vertices[v1]->predecessor[prevNode];
         }
 
-        fout << vertices[v1]->cost[v2] << " hops ";
+        outStream << "cost " << v1_node->ls_cost.at(v2) << " ";
 
-        /* reverse predecessors */
+        /* reverse predecessors to print hops*/
+        outStream << "hops ";
         while(!s.empty())
         {
-            fout << s.top() << " ";
+            outStream << s.top() << " ";
             s.pop();
         }
     }
     else
     {
-        fout << "infinite hops unreachable ";
+        outStream << "cost infinite hops unreachable ";
     }
 
-    fout << "message " << msg << endl;
+    outStream << "message " << msg << endl;
 }
 
-void Graph::sendMessageDV(int v1, int v2, string msg)
+void Graph::sendMessagesDV(ifstream & msgfile) const
 {
-    fout << "from " << v1 << " to " << v2 << " cost ";
-    if(vertices[v1]->dv_cost.find(v2) != vertices[v1]->dv_cost.end())
+    int v1, v2;
+    string line;
+    string message;
+
+    while(getline(msgfile, line))
+    {
+        istringstream iss(line);
+        iss >> v1 >> v2;
+        /* strip leading space */
+        iss.ignore(1, ' ');
+        getline(iss, message);
+
+        sendMessageDV(v1, v2, message);
+    }
+
+    outStream << endl;
+}
+
+void Graph::sendMessageDV(int v1, int v2, string & msg) const
+{
+    const Node * v1_node = vertices.at(v1);
+
+    outStream << "from " << v1 << " to " << v2 << " ";
+
+    /* check if v2 is reachable */
+    if(v1_node->dv_cost.count(v2))
     {
         /* find path from v1 to v2 */
-        fout << vertices[v1]->dv_cost[v2] << " hops ";
+        outStream << "cost " << v1_node->dv_cost.at(v2) << " ";
 
+        outStream << "hops ";
         int currNode = v1;
         while(currNode != v2)
         {
-            fout << currNode << " ";
-            currNode = vertices[currNode]->dv_next_hop[v2];
+            outStream << currNode << " ";
+            currNode = vertices.at(currNode)->dv_next_hop.at(v2);
         }
     }
     else
     {
-        fout << "infinite hops unreachable ";
+        outStream << "cost infinite hops unreachable ";
     }
 
-    fout << "message " << msg << endl;
+    outStream << "message " << msg << endl;
+}
+
+void Graph::linkState()
+{
+    for(const auto& vertex : vertices)
+    {
+        /* initialize the djikstra data structures */
+        for(const auto& others : vertices)
+        {
+            vertex.second->ls_predecessor[others.first] = -1;
+            if(vertex.first == others.first)
+            {
+                vertex.second->ls_known[others.first] = true;
+                vertex.second->ls_cost[others.first] = 0;
+            }
+            else
+            {
+                vertex.second->ls_known[others.first] = false;
+                vertex.second->ls_cost[others.first] = numeric_limits<int>::max();
+            }
+        }
+
+        /* run djikstra on the node */
+        djikstra(vertex.first);
+    }
 }
 
 void Graph::djikstra(int v)
 {
-
     Node * node = vertices[v];
-
-    for(auto v_it = vertices.begin(); v_it != vertices.end(); v_it++)
-    {
-        int vertex = v_it->first;
-        if(v == vertex)
-        {
-            node->known[vertex] = true;
-            node->cost[vertex] = 0;
-        }
-        else
-        {
-            node->cost[vertex] = numeric_limits<int>::max();
-            node->known[vertex] = false;
-        }
-
-        node->predecessor[vertex] = -1;
-    }
-
     int currNode = v;
 
-    int i = 0;
     while(true)
     {
-        //cout << "currNode=" << currNode << endl;
-        auto neighbors = vertices[currNode]->neighbors;
-        for(auto n_it = neighbors.begin(); n_it != neighbors.end(); n_it++)
+        for(const auto& neighbor : vertices[currNode]->neighbors)
         {
             /* current cost is last known path cost to get to that neighbor from the start */
-            int currCost = node->cost[n_it->first];
+            int currCost = node->ls_cost[neighbor.first];
             /* potential cost is path cost to current node from start + edge weight to neighbor */
-            int potentialCost = node->cost[currNode] + n_it->second;
-            bool known = node->known[n_it->first];
-            if(potentialCost < currCost && !known) {
-                node->cost[n_it->first] = potentialCost;
-                node->predecessor[n_it->first] = currNode;
+            int potentialCost = node->ls_cost[currNode] + neighbor.second;
+            /* known is whether we have seen this node before */
+            bool known = node->ls_known[neighbor.first];
+
+            if(potentialCost < currCost && !known)
+            {
+                node->ls_cost[neighbor.first] = potentialCost;
+                node->ls_predecessor[neighbor.first] = currNode;
             }
-            //cout << "neighbor=" << n_it->first << " currCost=" << currCost << " potentialCost=" << potentialCost << endl;
+            else if(potentialCost == currCost && !known)
+            {
+
+            }
         }
 
         /* select next unknown node based on minimum cost */
         int currLowestNode = -1;
         int currLowestCost = numeric_limits<int>::max();
-        for(auto v_it = vertices.begin(); v_it != vertices.end(); v_it++)
+        for(const auto& vertex : vertices)
         {
-            bool known = node->known[v_it->first];
-            int cost = node->cost[v_it->first];
-            //cout << "vertex=" << v_it->first << " known=" << known << " cost=" << cost << endl;
+            bool known = node->ls_known[vertex.first];
+            int cost = node->ls_cost[vertex.first];
+
             if(!known && cost < currLowestCost)
             {
                 currLowestCost = cost;
-                currLowestNode = v_it->first;
+                currLowestNode = vertex.first;
+            }
+            else if(!known && cost == currLowestCost)
+            {
+                /* tie breaker, choose node with lower ID */
+                if(vertex.first < currLowestNode)
+                {
+                    currLowestCost = cost;
+                    currLowestNode = vertex.first;
+                }
             }
         }
 
         if(currLowestNode == -1)
             break;
 
-        //node->predecessor[currLowestNode] = currNode;
         currNode = currLowestNode;
-        node->known[currNode] = true;
-        i++;
+        node->ls_known[currNode] = true;
     }
 }
-
 
 void Graph::distanceVector()
 {
