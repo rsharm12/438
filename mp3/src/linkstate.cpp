@@ -39,8 +39,8 @@ int main(int argc, char** argv)
         graph.sendMessagesLS(msgfile);
 
         /* stop if all changes have been applied */
-        if (changesfile.eof())
-            break;
+        // if (changesfile.eof())
+        //     break;
 
         /* add the next change to the graph */
         line.clear();
