@@ -38,16 +38,20 @@ int main(int argc, char** argv)
         msgfile.seekg(0, ios::beg);
         graph.sendMessagesLS(msgfile);
 
+        /* stop if all changes have been applied */
+        if (changesfile.eof())
+            break;
+
         /* add the next change to the graph */
         line.clear();
         while(line.length() == 0 && !changesfile.eof())
             getline(changesfile, line);
 
-        graph.addElements(line);
-
         /* stop if all changes have been applied */
         if (changesfile.eof())
             break;
+
+        graph.addElements(line);
     }
 
     changesfile.close();
