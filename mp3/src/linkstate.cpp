@@ -48,7 +48,7 @@ int main(int argc, char** argv)
             getline(changesfile, line);
 
         /* stop if all changes have been applied */
-        if (changesfile.eof())
+        if (changesfile.eof() && line.length() == 0)
             break;
 
         graph.addElements(line);
