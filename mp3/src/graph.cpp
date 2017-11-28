@@ -306,6 +306,14 @@ void Graph::sendMessageDV(int v1, int v2, string & msg) const
 
 void Graph::linkState()
 {
+    /* clear the previous data structure values */
+    for(const auto& vertex : vertices)
+    {
+        vertex.second->ls_known.clear();
+        vertex.second->ls_cost.clear();
+        vertex.second->ls_predecessor.clear();
+    }
+
     for(const auto& vertex : vertices)
     {
         /* initialize the djikstra data structures */
@@ -350,7 +358,7 @@ void Graph::djikstra(int v)
                 node->ls_cost[neighbor.first] = potentialCost;
                 node->ls_predecessor[neighbor.first] = currNode;
             }
-            else if(potentialCost == currCost && !known)
+            else if(potentialCost == currCost)
             {
                 /* need to apply tie breaker based on currNode ID vs
                  * predecessor of destination node */
