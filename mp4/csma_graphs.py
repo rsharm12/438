@@ -2,7 +2,9 @@
 
 import sys
 import random
-# from pprint import pprint
+from pprint import pprint
+
+import matplotlib.pyplot as plt
 
 def getInput(filename):
 	inputs = {}
@@ -98,7 +100,9 @@ def csma(params):
 
 	out_channelUtil = float(out_channelUtil)
 
-	# write to output.txt
+	return (out_channelUtil * 100 / params["T"])
+
+	############ submit later
 	with open("output.txt", "w") as f:
 		f.write("%f\n" % (out_channelUtil * 100 / params["T"])) # channel utilization
 		f.write("%f\n" % ((params["T"] - out_collisions - out_channelUtil) * 100 / params["T"])) # channel idle fraction
@@ -106,7 +110,68 @@ def csma(params):
 		f.write("%f\n" % variance([node["successes"] for node in nodes])) # variance in successful transmissions
 		f.write("%f\n" % variance([node["collisions"] for node in nodes])) # variance in collisions
 
-	# pprint(nodes)
+	pprint(nodes)
 
-params = getInput(sys.argv[1])
-csma(params)
+
+# params = getInput(sys.argv[1])
+
+params = {
+	"N": 25,
+	"L": 20,
+	"R": [8, 16, 32, 64, 128],
+	"M": 6,
+	"T": 50000
+}
+
+RS = [
+	([1, 2, 4, 8, 16], 'b'),
+	([2, 4, 8, 16, 32], 'g'),
+	([4, 8, 16, 32, 64], 'r'),
+	([8, 16, 32, 64, 128], 'm'),
+	([16, 32, 64, 128, 256], 'y'),
+]
+
+for R, color in RS:
+	params["R"] = R
+
+	x = range(5,101)
+	y = []
+	for n in x:
+		params["N"] = n
+		y.append(csma(params))
+		print("N=%d" % n)
+
+	plt.plot(x, y, color, label='R={}'.format(R))
+	print("done plotting with R={}".format(R))
+
+plt.legend(loc='lower left', fontsize='x-small', fancybox=True, shadow=True)
+plt.xlabel("number of nodes")
+plt.ylabel("channel utilization (%)")
+plt.title("Channel utilization with varying backoffs")
+plt.savefig("partD.png", dpi=300)
+
+# ls = [
+# 	(20, 'b'),
+# 	(40, 'g'),
+# 	(60, 'r'),
+# 	(80, 'm'),
+# 	(100, 'y'),
+# ]
+
+# for L, color in ls:
+# 	params["L"] = L
+# 	x = range(5,101)
+# 	y = []
+# 	for n in x:
+# 		params["N"] = n
+# 		y.append(csma(params))
+# 		print("N=%d" % n)
+
+# 	plt.plot(x, y, color, label='L={}'.format(L))
+
+# plt.legend(loc='lower left', fancybox=True, shadow=True)
+# plt.xlabel("number of nodes")
+# plt.ylabel("channel utilization (%)")
+# plt.title("Channel utilization with varying packet lengths")
+# plt.savefig("partE.png", dpi=300)
+
