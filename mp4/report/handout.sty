@@ -175,7 +175,7 @@
 \def\Section#1{\renewcommand{\@Section}{#1}}
 
 \long\def\HomeworkHeader#1#2{
-\headers{\@Class\ \@Semester}{HW #1.#2}{{\@NetIDOne}\ifnum\theAuthors>1{/\@NetIDTwo}\fi\ifnum\theAuthors>2{/\@NetIDThree}\fi}
+\headers{\@Class\ \@Semester}{MP #1#2}{{\@NetIDOne}\ifnum\theAuthors>1{/\@NetIDTwo}\fi\ifnum\theAuthors>2{/\@NetIDThree}\fi}
 \thispagestyle{plain}
 \setcounter{page}{1}
 \begin{center}
@@ -184,7 +184,7 @@
 \Large
 \begin{tabular}{@{}l}
 	\@Class\ \@Semester\\
-	Homework {#1} Problem {#2}\\
+	MP {#1}\\
 	\ifx\@Section\@empty~\else Return section: \@Section\fi
 \end{tabular}
 \hfill
@@ -202,7 +202,7 @@
 }
 
 \long\def\SolutionHeader#1#2{
-\headers{\@Class\ \@Semester}{HW #1.#2}{Solution}
+\headers{\@Class\ \@Semester}{MP #1#2}{Solution}
 \thispagestyle{plain}
 \setcounter{page}{1}
 \begin{center}
