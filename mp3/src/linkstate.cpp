@@ -1,8 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-
 #include "graph.h"
 
 int main(int argc, char** argv)
@@ -37,10 +32,6 @@ int main(int argc, char** argv)
         msgfile.clear();
         msgfile.seekg(0, ios::beg);
         graph.sendMessagesLS(msgfile);
-
-        /* stop if all changes have been applied */
-        // if (changesfile.eof())
-        //     break;
 
         /* add the next change to the graph */
         line.clear();
